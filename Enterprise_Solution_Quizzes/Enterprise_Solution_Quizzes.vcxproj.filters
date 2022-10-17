@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="QuizSharedDocker\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuizSharedDocker\Answer.cpp">
+    <ClCompile Include="QuizSharedDocker\objects\Answer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuizSharedDocker\Question.cpp">
+    <ClCompile Include="QuizSharedDocker\objects\Question.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QuizSharedDocker\Answer.h">
+    <ClInclude Include="QuizSharedDocker\objects\Answer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QuizSharedDocker\Question.h">
+    <ClInclude Include="QuizSharedDocker\objects\Question.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
