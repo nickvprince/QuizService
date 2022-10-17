@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="QuizSharedDocker\Answer.cpp" />
+    <ClCompile Include="QuizSharedDocker\Question.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QuizSharedDocker\Answer.h" />
+    <ClInclude Include="QuizSharedDocker\Question.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

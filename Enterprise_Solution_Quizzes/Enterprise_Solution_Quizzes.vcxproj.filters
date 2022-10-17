@@ -18,5 +18,19 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuizSharedDocker\Answer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuizSharedDocker\Question.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QuizSharedDocker\Answer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuizSharedDocker\Question.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
