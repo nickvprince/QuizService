@@ -1,26 +1,37 @@
-#define CROW_MAIN
-
-#include "crow_all.h"
 #include <iostream>
 using namespace std;
 
-void readHtmlRequestWriteResponse(crow::response &res, string path) {
+#ifdef __linux__
+
+#define CROW_MAIN
+
+#include "crow_all.h"
+
+void readHtmlRequestWriteResponse(crow::response& res, string path) {
 
 	std::ifstream in("../public/" + path, std::ifstream::in);
-	
+
 	if (in) {
 		ostringstream contents;
 		contents << in.rdbuf();
 		in.close();
 		res.write(contents.str());
-	} else {
+	}
+	else {
 		res.code = 404;
 	}
 	res.end();
 }
+#endif //__linux__
+
 
 int main() {
-	
+
+#ifdef _WIN32
+	std::cout << "Hello World" << std::endl;
+#endif // _WIN32
+
+#ifdef __linux__
 	crow::SimpleApp app;
 
 	//Default Request
@@ -41,4 +52,5 @@ int main() {
 
 	app.port(23500).multithreaded().run();
 	return 1;
+#endif //__linux__
 }
