@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="HTML">
+      <UniqueIdentifier>{d857d07a-781c-4394-b25c-b1f89d01ee3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JS">
+      <UniqueIdentifier>{edb75f92-ed97-4583-a045-612c8c5c0a8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuizSharedDocker\main.cpp">
@@ -24,6 +30,9 @@
     <ClCompile Include="QuizSharedDocker\objects\Question.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuizSharedDocker\objects\QuestionPoolCrow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QuizSharedDocker\objects\Answer.h">
@@ -32,5 +41,25 @@
     <ClInclude Include="QuizSharedDocker\objects\Question.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="QuizSharedDocker\public\HTML\QuestionPool.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\index.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\HTML\CreatePool.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\HTML\DeletePool.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\HTML\EditPool.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\Java\questionPoolForm.js">
+      <Filter>JS</Filter>
+    </None>
   </ItemGroup>
 </Project>

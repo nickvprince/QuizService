@@ -22,10 +22,19 @@
     <ClCompile Include="QuizSharedDocker\main.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Answer.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Question.cpp" />
+    <ClCompile Include="QuizSharedDocker\objects\QuestionPoolCrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QuizSharedDocker\objects\Answer.h" />
     <ClInclude Include="QuizSharedDocker\objects\Question.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="QuizSharedDocker\public\HTML\CreatePool.html" />
+    <None Include="QuizSharedDocker\public\HTML\DeletePool.html" />
+    <None Include="QuizSharedDocker\public\HTML\EditPool.html" />
+    <None Include="QuizSharedDocker\public\HTML\QuestionPool.html" />
+    <None Include="QuizSharedDocker\public\index.html" />
+    <None Include="QuizSharedDocker\public\Java\questionPoolForm.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
