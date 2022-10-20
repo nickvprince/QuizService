@@ -78,6 +78,8 @@ int main() {
 
 #ifdef _WIN32
 	std::cout << "Hello World" << std::endl;
+	Quiz q("1", "2", "3", 5);
+	q.saveQuiz();
 #endif // _WIN32
 
 #ifdef __linux__
@@ -111,8 +113,8 @@ int main() {
 
 			if((quizTitleString.str() != "" && quizDurationString.str() != "" &&
 			quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "")) {
-				Quiz currentQuiz(quizTitle);
-
+				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()));
+				currentQuiz.saveQuiz();
 				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
 			}	
 		}

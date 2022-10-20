@@ -8,16 +8,12 @@ function buttonclick(id){
             location.href = "../createQuiz.html";
             break;
         }
-        case "view-quizlist-button": {
-            location.href = "../viewQuizList.html";
-            break;
-        }
         case "edit-quiz-button": {
-            location.href = "../editQuiz.html";
+            location.href = "";
             break;
         }
         case "delete-quiz-button": {
-            location.href = "../deleteQuiz.html";
+            location.href = "";s
             break;
         }
         default:
