@@ -12,14 +12,6 @@ function buttonclick(id){
             location.href = "../viewQuizList.html";
             break;
         }
-        case "edit-quiz-button": {
-            location.href = "../editQuiz.html";
-            break;
-        }
-        case "delete-quiz-button": {
-            location.href = "../deleteQuiz.html";
-            break;
-        }
         default:
             break;
     }

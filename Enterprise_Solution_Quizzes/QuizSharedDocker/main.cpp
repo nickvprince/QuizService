@@ -67,6 +67,10 @@ void sendImage(response& res, string filename) {
 	}
 }
 
+void sendQuizText(response& res, string filename) {
+	sendFile(res, "quizzes/" + filename, "text/plain");
+}
+
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
 }
@@ -137,6 +141,10 @@ int main() {
 		sendImage(res, filename);
 	});
 
+	CROW_ROUTE(app, "/quizzes/<string>")
+	([](const request& req, response& res, string filename) {
+		sendQuizText(res, filename);
+	});
 	//serice port
 	app.port(27501).multithreaded().run();
 	return 1;
