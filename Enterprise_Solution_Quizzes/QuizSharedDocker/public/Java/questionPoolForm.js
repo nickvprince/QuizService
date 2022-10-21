@@ -22,8 +22,16 @@ function AddQuestion(i) {
 
 }
 
-function submit() {
+function Enter() {
+ 
+  var ids = document.querySelectorAll('[id]');
 
+    Array.prototype.forEach.call(ids, function (el, i) {
+        // "el" is your element
+        if (el.id.toString().includes("Q")) {
+            alert(el.id);
+        }
+    });
 }
 function option(i, c) {
     var b = String(i);
