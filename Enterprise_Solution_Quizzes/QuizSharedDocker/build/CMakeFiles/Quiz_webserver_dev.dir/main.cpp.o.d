@@ -1628,4 +1628,5 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /usr/include/boost/date_time/time_facet.hpp \
  /usr/include/boost/date_time/posix_time/conversion.hpp \
  /usr/include/boost/date_time/filetime_functions.hpp \
- /usr/include/boost/date_time/posix_time/time_parsers.hpp
+ /usr/include/boost/date_time/posix_time/time_parsers.hpp \
+ /QuizSharedDocker/objects/Quiz.cpp /QuizSharedDocker/objects/Quiz.h
