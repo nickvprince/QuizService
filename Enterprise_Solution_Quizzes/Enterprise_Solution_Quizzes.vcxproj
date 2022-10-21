@@ -29,6 +29,14 @@
     <ClInclude Include="QuizSharedDocker\objects\Question.h" />
     <ClInclude Include="QuizSharedDocker\objects\Quiz.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="QuizSharedDocker\public\createPool.html" />
+    <None Include="QuizSharedDocker\public\deletePool.html" />
+    <None Include="QuizSharedDocker\public\editPool.html" />
+    <None Include="QuizSharedDocker\public\questionPool.html" />
+    <None Include="QuizSharedDocker\public\index.html" />
+    <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
