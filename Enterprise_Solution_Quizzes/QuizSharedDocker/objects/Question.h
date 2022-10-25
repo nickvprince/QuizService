@@ -21,4 +21,5 @@ public:
 	bool selectAnswer(std::string Answer);
 	std::vector<std::string> getAnswers();
 	std::string getQuestion();
+	bool getExpected(std::string option);
 };

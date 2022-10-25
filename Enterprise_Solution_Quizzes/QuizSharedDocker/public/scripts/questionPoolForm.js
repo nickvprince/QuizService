@@ -36,7 +36,7 @@ query+= "=";
 var f = document.getElementById(el.id).value
 query+=f;
 query+="&&";
-            alert(query);
+           
         }
 	else if (el.id.toString().includes("-")) {
 var f = document.getElementById(el.id).checked
@@ -47,7 +47,7 @@ query+= "=";
 query+=f;
 query+="&&";
 }
-            alert(query);
+            
         }
 else if (el.id.toString().includes(":")) {
 var f = document.getElementById(el.id).value
@@ -56,14 +56,15 @@ var d = el.id.toString().split(':');
 query+= "=";
 query+=f;
 query+="&&";	
-            alert(query);
+            
         }
        
 
     });
 
 var tmp = query.slice(0,-2);
-alert(tmp);
+var currentHost = window.location.host;
+window.location.replace('/savepool'+tmp);
 }
 function option(i, c) {
 var n = document.createElement('br');

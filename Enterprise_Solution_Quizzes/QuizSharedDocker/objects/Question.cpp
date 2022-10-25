@@ -7,7 +7,7 @@ void question::Question(std::string question, float points) {
 
 	//set question id to next available number
 	ifstream infile;
-	infile.open("./Data/QuestionNumber.data");
+	infile.open("./QuestionPool/QuestionNumber.data");
 	string data;
 	getline(infile, data); // get line
 	this->questionID = atoi(data.c_str())+1;
@@ -15,7 +15,7 @@ void question::Question(std::string question, float points) {
 
 	//output new current number
 	ofstream outfile;
-	outfile.open("./Data/QuestionNumber.data", std::ios::out);
+	outfile.open("./QuestionPool/QuestionNumber.data", std::ios::out);
 	outfile << this->questionID;
 	outfile.close();
 }
@@ -92,4 +92,18 @@ std::vector<std::string> question::getAnswers() {
 }
 std::string question::getQuestion() {
 	return this->question;
+}
+
+bool question::getExpected(std::string option)
+{
+
+	int size = this->answers.size();
+
+	for (int i = 0; i < size; i++) {
+		if (this->answers.at(i).getAnswer() == option) {
+			return this->answers.at(i).getExpected();
+		}
+	}
+
+	return false;
 }

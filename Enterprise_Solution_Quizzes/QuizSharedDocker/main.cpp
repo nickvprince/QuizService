@@ -122,6 +122,9 @@ int main() {
 				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
 			}	
 		}
+		else if (filename == "savepool") {
+			std::cout << "here";
+		}
 		sendHtml(res, filename);
 	});
 
