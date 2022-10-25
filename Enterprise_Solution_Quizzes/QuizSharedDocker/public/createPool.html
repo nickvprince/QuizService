@@ -3,17 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <title>Quiz Module</title>
+ <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/createPool.css">
     <script src="../scripts/questionPoolForm.js"></script>
 </head>
 <body>
-    <h1> New Pool</h1>
+   <nav class="navbar">
+            <div class="navbar_container">
+                <a href="#QuizFunctions" id="navbar_logo">Create Question Pool</a>
+                <ul class="navbar_menu">
+                </ul>
+            </div>
+        </nav>
+<div class="main" id="quizfunctions">
     <form id="BeginnerForm">
-        <label for="poolname">Pool name:</label><br><br>
+        <label for="poolname" class="information">Pool name:</label>
         <input type="text" id="pname" name="pname" value=""><br><br>
-        <input type="button" id="addMC" name="addMC" value="add MC" onclick="AddQuestion(0)"><br />
-        <input type="button" id="addMQ" name="addMQ" value="add MQ" onclick="AddQuestion(1)"><br />
-        <input type="button" id="Submit" name="Submit" value="Submit" onclick="Enter()"><br /><br />
+        <input type="button" class="main_btn" id="addMC" name="addMC" value="add MC" onclick="AddQuestion(0)">
+        <input type="button" class="main_btn" id="addMq" name="addMQ" value="add MQ" onclick="AddQuestion(1)">
+        <input type="button" class="main_btn" id="Submit" name="Submit" value="Submit" onclick="Enter()">
     </form>
     <h1 id="insertHere"></h1>
+</div>
 </body>
+<footer>
+
+</footer>
 </html>

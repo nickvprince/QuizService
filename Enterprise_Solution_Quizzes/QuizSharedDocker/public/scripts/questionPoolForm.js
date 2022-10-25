@@ -5,6 +5,7 @@ function AddQuestion(i) {
     var t = String(i);
     var b = document.createElement('input');
     var d = document.createElement('input');
+var z = document.createElement('br');
     d.setAttribute("type", "text");
     d.setAttribute("value", "question"+formID);
     d.setAttribute("id", formID + "Q");
@@ -19,6 +20,8 @@ function AddQuestion(i) {
     i.appendChild(d);
     i.appendChild(b);
     document.getElementById("insertHere").insertAdjacentElement("afterend",i);
+ document.getElementById("insertHere").insertAdjacentElement("afterend",z);
+ document.getElementById((formID-1) + "Q").insertAdjacentElement("beforebegin",z);
 
 }
 
@@ -34,6 +37,7 @@ function Enter() {
     });
 }
 function option(i, c) {
+var n = document.createElement('br');
     var b = String(i);
     var i = document.createElement('input');
     var z = document.createElement('input');
@@ -47,6 +51,7 @@ function option(i, c) {
        
         document.getElementById(b).insertAdjacentElement("afterend", i);
         document.getElementById(b).insertAdjacentElement("afterend", z);
+ document.getElementById(b).insertAdjacentElement("afterend", n);
     }
     else if (c == 1) {
         i.setAttribute("type", "checkbox")
