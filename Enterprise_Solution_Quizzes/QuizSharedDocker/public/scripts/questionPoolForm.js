@@ -8,7 +8,7 @@ function AddQuestion(i) {
 var z = document.createElement('br');
     d.setAttribute("type", "text");
     d.setAttribute("value", "question"+formID);
-    d.setAttribute("id", formID + "Q");
+    d.setAttribute("id", "Q"+formID);
     b.setAttribute("type", "button");
     b.setAttribute("id", buttonID);
     b.setAttribute("value", "Add option");
@@ -26,15 +26,44 @@ var z = document.createElement('br');
 }
 
 function Enter() {
- 
+  var query = "?";
   var ids = document.querySelectorAll('[id]');
-
     Array.prototype.forEach.call(ids, function (el, i) {
         // "el" is your element
         if (el.id.toString().includes("Q")) {
-            alert(el.id);
+query+=el.id.toString();
+query+= "=";
+var f = document.getElementById(el.id).value
+query+=f;
+query+="&&";
+            alert(query);
         }
+	else if (el.id.toString().includes("-")) {
+var f = document.getElementById(el.id).checked
+var d = el.id.toString().split('-');
+if(f == true) { 
+query+=("Q"+d[0]+"A"+d[1]+"C")
+query+= "=";
+query+=f;
+query+="&&";
+}
+            alert(query);
+        }
+else if (el.id.toString().includes(":")) {
+var f = document.getElementById(el.id).value
+var d = el.id.toString().split(':');
+	  query+= ("Q"+d[0]+"A"+d[1]);
+query+= "=";
+query+=f;
+query+="&&";	
+            alert(query);
+        }
+       
+
     });
+
+var tmp = query.slice(0,-2);
+alert(tmp);
 }
 function option(i, c) {
 var n = document.createElement('br');
@@ -44,7 +73,8 @@ var n = document.createElement('br');
     i.setAttribute("id", b + "-" + optionID);
     i.setAttribute("name", b);
     z.setAttribute("type", "text");
-    z.setAttribute("value", "answer")
+    z.setAttribute("value", "answer");
+z.setAttribute("id", b + ":" + optionID);
     optionID++;
     if (c == 0) {
         i.setAttribute("type", "radio")
