@@ -88,9 +88,7 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
-
 	std::cout << "Hello World" << std::endl;
-
 	QuestionPool q("pool1");
 	std::cout << q.addQuestion("Question 1", 1);
 	std::cout << q.addOption("Question 1", "Option 1", 1);
@@ -119,22 +117,35 @@ int main() {
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
+		std::vector<char*> expected = req.url_params.get_list("Checked");
 		int size = questions.size();
+
 		for (int i = 0; i < size; i++) {
+			std::cout << "I : " + to_string(i);
 			q.addQuestion(questions.at(i), 1);
 			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A");
 			int sizeAnswers = answers.size();
 			for (int b = 0; b < sizeAnswers; b++) {
-				q.addOption(questions.at(i), answers.at(b), 0);
-				char* checked = req.url_params.get("Q" + to_string(i) + "A" + to_string(b) + "C");
-				std::cout << endl<<("Q" + to_string(i) + "A" + to_string(b) + "C") <<endl;
-				ostringstream checked2;
-				std::cout << "Checked2 : " << checked2.str();
-				checked2 << checked ? checked : "";
-				if (checked2.str() != "") {
-					q.setAnswer(questions.at(i), answers.at(b), true);
+				std::cout << "B : " + to_string(b);
+
+				if (strcmp(expected.back(),"false") == 0) {
+					q.addOption(questions.at(i), answers.at(b), 1);
+					std::cout << endl << questions.at(i) << "  " << answers.at(b) << "  true" << endl;
+					expected.pop_back();
 				}
+				else {
+					q.addOption(questions.at(i), answers.at(b), 0);
+					std::cout << endl << questions.at(i) << "  " << answers.at(b) << "  false" << endl;
+					expected.pop_back();
+				}
+				/*
+				char* checked = req.url_params.get("Q" + to_string(i) + "A" + to_string(b) + "C");
+				ostringstream ischecked;
+				ischecked << checked ? checked : "";
+				std::cout << endl << "Checked : " << checked.str() << endl;
+				*/
 			}
+			std::cout << "HERE " + to_string(i);
 		}
 
 		if (q.save() == true) {

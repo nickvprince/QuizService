@@ -87,34 +87,14 @@ function Enter() {
 
             var f = document.getElementById(el.id).checked
             var d = el.id.toString().split('-');
-            if (checked == false) {
-                tmp = d[0];
-                checked = true;
-            }
-            if (f == true) {
-                if (d[0] == tmp) {
-                    query += ("Q" + d[0] + "A" + count + "C")
-                    count++;
-                    query += "=";
-                    query += f;
-                    query += "&&";
-                }
-                else {
-                    count = 0;
-                    tmp = d[0];
-                    query += ("Q" + d[0] + "A" + count + "C")
-                    query += "=";
-                    query += f;
-                    query += "&&";
-                }
-            }
-            else {
-                count++;
-            }
+            query += "Checked[]=";
+            query += f;
+            query += "&";
+       
         }
     });
 
-
+    query += "&";
 
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host;

@@ -5,7 +5,7 @@ bool QuestionPool::save()
 	{
 		bool passed = false;
 		ofstream outfile;
-		outfile.open("QuizSharedDocker/public/QuestionPool/pools/" +this->ID+".pool", std::ios::out);
+		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out);
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
 			outfile << "---Question Start---" << endl;

@@ -3,7 +3,7 @@
 std::string file = "QuizSharedDocker/public/QuestionPool/";
 #endif
 #ifdef __linux__
-std::string file = "../public/QuestionPool/";
+std::string file = "./public/QuestionPool/";
 #endif
 int question::getQuestionID()
 {
@@ -17,7 +17,7 @@ question::question(std::string Question, float points) {
 
 	//set question id to next available number
 	ifstream infile;
-	infile.open(file+"QuestionNumber.data");
+	infile.open("../public/QuestionPool/QuestionNumber.data");
 	string data;
 	getline(infile, data); // get line
 	this->questionID = atoi(data.c_str())+1;
@@ -25,7 +25,7 @@ question::question(std::string Question, float points) {
 
 	//output new current number
 	ofstream outfile;
-	outfile.open(file+"QuestionNumber.data", std::ios::out);
+	outfile.open("../public/QuestionPool/QuestionNumber.data", std::ios::out);
 	outfile << this->questionID;
 	outfile.close();
 }
