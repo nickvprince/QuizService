@@ -79,15 +79,37 @@ function Enter() {
         }
     });
     query += "&";
+    checked = false;
+    tmp = 0;
+    var count = 0;
     Array.prototype.forEach.call(ids, function (el, i) {
         if (el.id.toString().includes("-")) {
+
             var f = document.getElementById(el.id).checked
             var d = el.id.toString().split('-');
+            if (checked == false) {
+                tmp = d[0];
+                checked = true;
+            }
             if (f == true) {
-                query += ("Q" + d[0] + "A" + d[1] + "C")
-                query += "=";
-                query += f;
-                query += "&&";
+                if (d[0] == tmp) {
+                    query += ("Q" + d[0] + "A" + count + "C")
+                    count++;
+                    query += "=";
+                    query += f;
+                    query += "&&";
+                }
+                else {
+                    count = 0;
+                    tmp = d[0];
+                    query += ("Q" + d[0] + "A" + count + "C")
+                    query += "=";
+                    query += f;
+                    query += "&&";
+                }
+            }
+            else {
+                count++;
             }
         }
     });

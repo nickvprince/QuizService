@@ -1,5 +1,10 @@
 #include "./Question.h"
-
+#ifdef _WIN32
+std::string file = "QuizSharedDocker/public/QuestionPool/";
+#endif
+#ifdef __linux__
+std::string file = "../public/QuestionPool/";
+#endif
 int question::getQuestionID()
 {
 	return this->questionID;
@@ -12,7 +17,7 @@ question::question(std::string Question, float points) {
 
 	//set question id to next available number
 	ifstream infile;
-	infile.open("../public/QuestionPool/QuestionNumber.data");
+	infile.open(file+"QuestionNumber.data");
 	string data;
 	getline(infile, data); // get line
 	this->questionID = atoi(data.c_str())+1;
@@ -20,7 +25,7 @@ question::question(std::string Question, float points) {
 
 	//output new current number
 	ofstream outfile;
-	outfile.open("../public/QuestionPool/QuestionNumber.data", std::ios::out);
+	outfile.open(file+"QuestionNumber.data", std::ios::out);
 	outfile << this->questionID;
 	outfile.close();
 }
@@ -81,10 +86,11 @@ bool question::selectAnswer(std::string Answer) {
 
 	for (int i = 0; i < size; i++) {
 		if (this->answers.at(i).getAnswer() == Answer) {
-			this->answers.at(i).select();
+			return this->answers.at(i).select();
+			
 		}
 	}
-	return true;
+	return false;
 }
 std::vector<std::string> question::getAnswers() {
 	std::vector<std::string> answers;

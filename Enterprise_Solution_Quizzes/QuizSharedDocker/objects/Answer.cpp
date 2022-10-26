@@ -9,10 +9,12 @@ answer::answer(std::string answer, bool expected, int questionID) {
 bool answer::select() {
 	if (this->selected == false) {
 		this->selected = true;
-		return false;
+		this->expected = true;
+		return true;
 	}
 	else if (this->selected == true) {
 		this->selected = false;
+		this->expected = false;
 		return false;
 	}
 	else {

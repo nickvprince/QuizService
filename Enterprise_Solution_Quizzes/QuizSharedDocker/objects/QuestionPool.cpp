@@ -1,10 +1,11 @@
 #include "./QuestionPool.h"
 
+
 bool QuestionPool::save()
 	{
 		bool passed = false;
 		ofstream outfile;
-		outfile.open("../public/QuestionPool/pools/"+this->ID+".pool", std::ios::out);
+		outfile.open("QuizSharedDocker/public/QuestionPool/pools/" +this->ID+".pool", std::ios::out);
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
 			outfile << "---Question Start---" << endl;
@@ -75,12 +76,13 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 		for (int i = 0; i < this->questions.size(); i++) {
 			if (this->questions[i].getQuestion() == question) {
 				if (this->questions[i].getExpected(option) == false) {
-					this->questions[i].selectAnswer(option);
+					return this->questions[i].selectAnswer(option);
+					
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 

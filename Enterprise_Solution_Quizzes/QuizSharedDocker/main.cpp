@@ -98,6 +98,7 @@ int main() {
 	std::cout << q.addQuestion("Question 2", 1);
 	std::cout << q.addOption("Question 2", "Option 1", 0);
 	std::cout << q.addOption("Question 2", "Option 2", 1);
+	std::cout << q.setAnswer("Question 2", "Option 1", 1);
 	q.save();
 
 
@@ -124,8 +125,15 @@ int main() {
 			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A");
 			int sizeAnswers = answers.size();
 			for (int b = 0; b < sizeAnswers; b++) {
-
 				q.addOption(questions.at(i), answers.at(b), 0);
+				char* checked = req.url_params.get("Q" + to_string(i) + "A" + to_string(b) + "C");
+				std::cout << endl<<("Q" + to_string(i) + "A" + to_string(b) + "C") <<endl;
+				ostringstream checked2;
+				std::cout << "Checked2 : " << checked2.str();
+				checked2 << checked ? checked : "";
+				if (checked2.str() != "") {
+					q.setAnswer(questions.at(i), answers.at(b), true);
+				}
 			}
 		}
 
@@ -137,29 +145,7 @@ int main() {
 		}
 		
 			});
-	/*
-	CROW_ROUTE(app, "/savepool")
-		([](const request& req, response& res, string filename) {
-		std::string poolname = req.url_params.get("pool");
-		QuestionPool q(poolname);
-		std::vector<char*> questions = req.url_params.get_list("Questions");
-		int size = questions.size();
-		for (int i = 0; i < size; i++) {
-			q.addQuestion(questions.at(i), 1);
-			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A");
-			int sizeAnswers = answers.size();
-			for (int b = 0; b < sizeAnswers; b++) {
 
-				q.addOption(questions.at(i), answers.at(b), 0);
-			}
-		}
-
-		q.save();
-		std::string str = "hello.html";
-
-		sendHtml(res, str);
-			});
-*/
 	// Calling html from products pages
 	CROW_ROUTE(app, "/<string>")
 		([](const request& req, response& res, string filename) {
