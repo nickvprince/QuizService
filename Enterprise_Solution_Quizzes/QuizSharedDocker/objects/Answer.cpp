@@ -1,4 +1,4 @@
-#include "Answer.h"
+#include "./Answer.h"
 
 answer::answer(std::string answer, bool expected, int questionID) {
 	this->Answer = answer;
@@ -9,13 +9,16 @@ answer::answer(std::string answer, bool expected, int questionID) {
 bool answer::select() {
 	if (this->selected == false) {
 		this->selected = true;
+		return false;
 	}
 	else if (this->selected == true) {
 		this->selected = false;
+		return false;
 	}
 	else {
-		throw exception("Error Select not equal true or false... Is it initialized?");
+		throw "Error Select not equal true or false... Is it initialized?";
 	}
+	return false;
 }
 std::string answer::getAnswer() {
 	return this->Answer;

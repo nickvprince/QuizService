@@ -26,7 +26,7 @@ var z = document.createElement('br');
 }
 
 function Enter() {
-  var query = "?";
+  var query = "?pool="+document.getElementById("pname").value+"&&";
   var ids = document.querySelectorAll('[id]');
     Array.prototype.forEach.call(ids, function (el, i) {
         // "el" is your element

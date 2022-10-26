@@ -1,4 +1,7 @@
 #include <iostream>
+#ifdef _WIN32
+#include "./objects/QuestionPool.h"
+#endif
 using namespace std;
 
 //#define __linux__
@@ -7,7 +10,9 @@ using namespace std;
 #define CROW_MAIN
 
 #include "crow_all.h"
+#include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+
 using namespace crow;
 
 void sendFile(response& res, string filename, string contentType);
@@ -81,9 +86,19 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
+
 	std::cout << "Hello World" << std::endl;
-	Quiz q("1", "2", "3", 5);
-	q.saveQuiz();
+	
+	QuestionPool q("pool1");
+	std::cout << q.addQuestion("Question 1", 1);
+	std::cout << q.addOption("Question 1", "Option 1", 1);
+	std::cout << q.addOption("Question 1", "Option 2", 0);
+	std::cout << q.addQuestion("Question 2", 1);
+	std::cout << q.addOption("Question 2", "Option 1", 0);
+	std::cout << q.addOption("Question 2", "Option 2", 1);
+	q.save();
+	
+	
 #endif // _WIN32
 
 #ifdef __linux__
@@ -123,7 +138,17 @@ int main() {
 			}	
 		}
 		else if (filename == "savepool") {
-			std::cout << "here";
+			QuestionPool q("pool1");
+			std::cout << q.addQuestion("Question 1", 1);
+			std::cout << q.addOption("Question 1", "Option 1", 1);
+			std::cout << q.addOption("Question 1", "Option 2", 0);
+			std::cout << q.addQuestion("Question 2", 1);
+			std::cout << q.addOption("Question 2", "Option 1", 0);
+			std::cout << q.addOption("Question 2", "Option 2", 1);
+			q.save();
+			std::string str = "createPool.html";
+			filename = str;
+	
 		}
 		sendHtml(res, filename);
 	});

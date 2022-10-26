@@ -1,17 +1,21 @@
 #pragma once
-#include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
+#ifdef __linux__
+#include "Answer.cpp"
+#endif
+#ifdef _WIN32
 #include "answer.h"
-using namespace std;
+#endif
 class question {
-	std::string question;
+	std::string Question;
 	int questionID;
 	std::vector<answer> answers;
 	float points;
 public:
-	void Question(std::string question, float points);
+	int getQuestionID();
+	question(std::string question, float points);
 	bool addAnswer(std::string Answer, bool expected);
 	bool save(FILE file);
 	bool load(FILE file);

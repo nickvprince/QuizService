@@ -1,13 +1,18 @@
-#include "Question.h"
+#include "./Question.h"
 
-void question::Question(std::string question, float points) {
-	this->question = question;
+int question::getQuestionID()
+{
+	return this->questionID;
+}
+
+question::question(std::string Question, float points) {
+	this->Question = Question;
 	this->points = points;
 	this->questionID = 0;
 
 	//set question id to next available number
 	ifstream infile;
-	infile.open("./QuestionPool/QuestionNumber.data");
+	infile.open("../public/QuestionPool/QuestionNumber.data");
 	string data;
 	getline(infile, data); // get line
 	this->questionID = atoi(data.c_str())+1;
@@ -15,7 +20,7 @@ void question::Question(std::string question, float points) {
 
 	//output new current number
 	ofstream outfile;
-	outfile.open("./QuestionPool/QuestionNumber.data", std::ios::out);
+	outfile.open("../public/QuestionPool/QuestionNumber.data", std::ios::out);
 	outfile << this->questionID;
 	outfile.close();
 }
@@ -68,7 +73,7 @@ int question::getType() {
 		return 1;
 	}
 	else {
-		throw exception("Question has no answers! was this meant to be a written question? Not currently implemented...");
+		throw "Question has no answers! was this meant to be a written question? Not currently implemented...";
 	}
 }
 bool question::selectAnswer(std::string Answer) {
@@ -91,7 +96,7 @@ std::vector<std::string> question::getAnswers() {
 	return answers;
 }
 std::string question::getQuestion() {
-	return this->question;
+	return this->Question;
 }
 
 bool question::getExpected(std::string option)

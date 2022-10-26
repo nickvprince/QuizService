@@ -1786,11 +1786,21 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
   /usr/include/boost/date_time/posix_time/conversion.hpp \
   /usr/include/boost/date_time/filetime_functions.hpp \
   /usr/include/boost/date_time/posix_time/time_parsers.hpp \
+  ../objects/QuestionPool.cpp \
+  ../objects/QuestionPool.h \
+  ../objects/Question.cpp \
+  ../objects/Question.h \
+  ../objects/Answer.cpp \
+  ../objects/Answer.h \
   ../objects/Quiz.cpp \
   ../objects/Quiz.h
 
 
 ../objects/Quiz.cpp:
+
+../objects/Answer.h:
+
+../objects/QuestionPool.cpp:
 
 /usr/include/boost/date_time/posix_time/time_parsers.hpp:
 
@@ -2752,6 +2762,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/range/size.hpp:
 
+../objects/Question.h:
+
 /usr/include/boost/asio/traits/submit_free.hpp:
 
 /usr/include/boost/mpl/aux_/has_type.hpp:
@@ -3534,6 +3546,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/preprocessor/seq/seq.hpp:
 
+../objects/Answer.cpp:
+
 /usr/include/boost/date_time/date_format_simple.hpp:
 
 /usr/include/c++/11/bits/string_view.tcc:
@@ -3579,6 +3593,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/c++/11/stop_token:
 
 /usr/include/boost/mpl/aux_/value_wknd.hpp:
+
+../objects/Question.cpp:
 
 /usr/include/boost/asio/detail/executor_op.hpp:
 
@@ -4277,6 +4293,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/config/no_tr1/cmath.hpp:
 
 /usr/include/c++/11/cmath:
+
+../objects/QuestionPool.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 

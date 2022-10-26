@@ -1629,4 +1629,10 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /usr/include/boost/date_time/posix_time/conversion.hpp \
  /usr/include/boost/date_time/filetime_functions.hpp \
  /usr/include/boost/date_time/posix_time/time_parsers.hpp \
+ /QuizSharedDocker/./objects/QuestionPool.cpp \
+ /QuizSharedDocker/./objects/./QuestionPool.h \
+ /QuizSharedDocker/./objects/././Question.cpp \
+ /QuizSharedDocker/./objects/./././Question.h \
+ /QuizSharedDocker/./objects/./././Answer.cpp \
+ /QuizSharedDocker/./objects/././././Answer.h \
  /QuizSharedDocker/objects/Quiz.cpp /QuizSharedDocker/objects/Quiz.h

@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QuestionPool.cpp" />
     <ClCompile Include="QuizSharedDocker\main.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Answer.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Question.cpp" />
+    <ClCompile Include="QuizSharedDocker\objects\QuestionPool.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Quiz.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QuestionPool.h" />
     <ClInclude Include="QuizSharedDocker\objects\Answer.h" />
     <ClInclude Include="QuizSharedDocker\objects\Question.h" />
+    <ClInclude Include="QuizSharedDocker\objects\QuestionPool.h" />
     <ClInclude Include="QuizSharedDocker\objects\Quiz.h" />
   </ItemGroup>
   <ItemGroup>

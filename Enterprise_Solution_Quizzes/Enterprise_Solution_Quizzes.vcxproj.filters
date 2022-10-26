@@ -33,7 +33,7 @@
     <ClCompile Include="QuizSharedDocker\objects\Quiz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuestionPool.cpp">
+    <ClCompile Include="QuizSharedDocker\objects\QuestionPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="QuizSharedDocker\objects\Quiz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QuestionPool.h">
+    <ClInclude Include="QuizSharedDocker\objects\QuestionPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
