@@ -38,6 +38,7 @@
     <None Include="QuizSharedDocker\public\questionPool.html" />
     <None Include="QuizSharedDocker\public\index.html" />
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
+    <None Include="QuizSharedDocker\public\selectPool.html" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -160,6 +161,5 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

@@ -1,4 +1,6 @@
 #include <iostream>
+
+
 #ifdef _WIN32
 #include "./objects/QuestionPool.h"
 #endif
@@ -88,6 +90,7 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
+	
 	std::cout << "Hello World" << std::endl;
 	QuestionPool q("pool1");
 	std::cout << q.addQuestion("Question 1", 1);
@@ -98,7 +101,6 @@ int main() {
 	std::cout << q.addOption("Question 2", "Option 2", 1);
 	std::cout << q.setAnswer("Question 2", "Option 1", 1);
 	q.save();
-
 
 #endif // _WIN32
 
@@ -111,6 +113,14 @@ int main() {
 		sendHtml(res, "index.html");
 			});
 
+	CROW_ROUTE(app, "/selectPool")
+		([](const request& req, response& res) {
+
+			});
+	/// <summary>
+	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
+	/// </summary>
+	/// <returns></returns>
 	CROW_ROUTE(app, "/savepool")
 		([](const request& req, response& res) {
 
@@ -119,11 +129,25 @@ int main() {
 		std::vector<char*> questions = req.url_params.get_list("Questions");
 		std::vector<char*> expected = req.url_params.get_list("Checked");
 		int size = questions.size();
-
+		std::cout << endl << "QUESTIONS" << endl;
+		for (int i = 0; i < questions.size(); i++) {
+			std::cout << questions.at(i);
+		}
+		std::cout << endl;
+		std::cout << endl << "CHECKED" << endl;
+		for (int i = 0; i < expected.size(); i++) {
+			std::cout << expected.at(i);
+		}
+		std::cout << endl;
 		for (int i = 0; i < size; i++) {
 			std::cout << "I : " + to_string(i);
 			q.addQuestion(questions.at(i), 1);
-			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A");
+			std::vector<char*> answers = req.url_params.get_list("checked");
+			std::cout << endl << "ANSWERS" << endl;
+			for (int i = 0; i < answers.size(); i++) {
+				std::cout << answers.at(i);
+			}
+			std::cout << endl;
 			int sizeAnswers = answers.size();
 			for (int b = 0; b < sizeAnswers; b++) {
 				std::cout << "B : " + to_string(b);
@@ -138,12 +162,6 @@ int main() {
 					std::cout << endl << questions.at(i) << "  " << answers.at(b) << "  false" << endl;
 					expected.pop_back();
 				}
-				/*
-				char* checked = req.url_params.get("Q" + to_string(i) + "A" + to_string(b) + "C");
-				ostringstream ischecked;
-				ischecked << checked ? checked : "";
-				std::cout << endl << "Checked : " << checked.str() << endl;
-				*/
 			}
 			std::cout << "HERE " + to_string(i);
 		}

@@ -83,19 +83,26 @@ function Enter() {
     tmp = 0;
     var count = 0;
     Array.prototype.forEach.call(ids, function (el, i) {
+     
         if (el.id.toString().includes("-")) {
-
+           
             var f = document.getElementById(el.id).checked
-            var d = el.id.toString().split('-');
-            query += "Checked[]=";
-            query += f;
-            query += "&";
-       
+            if (f == true) {
+               
+                var d = el.id.toString().split('-');
+                var string = el.id.toString().replace('-',':');
+                alert("String : "+string);
+                var n = document.getElementById(string.toString()).value;
+                alert(n);
+                query += "Checked" + d[0].toString()+"[]=";
+                query += n;
+                query += "&";
+            }
         }
     });
 
     query += "&";
-
+    alert(query);
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host;
     window.location.replace('/savepool' + tmp);
@@ -105,11 +112,11 @@ function option(i, c) {
     var b = String(i);
     var i = document.createElement('input');
     var z = document.createElement('input');
-    i.setAttribute("id", b + "-" + optionID);
+    i.setAttribute("id", b + "-" + nextID(b + "-").toString());
     i.setAttribute("name", b);
     z.setAttribute("type", "text");
     z.setAttribute("value", "answer");
-    z.setAttribute("id", b + ":" + optionID);
+    z.setAttribute("id", b + ":" + nextID(b + ":").toString());
     optionID++;
     if (c == 0) {
         i.setAttribute("type", "radio")
@@ -127,4 +134,17 @@ function option(i, c) {
         alert("Unexpected input");
     }
 
+}
+
+function nextID(b) {
+
+    var x = 0;
+    var ids = document.querySelectorAll('[id]');
+    Array.prototype.forEach.call(ids, function (el, i) {
+        if (el.id.toString().includes(b.toString())) {
+            x++;
+        }
+       
+    });
+    return x;
 }

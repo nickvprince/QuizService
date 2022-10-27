@@ -5,6 +5,15 @@ bool QuestionPool::save()
 	{
 		bool passed = false;
 		ofstream outfile;
+		FILE* file;
+		if (file = fopen("a.txt", "r")) {
+			fclose(file);
+			return false;
+		}
+		outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app);
+		outfile << this->ID;
+		outfile.close();
+
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out);
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {

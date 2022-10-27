@@ -1,0 +1,147 @@
+.main {
+    background: linear-gradient(-45deg, #a04fc0, #553993, #3a52ce, #23a6d5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+    padding: 10rem 0;
+}
+.navbar {
+    background: #131313;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    /*z-index specifies the stack order of an element -> 
+    999 to ensure it's always on the top*/
+    z-index: 999; 
+}
+#navbar_logo {
+    background-image: linear-gradient(to top, #6039d5 0%, #65d1bab9 100%);
+    background-color: #08ff6b; /*Brighten up the gradient a bit*/
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+#navbar_logo {
+    background-image: linear-gradient(to top, #6039d5 0%, #65d1bab9 100%);
+    background-color: #08ff6b; /*Brighten up the gradient a bit*/
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.main {
+    background: linear-gradient(-45deg, #a04fc0, #553993, #3a52ce, #23a6d5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+    padding: 10rem 0;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.main_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 90%;
+    z-index: 1;
+    width: 100%;
+    max-width: 1300px;
+    padding: 0, 50px;
+}
+
+.main_content {
+    color: #fff;
+    width: 100%;
+}
+
+.main_content h1 {
+    color: #131313;
+}
+
+
+
+.main_btn {
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 20px;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 20px;
+ display: flex;
+flex-wrap: nowrap;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 0px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.main_btn a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.872);
+}
+
+.main_btn:active,
+.main_btn:hover {
+  outline: 0;
+}
+
+.main_btn span {
+  background-color: rgb(16, 17, 69);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.main_btn:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .main_btn {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
