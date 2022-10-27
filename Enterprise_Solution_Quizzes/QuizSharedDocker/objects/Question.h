@@ -26,4 +26,5 @@ public:
 	std::vector<std::string> getAnswers();
 	std::string getQuestion();
 	bool getExpected(std::string option);
+	float getPoints();
 };

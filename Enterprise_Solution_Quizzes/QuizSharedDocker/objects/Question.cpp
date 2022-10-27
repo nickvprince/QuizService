@@ -118,3 +118,8 @@ bool question::getExpected(std::string option)
 
 	return false;
 }
+
+float question::getPoints()
+{
+	return this->points;
+}

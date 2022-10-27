@@ -7,7 +7,8 @@ bool QuestionPool::save()
 		bool passed = false;
 		ofstream outfile;
 		FILE* file;
-		if (file = fopen("a.txt", "r")) {
+		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
+		if (file = fopen(tmp.c_str(), "r")) {
 			fclose(file);
 			return false;
 		}
@@ -21,6 +22,7 @@ bool QuestionPool::save()
 			outfile << "---Question Start---" << endl;
 			outfile << this->questions.at(i).getQuestion()<<endl;
 			outfile << this->questions.at(i).getQuestionID()<<endl;
+			outfile << this->questions.at(i).getPoints() << endl;
 			std::vector<std::string> options = this->questions.at(i).getAnswers();
 			for (int b = 0; b < options.size(); b++) {
 				outfile << options.at(b) <<endl;
