@@ -80,6 +80,35 @@ void sendQuizText(response& res, string filename) {
 	sendFile(res, "quizzes/" + filename, "text/plain");
 }
 
+	
+void sendPool(response& res, string filename) {
+	std::cout << "SENDPOOL" << " QuestionPool/" + filename;
+	ifstream file;
+	file.open("../public/QuestionPool/"+filename);
+	if (!file.is_open())
+	{
+		res.code = 500;
+		res.write("Available pools File Error");
+		}
+
+	string line;
+	while (getline(file, line))
+	{
+		string output = "Question Pool :" + line +"\n";
+		res.write(output);
+	}
+
+	file.close();
+	res.set_header("Content-Type", "text/plain");
+	// Create the full file path
+	string root = "../public/";
+	string filepath = root.append(filename);
+
+	// On each send, we output the filename to console, (troubleshooting purposes)
+	cout << endl << "FILEPATH: " << filepath << endl;
+	res.end();
+}
+
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
 }
@@ -90,17 +119,11 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
-	std::cout <<strcmp(" ", "");
-	std::cout << "Hello World" << std::endl;
-	QuestionPool q("pool1");
-	std::cout << q.addQuestion("Question 1", 1);
-	std::cout << q.addOption("Question 1", "Option 1", 1);
-	std::cout << q.addOption("Question 1", "Option 2", 0);
-	std::cout << q.addQuestion("Question 2", 1);
-	std::cout << q.addOption("Question 2", "Option 1", 0);
-	std::cout << q.addOption("Question 2", "Option 2", 1);
-	std::cout << q.setAnswer("Question 2", "Option 1", 1);
-	q.save();
+
+	
+
+
+
 
 #endif // _WIN32
 
@@ -111,11 +134,6 @@ int main() {
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
 		sendHtml(res, "index.html");
-			});
-
-	CROW_ROUTE(app, "/selectPool")
-		([](const request& req, response& res) {
-
 			});
 	/// <summary>
 	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
@@ -206,6 +224,10 @@ int main() {
 	CROW_ROUTE(app, "/quizzes/<string>")
 		([](const request& req, response& res, string filename) {
 		sendQuizText(res, filename);
+			});
+	CROW_ROUTE(app, "/QuestionPool/<string>/<string>")
+		([](const request& req, response& res, string folder, string name) {
+		sendPool(res, folder+"/"+name);
 			});
 	//serice port
 	app.port(27501).multithreaded().run();
