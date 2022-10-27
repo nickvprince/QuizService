@@ -91,9 +91,9 @@ function Enter() {
                
                 var d = el.id.toString().split('-');
                 var string = el.id.toString().replace('-',':');
-                alert("String : "+string);
+              
                 var n = document.getElementById(string.toString()).value;
-                alert(n);
+               
                 query += "Checked" + d[0].toString()+"[]=";
                 query += n;
                 query += "&";
@@ -102,7 +102,6 @@ function Enter() {
     });
 
     query += "&";
-    alert(query);
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host;
     window.location.replace('/savepool' + tmp);
