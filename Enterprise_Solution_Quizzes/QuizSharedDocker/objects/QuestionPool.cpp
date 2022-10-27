@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "./QuestionPool.h"
 
 
@@ -11,7 +12,7 @@ bool QuestionPool::save()
 			return false;
 		}
 		outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app);
-		outfile << this->ID;
+		outfile << this->ID << endl;
 		outfile.close();
 
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out);

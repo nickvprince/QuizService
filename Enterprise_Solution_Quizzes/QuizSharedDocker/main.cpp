@@ -90,7 +90,7 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
-	
+	std::cout <<strcmp(" ", "");
 	std::cout << "Hello World" << std::endl;
 	QuestionPool q("pool1");
 	std::cout << q.addQuestion("Question 1", 1);
@@ -127,45 +127,26 @@ int main() {
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
-		std::vector<char*> expected = req.url_params.get_list("Checked");
-		int size = questions.size();
-		std::cout << endl << "QUESTIONS" << endl;
 		for (int i = 0; i < questions.size(); i++) {
-			std::cout << questions.at(i);
-		}
-		std::cout << endl;
-		std::cout << endl << "CHECKED" << endl;
-		for (int i = 0; i < expected.size(); i++) {
-			std::cout << expected.at(i);
-		}
-		std::cout << endl;
-		for (int i = 0; i < size; i++) {
-			std::cout << "I : " + to_string(i);
-			q.addQuestion(questions.at(i), 1);
-			std::vector<char*> answers = req.url_params.get_list("checked");
-			std::cout << endl << "ANSWERS" << endl;
-			for (int i = 0; i < answers.size(); i++) {
-				std::cout << answers.at(i);
-			}
-			std::cout << endl;
-			int sizeAnswers = answers.size();
-			for (int b = 0; b < sizeAnswers; b++) {
-				std::cout << "B : " + to_string(b);
-
-				if (strcmp(expected.back(),"false") == 0) {
+			q.addQuestion(questions.at(i), 1); // add question to pool
+			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A"); // options for question
+			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(i)); // selected for question
+			for (int b = 0; b < answers.size(); b++) { // add all options to question
+				bool selectTrueFalse = false;
+				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
+					if (strcmp(answers.at(b),selected.at(c)) == 0) { // if match found
+						selectTrueFalse = true;
+					}
+				}
+				if (selectTrueFalse == true) {
 					q.addOption(questions.at(i), answers.at(b), 1);
-					std::cout << endl << questions.at(i) << "  " << answers.at(b) << "  true" << endl;
-					expected.pop_back();
 				}
 				else {
 					q.addOption(questions.at(i), answers.at(b), 0);
-					std::cout << endl << questions.at(i) << "  " << answers.at(b) << "  false" << endl;
-					expected.pop_back();
 				}
+				selectTrueFalse = false;
 			}
-			std::cout << "HERE " + to_string(i);
 		}
-
 		if (q.save() == true) {
 			sendHtml(res, "savepoolPass.html");
 		}
