@@ -79,6 +79,9 @@ float question::getPointsEarned() {
 		if (this->answers.at(i).isCorrect() == true) {
 			correctCount++;
 		}
+		else if (this->answers.at(i).isCorrect() == false) {
+			correctCount--;
+		}
 	}
 	return this->points * (correctCount / possibleAnswers);
 }
