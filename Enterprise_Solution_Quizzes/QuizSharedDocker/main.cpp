@@ -156,11 +156,11 @@ int main() {
 						selectTrueFalse = true;
 					}
 				}
-				if (selectTrueFalse == true) {
+				if (selectTrueFalse == true) { // if this answer is supposed to be true add question with expected true
 					q.addOption(questions.at(i), answers.at(b), 1);
 				}
 				else {
-					q.addOption(questions.at(i), answers.at(b), 0);
+					q.addOption(questions.at(i), answers.at(b), 0); // else add answer with expected false
 				}
 				selectTrueFalse = false;
 			}
@@ -225,6 +225,10 @@ int main() {
 		([](const request& req, response& res, string filename) {
 		sendQuizText(res, filename);
 			});
+	/// <summary>
+	/// gets the text file of all the question pools
+	/// </summary>
+	/// <returns></returns>
 	CROW_ROUTE(app, "/QuestionPool/<string>/<string>")
 		([](const request& req, response& res, string folder, string name) {
 		sendPool(res, folder+"/"+name);

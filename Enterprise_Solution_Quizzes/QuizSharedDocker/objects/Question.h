@@ -17,8 +17,6 @@ public:
 	int getQuestionID();
 	question(std::string question, float points);
 	bool addAnswer(std::string Answer, bool expected);
-	bool save(FILE file);
-	bool load(FILE file);
 	bool deleteAnswer(std::string Answer);
 	float getPointsEarned();
 	int getType();
