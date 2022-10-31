@@ -298,5 +298,17 @@ namespace EnterpriseSolutionQuizzesTests
 			//assert
 			Assert::AreEqual(expected, answer);
 		}
+		TEST_METHOD(getID)
+		{
+			//setup
+			question ques("hello", 1);
+			int expected = 1;
+			int answer;
+			//act
+			answer = ques.getQuestionID();
+			//assert
+			Assert::AreEqual(expected, answer);
+		}
+		
 	};
 }

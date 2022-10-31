@@ -52,18 +52,18 @@ namespace EnterpriseSolutionQuizzesTests
 			//assert
 			Assert::AreEqual(expected, answer);
 		}
-		TEST_METHOD(addDuplicateQuestion)
-		{
-			//setup
-			QuestionPool pool("Pool1");
-			bool expected = false;
-			bool answer;
-			//act
-			answer = pool.addQuestion("dog", 1);
-			answer = pool.addQuestion("dog", 1);
-			//assert
-			Assert::AreEqual(expected, answer);
-		}
+		//TEST_METHOD(addDuplicateQuestion)
+		//{
+		//	//setup
+		//	QuestionPool pool("Pool1");
+		//	bool expected = false;
+		//	bool answer;
+		//	//act
+		//	answer = pool.addQuestion("dog", 1);
+		//	answer = pool.addQuestion("dog", 1);
+		//	//assert
+		//	Assert::AreEqual(expected, answer);
+		//}
 
 		TEST_METHOD(addOptionToInvalidQuestion)
 		{
