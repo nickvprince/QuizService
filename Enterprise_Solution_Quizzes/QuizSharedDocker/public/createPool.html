@@ -7,24 +7,28 @@
         <link rel="stylesheet" href="styles/createPool.css">
     <script src="../scripts/questionPoolForm.js"></script>
 </head>
+
 <body onload="start()">
-   <nav class="navbar">
-            <div class="navbar_container">
-                <a href="#QuizFunctions" id="navbar_logo">Create Question Pool</a>
-                <ul class="navbar_menu">
-                </ul>
-            </div>
-        </nav>
-<div class="main" id="quizfunctions">
-    <form id="BeginnerForm">
-        <label for="poolname" class="information">Pool name:</label>
-        <input type="text" id="pname" name="pname" value=""><br><br>
-        <input type="button" class="main_btn" id="addMC" name="addMC" value="add MC" onclick="AddQuestion(0)">
-        <input type="button" class="main_btn" id="addMq" name="addMQ" value="add MQ" onclick="AddQuestion(1)">
-        <input type="button" class="main_btn" id="Submit" name="Submit" value="Submit" onclick="Enter()">
-    </form>
-    <h1 id="insertHere"></h1>
-</div>
+    <nav class="navbar">
+        <!--- Add Navbar to page -->
+        <div class="navbar_container">
+            <a href="#QuizFunctions" id="navbar_logo">Create Question Pool</a>
+            <ul class="navbar_menu">
+            </ul>
+        </div>
+    </nav>
+
+    <!--- Add main section to allow for colouring -->
+    <div class="main" id="quizfunctions">
+        <form id="BeginnerForm">
+            <label for="poolname" class="information">Pool name:</label>
+            <input type="text" id="pname" name="pname" value=""><br><br>
+            <input type="button" class="main_btn" id="addMC" name="addMC" value="add MC" onclick="AddQuestion(0)"> <!--- Add mutliple choice button -->
+            <input type="button" class="main_btn" id="addMq" name="addMQ" value="add MQ" onclick="AddQuestion(1)"><!--- Add mutliple question button -->
+            <input type="button" class="main_btn" id="Submit" name="Submit" value="Submit" onclick="Enter()"> <!--- Add submission button -->
+        </form>
+        <h1 id="insertHere"></h1>
+    </div>
 </body>
 <footer>
 

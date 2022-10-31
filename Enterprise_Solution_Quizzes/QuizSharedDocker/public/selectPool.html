@@ -8,6 +8,8 @@
     
 </head>
 <body onload="load()">
+    <!--- add edit or delete button -->
+    <!--- Add navbar to page -->
     <nav class="navbar">
         <div class="navbar_container">
             <a href="#QuizFunctions" id="navbar_logo">Question Pool Module</a>
@@ -15,15 +17,16 @@
             </ul>
         </div>
     </nav>
+    <!--- Main class for background colouring -->
     <div class="main" id="selections">
         <h1> Choose Pool </h1>
         <div>
-            <embed type="text/plain" src="./QuestionPool/pools/currentPools.pool" height="100%" width="100%">
+            <embed type="text/plain" src="./QuestionPool/pools/currentPools.pool" height="100%" width="100%"> <!--- Read question pools from files -->
         </div>
         <input type="text" id="pname" name="pname" value="Pool Name">
         <br>
         <br id="insertHere">
-       
+
     </div>
 
 </body>
