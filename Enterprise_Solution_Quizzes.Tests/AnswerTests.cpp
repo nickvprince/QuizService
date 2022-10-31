@@ -148,5 +148,27 @@ namespace EnterpriseSolutionQuizzesTests
 			//assert
 			Assert::AreEqual(expected, answer);
 		}
+		TEST_METHOD(setExpectedTrue)
+		{
+			//setup
+			answer ans("hello", 0, 0);
+			int expected = 1;
+			int answer;
+			//act
+			answer = ans.setExpected(1);
+			//assert
+			Assert::AreEqual(expected, answer);
+		}
+		TEST_METHOD(setExpectedFalse)
+		{
+			//setup
+			answer ans("hello", 1, 0);
+			int expected = 0;
+			int answer;
+			//act
+			answer = ans.setExpected(0);
+			//assert
+			Assert::AreEqual(expected, answer);
+		}
 	};
 }

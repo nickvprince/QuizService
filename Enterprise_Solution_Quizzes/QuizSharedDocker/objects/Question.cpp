@@ -170,3 +170,14 @@ float question::getPoints()
 {
 	return this->points;
 }
+
+bool question::setExpected(bool expected,std::string option)
+{
+	for (int i = 0; i < this->answers.size(); i++) {
+		if (this->answers.at(i).getAnswer() == option) {
+			return this->answers.at(i).setExpected(expected);
+		
+		}
+	}
+	return false;
+}

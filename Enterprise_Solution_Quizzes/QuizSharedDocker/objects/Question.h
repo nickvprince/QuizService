@@ -25,4 +25,5 @@ public:
 	std::string getQuestion();
 	bool getExpected(std::string option);
 	float getPoints();
+	bool setExpected(bool expected, std::string option);
 };

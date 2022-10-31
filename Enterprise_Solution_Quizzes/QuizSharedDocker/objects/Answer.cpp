@@ -62,3 +62,9 @@ bool answer::getExpected() {
 int answer::getQuestionID() {
 	return this->questionID;
 }
+
+bool answer::setExpected(bool expected)
+{
+	this->expected = expected;
+	return this->expected;
+}

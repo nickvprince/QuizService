@@ -19,4 +19,5 @@ public:
 	bool setAnswer(std::string question, std::string option, bool answer);
 	bool save();
 	bool load();
+	std::string getID();
 };

@@ -273,5 +273,30 @@ namespace EnterpriseSolutionQuizzesTests
 			//assert
 			Assert::AreEqual(expected, answer);
 		}
+
+		TEST_METHOD(setExpectedTrue)
+		{
+			//setup
+			question ques("hello", 1);
+			bool expected = true;
+			bool answer;
+			//act
+			answer = ques.addAnswer("dog", 0);
+			answer = ques.setExpected(true,"dog");
+			//assert
+			Assert::AreEqual(expected, answer);
+		}
+		TEST_METHOD(setExpectedFalse)
+		{
+			//setup
+			question ques("hello", 1);
+			bool expected = false;
+			bool answer;
+			//act
+			answer = ques.addAnswer("dog", 1);
+			answer = ques.setExpected(false, "dog");
+			//assert
+			Assert::AreEqual(expected, answer);
+		}
 	};
 }

@@ -15,5 +15,5 @@ public:
 	bool isCorrect();
 	bool getExpected();
 	int getQuestionID();
-
+	bool setExpected(bool expected);
 };

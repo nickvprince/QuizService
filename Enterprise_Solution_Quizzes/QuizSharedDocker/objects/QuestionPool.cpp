@@ -47,6 +47,15 @@ bool QuestionPool::load()
 		return false;
 	}
 /// <summary>
+/// gets the current pool name
+/// </summary>
+/// <returns></returns>
+std::string QuestionPool::getID()
+{
+	return this->ID;
+}
+
+/// <summary>
 /// initialize a pool with the name provided
 /// </summary>
 /// <param name="poolName"></param>
@@ -137,7 +146,7 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 					return true;
 				}
 				else if (this->questions[i].getExpected(option) != answer) {
-					return this->questions[i].selectAnswer(option);
+					return this->questions[i].setExpected(answer,option);
 
 				}
 			}
