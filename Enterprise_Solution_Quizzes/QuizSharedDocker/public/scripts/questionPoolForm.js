@@ -128,6 +128,7 @@ function option(i, c) { // add option to a question
         i.setAttribute("type", "checkbox")
         document.getElementById(b).insertAdjacentElement("afterend", i);
         document.getElementById(b).insertAdjacentElement("afterend", z);
+        document.getElementById(b).insertAdjacentElement("afterend", n);
     }
     else {
         alert("Unexpected input");
