@@ -1,0 +1,1 @@
+docker run --rm -ti -p 27501:27501 -v C:\Users\teche\source\repos\Quizzes2\Enterprise_Solution_Quizzes\QuizSharedDocker:/QuizSharedDocker quiz_webserver_dev bash

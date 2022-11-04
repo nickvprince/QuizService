@@ -147,8 +147,8 @@ int main() {
 		std::vector<char*> questions = req.url_params.get_list("Questions");
 		for (int i = 0; i < questions.size(); i++) {
 			q.addQuestion(questions.at(i), 1); // add question to pool
-			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(i) + "A"); // options for question
-			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(i)); // selected for question
+			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(questions.size()-1-i) + "A"); // options for question
+			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(questions.size() - 1 - i)); // selected for question
 			for (int b = 0; b < answers.size(); b++) { // add all options to question
 				bool selectTrueFalse = false;
 				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
