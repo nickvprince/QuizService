@@ -97,7 +97,6 @@ void sendPool(response& res, string filename) {
 		string output = "Question Pool :" + line +"\n";
 		res.write(output);
 	}
-
 	file.close();
 	res.set_header("Content-Type", "text/plain");
 	// Create the full file path
@@ -119,17 +118,28 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
-
 	
-
-
 
 
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
-
+	CROW_ROUTE(app, "/getPool/<string>")
+		([](const request& req, response& res, string poolname) {
+		for (int i = 0; i < poolname.length(); i++) {
+			if (poolname[i] == '%') {
+				poolname.erase(i, i - 1);
+				poolname.insert(poolname.begin() + i, ' ');
+			}
+		}
+		QuestionPool pool(poolname);
+		pool.load();
+		res.set_header("Content-Type", "text/plain");
+		res.code = 200;
+		res.write("Question:answer;answer;answer;answer[3]Question2:answer2:answer2:answer2:answer2[2]");
+		res.end();
+			});
 	// Default Route
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
@@ -233,6 +243,7 @@ int main() {
 		([](const request& req, response& res, string folder, string name) {
 		sendPool(res, folder+"/"+name);
 			});
+
 	//serice port
 	app.port(27501).multithreaded().run();
 	return 1;

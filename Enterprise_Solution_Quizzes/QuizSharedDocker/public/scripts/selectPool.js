@@ -1,3 +1,4 @@
+
 function load() {
 
     const urlParams = new URLSearchParams(location.search);
