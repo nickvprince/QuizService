@@ -171,7 +171,7 @@ int main() {
 		else {
 			sendHtml(res, "savepoolFail.html");
 		}
-		
+		 
 			});
 
 	// Calling html from products pages
