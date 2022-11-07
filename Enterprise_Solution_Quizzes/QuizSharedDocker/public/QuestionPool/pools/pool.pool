@@ -1,33 +1,38 @@
 ---Question Start---
-Dog3
-315
+dog and cat
+488
 1
-Dog1_1
-0
-Dog1_2
-0
-Dog1_3
+dog
 1
----Question End---
----Question Start---
-Dog2
-316
+cat
 1
-Dog2_1
-0
-Dog2_2
-1
-Dog2_3
+snake
 0
 ---Question End---
 ---Question Start---
-Dog1
-317
+snake
+489
 1
-Dog3_1
+snake
 1
-Dog3_2
+cat
 0
-Dog3_3
+---Question End---
+---Question Start---
+cat
+490
+1
+dog
+0
+cat
+1
+---Question End---
+---Question Start---
+dog
+491
+1
+dog
+1
+cat
 0
 ---Question End---

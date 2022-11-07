@@ -127,13 +127,13 @@ std::cout <<"Hello world! -- This is not a windows project!"
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
-		QuestionPool pool("pool1");
-		pool.load();
+		QuestionPool pool(poolname);
+		std::cout <<pool.load();
+		std::cout << pool.getID();
 	
-		int index = -1;
 		nlohmann::json c;
 		fstream outfile;
-		outfile.open("../public/QuestionPool/pools/pool1.pool", std::ios::in);
+		outfile.open("../public/QuestionPool/pools/"+poolname+".pool", std::ios::in);
 		string tp;
 		if (outfile.is_open()) {
 			for (int i = 0; i < pool.getQuestions().size(); i++) {
@@ -151,6 +151,7 @@ std::cout <<"Hello world! -- This is not a windows project!"
 			std::cout << "not open" << endl;
 			res.write("fail");
 		}
+		outfile.close();
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();
