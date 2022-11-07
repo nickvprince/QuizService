@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./objects/json.hpp"
 
 
 #ifdef _WIN32
@@ -8,7 +9,6 @@ using namespace std;
 
 //#define __linux__
 #ifdef __linux__
-
 #define CROW_MAIN
 #include <bits/stdc++.h> 
 #include "crow_all.h"
@@ -122,7 +122,7 @@ int main() {
 
 	QuestionPool pool("pool1");
 	string send;
-
+	nlohmann::json c;
 	if (pool.load() == false) {
 		send = "fail";
 	}
@@ -131,7 +131,7 @@ int main() {
 		int index = -1;
 		for (int i = 0; i < pool.getQuestions().size(); i++) {
 			send += pool.getQuestions().at(i) + ":";
-
+			
 			for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
 		
 				send += pool.getOptions(pool.getQuestions().at(i)).at(b) + ";";
@@ -143,43 +143,48 @@ int main() {
 		}
 	}
 	std::cout << send;
+	for (int i = 0; i < pool.getQuestions().size(); i++) {
+		c += pool.getQuestions().at(i);
+		c += pool.getOptions(pool.getQuestions().at(i));
+		for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+			if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b))==1) {
+				c += b;
+			}
+		}
+	}
+	std::cout << to_string(c);
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
-		QuestionPool p("pool1");
-		p.load();
+		QuestionPool pool("pool1");
+		pool.load();
 	
 		int index = -1;
-		string send;
+		nlohmann::json c;
 		fstream outfile;
 		outfile.open("../public/QuestionPool/pools/pool1.pool", std::ios::in);
 		string tp;
 		if (outfile.is_open()) {
-			while (getline(outfile, tp)) { //read data from file object and put it into string.
-				std::cout << tp << endl;
-				if (strcmp(tp.c_str(), "---Question Start---") == 13) {
-					index = -1;
+			for (int i = 0; i < pool.getQuestions().size(); i++) {
+				c += pool.getQuestions().at(i);
+				c += pool.getOptions(pool.getQuestions().at(i));
+				for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+					if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == 1) {
+						c += b;
+					}
 				}
-				else if (strcmp(tp.c_str(), "---Question End---") == 0) {
-					index = 5;
-
-				}
-				if (index == 0) {
-					send += tp;
-				}
-				index++;
 			}
+			res.write(to_string(c));
 		}
 		else {
 			std::cout << "not open" << endl;
+			res.write("fail");
 		}
-		std::cout << endl << endl << send << endl << endl;
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
-		res.write("hi");
 		res.end();
 			});
 	// Default Route
