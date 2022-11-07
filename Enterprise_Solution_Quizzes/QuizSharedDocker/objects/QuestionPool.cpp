@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "./QuestionPool.h"
-
 /// <summary>
 /// saves the question pool into the QuestionPool directory
 /// </summary>
@@ -10,7 +9,12 @@ bool QuestionPool::save()
 		bool passed = false;
 		ofstream outfile;
 		FILE* file;
+#ifdef __linux__
 		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
+#endif
+#ifdef _WIN32
+		string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
+#endif
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
 			fclose(file);
 			return false;
@@ -18,11 +22,15 @@ bool QuestionPool::save()
 		outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app); // append this pool title to the list of titles
 		outfile << this->ID << endl;
 		outfile.close();
-
+#ifdef _WIN32
+		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
+#endif
+#ifdef __linux__
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out); // write pool
+#endif
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
-			outfile << "---Question Start---" << endl;
+			outfile << "---Question tart---" << endl;
 			outfile << this->questions.at(i).getQuestion()<<endl;
 			outfile << this->questions.at(i).getQuestionID()<<endl;
 			outfile << this->questions.at(i).getPoints() << endl;
@@ -44,8 +52,96 @@ bool QuestionPool::save()
 /// <returns></returns>
 bool QuestionPool::load()
 	{
+
+	FILE* file;
+	fstream outfile;
+#ifdef __linux__
+	string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
+#endif
+#ifdef _WIN32
+	string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
+#endif
+	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
+		fclose(file);
+	}
+	else {
 		return false;
 	}
+#ifdef __linux__
+	outfile.open("../public/QuestionPool/pools/" + this->ID + ".pool", std::ios::in);
+#endif
+#ifdef _WIN32
+	outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool", std::ios::in);
+#endif
+	
+	if (outfile.is_open()) {   //checking whether the file is open
+		std::vector<answer> answers;
+		std::string title;
+		int id;
+		float points=0;
+		std::string answerID;
+		int expected;
+		string tp;
+		int index = 0;
+		while (getline(outfile, tp)) { //read data from file object and put it into string.
+			int checkIndex;
+#ifdef _WIN32
+			checkIndex = 0;
+#endif
+#ifdef __linux__
+			checkIndex = 13;
+#endif
+			if (strcmp(tp.c_str(), "---Question Start---") == checkIndex) {
+				index = -1;
+			}
+			else if (strcmp(tp.c_str(), "---Question End---") == checkIndex) {
+				index = 5;
+				
+			}
+			switch (index) {
+			case 0: // question title
+				title = tp;
+				break;
+			case 1: //questionID
+				id = atoi(tp.c_str());
+				break;
+			case 2: // points
+				points = atof(tp.c_str());
+				break;
+			case 3: // answer
+				answerID = tp;
+				break;
+			case 4: { // selected or not || add answer to answers vector
+				index -= 2; // set next index to another answer
+				expected = atoi(tp.c_str());
+				answer ans(answerID, expected, id);
+				answers.push_back(ans);
+				break;
+			}
+			case 5: {// end question so add it
+				question q(title, points);
+				while (!answers.empty()) {
+					q.addAnswer(answers.at(answers.size() - 1).getAnswer(), answers.at(answers.size() - 1).getExpected());
+					answers.pop_back();
+				}
+				this->questions.push_back(q);
+			
+				break;
+			}
+			default:
+				break;
+			}
+			index++;
+		}
+	}
+	else {
+		return false;
+	}
+	outfile.close();
+
+		return true;
+	}
+
 /// <summary>
 /// gets the current pool name
 /// </summary>
@@ -74,6 +170,16 @@ bool QuestionPool::addQuestion(std::string Question, float points) {
 		this->questions.push_back(q);
 		return true;
 	}
+bool QuestionPool::getExpected(std::string question, std::string answer)
+{
+	for (int i = 0; i < this->questions.size(); i++) {
+		if (strcmp(this->questions.at(i).getQuestion().c_str(), question.c_str()) == 0) {
+			return this->questions.at(i).getExpected(answer);
+		}
+	}
+	throw "ERROR";
+	return false;
+}
 /// <summary>
 /// add an option to the question provided and the expected answer to go with it
 /// </summary>

@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./objects/json.hpp"
 
 
 #ifdef _WIN32
@@ -8,12 +9,12 @@ using namespace std;
 
 //#define __linux__
 #ifdef __linux__
-
 #define CROW_MAIN
-
+#include <bits/stdc++.h> 
 #include "crow_all.h"
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+
 
 using namespace crow;
 
@@ -97,7 +98,6 @@ void sendPool(response& res, string filename) {
 		string output = "Question Pool :" + line +"\n";
 		res.write(output);
 	}
-
 	file.close();
 	res.set_header("Content-Type", "text/plain");
 	// Create the full file path
@@ -120,16 +120,73 @@ int main() {
 
 #ifdef _WIN32
 
-	
+	QuestionPool pool("pool1");
+	string send;
+	nlohmann::json c;
+	if (pool.load() == false) {
+		send = "fail";
+	}
+	else {
 
-
-
-
+		int index = -1;
+		for (int i = 0; i < pool.getQuestions().size(); i++) {
+			send += pool.getQuestions().at(i) + ":";
+			
+			for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+		
+				send += pool.getOptions(pool.getQuestions().at(i)).at(b) + ";";
+				if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == true) {
+					index = b;
+				}
+			}
+			send += "[" + to_string(index) + "]";
+		}
+	}
+	std::cout << send;
+	for (int i = 0; i < pool.getQuestions().size(); i++) {
+		c += pool.getQuestions().at(i);
+		c += pool.getOptions(pool.getQuestions().at(i));
+		for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+			if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b))==1) {
+				c += b;
+			}
+		}
+	}
+	std::cout << to_string(c);
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
-
+	CROW_ROUTE(app, "/getPool/<string>")
+		([](const request& req, response& res, string poolname) {
+		QuestionPool pool("pool1");
+		pool.load();
+	
+		int index = -1;
+		nlohmann::json c;
+		fstream outfile;
+		outfile.open("../public/QuestionPool/pools/pool1.pool", std::ios::in);
+		string tp;
+		if (outfile.is_open()) {
+			for (int i = 0; i < pool.getQuestions().size(); i++) {
+				c += pool.getQuestions().at(i);
+				c += pool.getOptions(pool.getQuestions().at(i));
+				for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+					if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == 1) {
+						c += b;
+					}
+				}
+			}
+			res.write(to_string(c));
+		}
+		else {
+			std::cout << "not open" << endl;
+			res.write("fail");
+		}
+		res.set_header("Content-Type", "text/plain");
+		res.code = 200;
+		res.end();
+			});
 	// Default Route
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
@@ -233,6 +290,7 @@ int main() {
 		([](const request& req, response& res, string folder, string name) {
 		sendPool(res, folder+"/"+name);
 			});
+
 	//serice port
 	app.port(27501).multithreaded().run();
 	return 1;
