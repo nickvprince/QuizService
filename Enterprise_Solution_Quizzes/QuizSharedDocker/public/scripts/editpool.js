@@ -16,10 +16,10 @@ function load() {
     // if file doesnt exist or fails to load go back to selectpool after alerting the user
     if (xmlHttp.responseText.toString() == "fail") {
         alert("Error : Failed to find question pool");
-        window.location.replace('/selectPool.html');
+        window.location.replace('/selectPool.html?type=edit');
     }
     var data = xmlHttp.responseText.toString();
     // parse information from data || use questionPoolForm.js functions, modify to input values
-  
+    alert(xmlHttp.responseText);
 }
 

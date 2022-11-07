@@ -10,10 +10,11 @@ using namespace std;
 #ifdef __linux__
 
 #define CROW_MAIN
-
+#include <bits/stdc++.h> 
 #include "crow_all.h"
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+
 
 using namespace crow;
 
@@ -118,26 +119,67 @@ void sendHtml(response& res, string filename) {
 int main() {
 
 #ifdef _WIN32
-	
 
+	QuestionPool pool("pool1");
+	string send;
 
+	if (pool.load() == false) {
+		send = "fail";
+	}
+	else {
+
+		int index = -1;
+		for (int i = 0; i < pool.getQuestions().size(); i++) {
+			send += pool.getQuestions().at(i) + ":";
+
+			for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+		
+				send += pool.getOptions(pool.getQuestions().at(i)).at(b) + ";";
+				if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == true) {
+					index = b;
+				}
+			}
+			send += "[" + to_string(index) + "]";
+		}
+	}
+	std::cout << send;
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
-		for (int i = 0; i < poolname.length(); i++) {
-			if (poolname[i] == '%') {
-				poolname.erase(i, i - 1);
-				poolname.insert(poolname.begin() + i, ' ');
+		QuestionPool p("pool1");
+		p.load();
+	
+		int index = -1;
+		string send;
+		fstream outfile;
+		outfile.open("../public/QuestionPool/pools/pool1.pool", std::ios::in);
+		string tp;
+		if (outfile.is_open()) {
+			while (getline(outfile, tp)) { //read data from file object and put it into string.
+				std::cout << tp << endl;
+				if (strcmp(tp.c_str(), "---Question Start---") == 13) {
+					index = -1;
+				}
+				else if (strcmp(tp.c_str(), "---Question End---") == 0) {
+					index = 5;
+
+				}
+				if (index == 0) {
+					send += tp;
+				}
+				index++;
 			}
 		}
-		QuestionPool pool(poolname);
-		pool.load();
+		else {
+			std::cout << "not open" << endl;
+		}
+		std::cout << endl << endl << send << endl << endl;
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
-		res.write("Question:answer;answer;answer;answer[3]Question2:answer2:answer2:answer2:answer2[2]");
+		res.write("hi");
 		res.end();
 			});
 	// Default Route
