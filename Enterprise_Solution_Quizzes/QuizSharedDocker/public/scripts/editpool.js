@@ -32,8 +32,10 @@ function load() {
 
     // parse information from data || use questionPoolForm.js functions, modify to input values
     data = data.replace("[", " ");
-   
+    var question;
+    var answers =[];
     data = data.split('"');
+    var arraySize = 0;
     var index = -1;
     for (var i = 0; i < data.length; i++) {
         if (data[i][data[i].length-1] == "r") {
@@ -41,7 +43,7 @@ function load() {
         }
         if (index == 0) {
             alert("Question : " + data[i]);
-
+            question = data[i];
         }
         else {
             if (data[i][0] == "," || data[i][0]==" ") {
@@ -58,17 +60,28 @@ function load() {
                         tmp[1] = tmp[1].slice(0, tmp[1].length - 1);
                     }
                     if (tmp.length > 2) {
+                        var x = AddQuestion(1, String(question)); // multiple answer
+                        for (var v = 0; v < answers.length; v++) {
+                            option(x, 1, answers[v]);
+                        }
                         for (var b = 1; b < tmp.length - 1; b++) {
                             alert("selected: " + tmp[b]);
                         }
                     }
                     else {
+                        var x=AddQuestion(0, String(question)); // multiple choice
+                        for (var v = 0; v < answers.length; v++) {
+                            option(x, 0, answers[v]);
+                        }
                         alert("selected: " + tmp[1]);
                     }
                     index = -1;
+                    arraySize = 0;
                 }
                 else {
                     alert("Answer : " + data[i]);
+                    answers[arraySize] = data[i];
+                    arraySize++;
                 }
             }
             
@@ -80,6 +93,8 @@ function load() {
 
     
 }
+
+
 
 
 
