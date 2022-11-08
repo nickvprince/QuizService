@@ -1,38 +1,9 @@
 ---Question Start---
-dog and cat
-488
+Hello
+593
 1
-dog
-1
-cat
-1
-snake
+answer
 0
----Question End---
----Question Start---
-snake
-489
+hi
 1
-snake
-1
-cat
-0
----Question End---
----Question Start---
-cat
-490
-1
-dog
-0
-cat
-1
----Question End---
----Question Start---
-dog
-491
-1
-dog
-1
-cat
-0
 ---Question End---

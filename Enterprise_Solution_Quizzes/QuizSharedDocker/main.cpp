@@ -167,7 +167,10 @@ std::cout <<"Hello world! -- This is not a windows project!"
 	/// <returns></returns>
 	CROW_ROUTE(app, "/savepool")
 		([](const request& req, response& res) {
-
+		auto isOverwrite = req.url_params.get("type");
+		ostringstream isOverwriteString;
+		isOverwriteString << isOverwrite ? isOverwrite : "";
+		string overWrite = isOverwriteString.str();
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
@@ -191,7 +194,19 @@ std::cout <<"Hello world! -- This is not a windows project!"
 				selectTrueFalse = false;
 			}
 		}
-		if (q.save() == true) {
+		bool result;
+		if (overWrite != "") {
+			result = q.save(1);
+			
+		}
+		else {
+			result = q.save(0);
+		}
+		if (result == true && overWrite != "") {
+		
+			sendHtml(res, "selectPool.html");
+		}
+		else if (result == true) {
 			sendHtml(res, "savepoolPass.html");
 		}
 		else {

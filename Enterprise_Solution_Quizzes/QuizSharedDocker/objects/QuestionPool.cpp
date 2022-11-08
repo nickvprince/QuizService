@@ -4,7 +4,7 @@
 /// saves the question pool into the QuestionPool directory
 /// </summary>
 /// <returns></returns>
-bool QuestionPool::save()
+bool QuestionPool::save(int overWrite)
 	{
 		bool passed = false;
 		ofstream outfile;
@@ -17,11 +17,15 @@ bool QuestionPool::save()
 #endif
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
 			fclose(file);
-			return false;
+			if (overWrite == false) {
+				return false;
+			}
 		}
-		outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app); // append this pool title to the list of titles
-		outfile << this->ID << endl;
-		outfile.close();
+		if (overWrite == false) {
+			outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app); // append this pool title to the list of titles
+			outfile << this->ID << endl;
+			outfile.close();
+		}
 #ifdef _WIN32
 		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif

@@ -18,7 +18,7 @@ public:
 	std::vector<std::string> getQuestions();
 	std::vector<std::string> getOptions(std::string question);
 	bool setAnswer(std::string question, std::string option, bool answer);
-	bool save();
+	bool save(int overWrite);
 	bool load();
 	std::string getID();
 };

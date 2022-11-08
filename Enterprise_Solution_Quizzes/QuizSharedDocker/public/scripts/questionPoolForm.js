@@ -115,12 +115,8 @@ function Enter() { // submit question pool to be saved
     query += "&";
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host; // direct to new page with all data in query string
-    if (fromEdit == true) {
-        window.location.replace("selectPool.html?type=edit");
-    }
-    else{
         window.location.replace('/savepool' + tmp);
-    }
+    
 }
 function option(i, c) { // add option to a question
     var n = document.createElement('br');
