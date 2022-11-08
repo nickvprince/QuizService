@@ -6,9 +6,13 @@ function load() {
         pool = value;
     }
     //add the pool being edited
+    document.getElementById("pname").value = pool.toString();
+   
     var addTitle = document.createElement("h1");
     addTitle.textContent = "Editing : " + pool.toString();
-    document.getElementById("title").insertAdjacentElement("afterend", addTitle);
+    document.getElementById("title").insertAdjacentElement("afterbegin", addTitle);
+    document.getElementById("title").insertAdjacentElement("beforebegin", poolname);
+    document.getElementById('pname').style.display = 'none';
     // http request for pool data
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "/getPool/" + pool.toString(), false);
@@ -20,6 +24,9 @@ function load() {
     }
     var data = xmlHttp.responseText.toString();
     // parse information from data || use questionPoolForm.js functions, modify to input values
-    alert(xmlHttp.responseText);
+    
 }
+
+
+
 

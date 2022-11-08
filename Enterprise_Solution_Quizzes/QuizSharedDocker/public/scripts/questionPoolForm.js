@@ -38,8 +38,19 @@ function AddQuestion(i) {
 }
 
 function Enter() { // submit question pool to be saved
-    var query = "?pool=" + document.getElementById("pname").value + "&&";
+    var query = "?"
+    var fromEdit = false;
+    const urlParams = new URLSearchParams(location.search); // if from edit pool act differently
+    for (const [key, value] of urlParams) {
+        if (key == "pool") {
+            query += "type=edit&&";
+            fromEdit = true;
+        }
+    }
+    alert("here");
+    query += "pool=" +document.getElementById("pname").value + "&&";
     var ids = document.querySelectorAll('[id]');
+    alert(ids.toString());
     Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
         // "el" is your element
         if (el.id.toString().includes("Q")) {
@@ -100,11 +111,16 @@ function Enter() { // submit question pool to be saved
             }
         }
     });
-
+    alert(query.toString());
     query += "&";
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host; // direct to new page with all data in query string
-    window.location.replace('/savepool' + tmp);
+    if (fromEdit == true) {
+        window.location.replace("selectPool.html?type=edit");
+    }
+    else{
+        window.location.replace('/savepool' + tmp);
+    }
 }
 function option(i, c) { // add option to a question
     var n = document.createElement('br');
