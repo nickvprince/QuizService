@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 //#define __linux__
@@ -8,6 +10,7 @@ using namespace std;
 
 #include "crow_all.h"
 #include "objects/Quiz.cpp"
+
 using namespace crow;
 
 void sendFile(response& res, string filename, string contentType);
@@ -71,14 +74,70 @@ void sendQuizText(response& res, string filename) {
 	sendFile(res, "quizzes/" + filename, "text/plain");
 }
 
+void sendJson(response& res, string filename){
+	sendFile(res, "json/" + filename, "application/json");
+}
+
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
 }
 
+
 #endif //__linux__
+
+#ifdef __linux__
+#include "mysql_connection.h"
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+using namespace sql;
+#endif
 
 
 int main() {
+
+#ifdef __linux__
+    sql::Driver *myDriver;
+    sql::Connection *myConn;
+    sql::Statement *myStmt;
+    sql::ResultSet  *myRes;
+
+    sql::ConnectOptionsMap options;
+    options["CLIENT_MULTI_STATEMENTS"] = true;
+
+    myDriver = get_driver_instance();
+    myConn = myDriver->connect("tcp://192.168.0.246", "root", "admin");
+    myConn->setSchema("QuizSQL");
+
+    try {
+
+        myStmt = myConn->createStatement();
+        myRes = myStmt->executeQuery("CREATE TABLE Persons (PersonID int,LastName varchar(255),FirstName varchar(255),Address varchar(255),City varchar(255));");
+        delete myRes;
+        delete myStmt;
+        delete myConn;
+    } catch (sql::SQLException &e) {
+        if(e.what()){
+            std::cout << "Error -> " << e.what() << std::endl;
+        }
+    }
+
+    try {
+
+        myStmt = myConn->createStatement();
+        myRes = myStmt->executeQuery("INSERT INTO Persons (PersonID,LastName,FirstName,Address,City) VALUES (001, 'Ahmed', 'Islam', 'CNSTA BLVD', 'Waterloo'),(002, 'Prince', 'Nick', 'CNSTA BLVD', 'Fergus');");
+        delete myRes;
+        delete myStmt;
+        delete myConn;
+    } catch (sql::SQLException &e) {
+        if(e.what()){
+            std::cout << "Error -> " << e.what() << std::endl;
+        }
+    }
+
+#endif
+
 
 #ifdef _WIN32
 	std::cout << "Hello World" << std::endl;
@@ -145,6 +204,15 @@ int main() {
 	([](const request& req, response& res, string filename) {
 		sendQuizText(res, filename);
 	});
+
+
+	CROW_ROUTE(app, "/json/<string>")
+	([](const request& req, response& res, string filename) {
+		sendJson(res, filename);
+	});
+	
+
+
 	//serice port
 	app.port(27501).multithreaded().run();
 	return 1;
