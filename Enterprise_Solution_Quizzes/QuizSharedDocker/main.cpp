@@ -97,47 +97,6 @@ using namespace sql;
 
 int main() {
 
-#ifdef __linux__
-    sql::Driver *myDriver;
-    sql::Connection *myConn;
-    sql::Statement *myStmt;
-    sql::ResultSet  *myRes;
-
-    sql::ConnectOptionsMap options;
-    options["CLIENT_MULTI_STATEMENTS"] = true;
-
-    myDriver = get_driver_instance();
-    myConn = myDriver->connect("tcp://192.168.0.246", "root", "admin");
-    myConn->setSchema("QuizSQL");
-
-    try {
-
-        myStmt = myConn->createStatement();
-        myRes = myStmt->executeQuery("CREATE TABLE Persons (PersonID int,LastName varchar(255),FirstName varchar(255),Address varchar(255),City varchar(255));");
-        delete myRes;
-        delete myStmt;
-        delete myConn;
-    } catch (sql::SQLException &e) {
-        if(e.what()){
-            std::cout << "Error -> " << e.what() << std::endl;
-        }
-    }
-
-    try {
-
-        myStmt = myConn->createStatement();
-        myRes = myStmt->executeQuery("INSERT INTO Persons (PersonID,LastName,FirstName,Address,City) VALUES (001, 'Ahmed', 'Islam', 'CNSTA BLVD', 'Waterloo'),(002, 'Prince', 'Nick', 'CNSTA BLVD', 'Fergus');");
-        delete myRes;
-        delete myStmt;
-        delete myConn;
-    } catch (sql::SQLException &e) {
-        if(e.what()){
-            std::cout << "Error -> " << e.what() << std::endl;
-        }
-    }
-
-#endif
-
 
 #ifdef _WIN32
 	std::cout << "Hello World" << std::endl;
