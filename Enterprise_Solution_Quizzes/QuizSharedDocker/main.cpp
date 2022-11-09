@@ -85,15 +85,6 @@ void sendHtml(response& res, string filename) {
 
 #endif //__linux__
 
-#ifdef __linux__
-#include "mysql_connection.h"
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-using namespace sql;
-#endif
-
 
 int main() {
 
