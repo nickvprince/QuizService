@@ -202,7 +202,11 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 		}
 		bool result;
-		if (overWrite != "") {
+		if (overWrite == "2")
+		{
+			result = q.save(2);
+		}
+		else if (overWrite != "") {
 			result = q.save(1);
 			
 		}

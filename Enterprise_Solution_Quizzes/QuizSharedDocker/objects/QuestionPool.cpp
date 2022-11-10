@@ -1,11 +1,73 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "./QuestionPool.h"
+#include "mysql_connection.h"
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+
 /// <summary>
 /// saves the question pool into the QuestionPool directory
 /// </summary>
 /// <returns></returns>
 bool QuestionPool::save(int overWrite)
 	{
+	if (overWrite == 2)
+	{
+		try {
+			sql::Driver* driver;
+			sql::Connection* con;
+			sql::Statement* stmt;
+			sql::ResultSet* res;
+
+			/* Create a connection */
+			driver = get_driver_instance();
+			con = driver->connect("tcp://192.168.2.160:3306", "root", "admin");
+			/* Connect to the MySQL test database */
+			con->setSchema("QuizMYSQL");
+			
+			string poolid = this->ID + "pool";
+
+			stmt = con->createStatement();
+			stmt->execute("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
+
+			int size = this->questions.size();
+			for (int i = 0; i < size; i++)
+			{
+				string question = this->questions.at(i).getQuestion();
+				string questionid = to_string(this->questions.at(i).getQuestionID());
+				string points = to_string(this->questions.at(i).getPoints());
+				std::vector<std::string> options = this->questions.at(i).getAnswers();
+
+				stmt->execute("INSERT INTO question(idquestion, question, points, qp_poolid) VALUES ('"+questionid+"','"+question+"','"+points+"','"+poolid+"')");
+
+				for (int b = 0; b < options.size(); b++)
+				{
+					string option = options.at(b);
+					string answer = to_string(this->questions.at(i).getExpected(options.at(b)));
+
+					stmt->execute("INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ('" + option + "','" + answer + "','" + "0" + "','" + questionid + "')");
+				}
+			}
+
+			delete stmt;
+			delete res;
+			delete con;
+		}
+		catch (sql::SQLException& e) {
+			cout << "# ERR: SQLException in " << __FILE__;
+			cout << "(" << __FUNCTION__ << ") on line "
+				<< __LINE__ << endl;
+			cout << "# ERR: " << e.what();
+			cout << " (MySQL error code: " << e.getErrorCode();
+			cout << ", SQLState: " << e.getSQLState() <<
+				" )" << endl;
+		}
+
+
+	}
+
+
 		bool passed = false;
 		ofstream outfile;
 		FILE* file;

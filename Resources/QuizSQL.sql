@@ -24,7 +24,7 @@ USE `QuizMYSQL` ;
 DROP TABLE IF EXISTS `QuizMYSQL`.`answer` ;
 
 CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`answer` (
-  `idAnswer` VARCHAR(45) NOT NULL,
+  `idAnswer` INT(45) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `answer` VARCHAR(45) NOT NULL,
   `expected` TINYINT NOT NULL,
   `selected` TINYINT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`answer` (
   CONSTRAINT `fk_answer_question`
     FOREIGN KEY (`question_idquestion`)
     REFERENCES `QuizMYSQL`.`question` (`idquestion`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`question` (
   CONSTRAINT `fk_question_qp1`
     FOREIGN KEY (`qp_poolid`)
     REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`quiz` (
   UNIQUE INDEX `idquiz_UNIQUE` (`idquiz` ASC) VISIBLE,
     FOREIGN KEY (`qp_poolid`)
     REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -102,29 +102,21 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO qp (poolid) values ('pool1');
+INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints,pointsachieved) values (1,'pool1','thequiz','today','tommorow',1,1,1);
+INSERT INTO question (idquestion,question,points,qp_poolid) values (1, 'dogs or cats', 1, 'pool1');
+INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Dogs", 0, 0, 1);
+INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Cats", 1, 0, 1);
 
-INSERT INTO question (question,points,qp_poolid) values("dog or cat",1,'pool1');
-INSERT INTO question (question,points,qp_poolid) values("dog",1,'pool1');
-
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A001", "Dog", 1, 0, 0, 1, 123);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A002", "Cat", 1, 0, 0, 1, 123);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A003", "Horse", 0, 0, 0, 1, 123);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A004", "Sheep", 0, 0, 0, 1, 123);
-
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A005", "Dog", 0, 0, 1, 1, 123);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion, quizID, studentID) VALUES ("A006", "Penguin", 1, 0, 1, 1, 123);
-
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A001", "Dog", 1, 0, 0);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A002", "Cat", 1, 0, 0);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A003", "Horse", 0, 0, 0);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A004", "Sheep", 0, 0, 0);
-
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A005", "Dog", 0, 0, 1);
-INSERT INTO answer (idAnswer, answer, expected, selected, question_idquestion) VALUES ("A006", "Penguin", 1, 0, 1);
+INSERT INTO qp (poolid) values ('pool2');
+INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints,pointsachieved) values (2,'pool2','thequiz2','today','tommorow',1,1,1);
+INSERT INTO question (idquestion,question,points,qp_poolid) values (2, 'lizards or monkeys', 1, 'pool2');
+INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Lizards", 0, 0, 2);
+INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Monkeys", 1, 0, 2);
 
 
 
-select * from answer where idAnswer = 'A001';
 
+INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("pet", 0, 0, 1);
 
-
+select * from qp;
+ 
