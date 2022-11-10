@@ -236,8 +236,8 @@ std::cout <<"Hello world! -- This is not a windows project!"
 			quizEndDateString << quizEndDate ? quizEndDate : "";
 
 			if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
-				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "")) {
-				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()));
+				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
+				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
 				currentQuiz.saveQuiz();
 				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
 			}
