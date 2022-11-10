@@ -4,7 +4,7 @@
 /// saves the question pool into the QuestionPool directory
 /// </summary>
 /// <returns></returns>
-bool QuestionPool::save()
+bool QuestionPool::save(int overWrite)
 	{
 		bool passed = false;
 		ofstream outfile;
@@ -17,11 +17,15 @@ bool QuestionPool::save()
 #endif
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
 			fclose(file);
-			return false;
+			if (overWrite == false) {
+				return false;
+			}
 		}
-		outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app); // append this pool title to the list of titles
-		outfile << this->ID << endl;
-		outfile.close();
+		if (overWrite == false) {
+			outfile.open("../public/QuestionPool/pools/currentPools.pool", std::ios::app); // append this pool title to the list of titles
+			outfile << this->ID << endl;
+			outfile.close();
+		}
 #ifdef _WIN32
 		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
@@ -30,7 +34,7 @@ bool QuestionPool::save()
 #endif
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
-			outfile << "---Question tart---" << endl;
+			outfile << "---Question Start---" << endl;
 			outfile << this->questions.at(i).getQuestion()<<endl;
 			outfile << this->questions.at(i).getQuestionID()<<endl;
 			outfile << this->questions.at(i).getPoints() << endl;
@@ -56,10 +60,10 @@ bool QuestionPool::load()
 	FILE* file;
 	fstream outfile;
 #ifdef __linux__
-	string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
+	string tmp = ("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str();
 #endif
 #ifdef _WIN32
-	string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
+	string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
 		fclose(file);
@@ -68,10 +72,11 @@ bool QuestionPool::load()
 		return false;
 	}
 #ifdef __linux__
-	outfile.open("../public/QuestionPool/pools/" + this->ID + ".pool", std::ios::in);
+	outfile.open(("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str(), std::ios::in);
 #endif
 #ifdef _WIN32
-	outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool", std::ios::in);
+
+	outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
 #endif
 	
 	if (outfile.is_open()) {   //checking whether the file is open
@@ -83,7 +88,12 @@ bool QuestionPool::load()
 		int expected;
 		string tp;
 		int index = 0;
-		while (getline(outfile, tp)) { //read data from file object and put it into string.
+		while (!outfile.eof()) { //read data from file object and put it into string.
+			getline(outfile, tp);
+			if (tp[tp.size() - 1] != '\r') {
+				tp += '\r';
+			}
+
 			int checkIndex;
 #ifdef _WIN32
 			checkIndex = 0;
@@ -100,7 +110,7 @@ bool QuestionPool::load()
 			}
 			switch (index) {
 			case 0: // question title
-				title = tp;
+				title = tp.c_str();
 				break;
 			case 1: //questionID
 				id = atoi(tp.c_str());
@@ -109,7 +119,7 @@ bool QuestionPool::load()
 				points = atof(tp.c_str());
 				break;
 			case 3: // answer
-				answerID = tp;
+				answerID = tp.c_str();
 				break;
 			case 4: { // selected or not || add answer to answers vector
 				index -= 2; // set next index to another answer
@@ -138,7 +148,9 @@ bool QuestionPool::load()
 		return false;
 	}
 	outfile.close();
-
+	if (this->questions.size() == 0) {
+		return false;
+	}
 		return true;
 	}
 

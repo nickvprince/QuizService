@@ -120,20 +120,20 @@ int main() {
 
 #ifdef _WIN32
 
-std::cout <<"Hello world! -- This is not a windows project!"
+	std::cout << "Hello world! -- This is not a windows project!";
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
-		QuestionPool pool("pool1");
-		pool.load();
+		QuestionPool pool(poolname);
+		std::cout <<pool.load();
+		std::cout << pool.getID();
 	
-		int index = -1;
 		nlohmann::json c;
 		fstream outfile;
-		outfile.open("../public/QuestionPool/pools/pool1.pool", std::ios::in);
+		outfile.open("../public/QuestionPool/pools/"+poolname+".pool", std::ios::in);
 		string tp;
 		if (outfile.is_open()) {
 			for (int i = 0; i < pool.getQuestions().size(); i++) {
@@ -151,6 +151,7 @@ std::cout <<"Hello world! -- This is not a windows project!"
 			std::cout << "not open" << endl;
 			res.write("fail");
 		}
+		outfile.close();
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();
@@ -166,7 +167,10 @@ std::cout <<"Hello world! -- This is not a windows project!"
 	/// <returns></returns>
 	CROW_ROUTE(app, "/savepool")
 		([](const request& req, response& res) {
-
+		auto isOverwrite = req.url_params.get("type");
+		ostringstream isOverwriteString;
+		isOverwriteString << isOverwrite ? isOverwrite : "";
+		string overWrite = isOverwriteString.str();
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
@@ -190,7 +194,19 @@ std::cout <<"Hello world! -- This is not a windows project!"
 				selectTrueFalse = false;
 			}
 		}
-		if (q.save() == true) {
+		bool result;
+		if (overWrite != "") {
+			result = q.save(1);
+			
+		}
+		else {
+			result = q.save(0);
+		}
+		if (result == true && overWrite != "") {
+		
+			sendHtml(res, "selectPool.html");
+		}
+		else if (result == true) {
 			sendHtml(res, "savepoolPass.html");
 		}
 		else {

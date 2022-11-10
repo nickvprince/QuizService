@@ -5,7 +5,7 @@
     <title>Quiz Module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/createPool.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../scripts/questionPoolForm.js"></script>
     <script src="../scripts/editpool.js"></script>
 </head>
 <body onload="load()">
@@ -19,7 +19,12 @@
     </nav>
     <!--- Main class to allow for background colouring -->
     <div class="main" id="quizfunctions">
-    <h1 id="title"></h1>
+        <h1 id="title"></h1>
+        <input type="button" class="main_btn" id="addMC" name="addMC" value="add Multiple Choice" onclick="AddQuestion(0)"> <!--- Add mutliple choice button -->
+        <input type="button" class="main_btn" id="addMq" name="addMQ" value="add Multiple Answer" onclick="AddQuestion(1)"><!--- Add mutliple question button -->
+        <input type="button" class="main_btn" id="Submit" name="Submit" value="Submit" onclick="Enter()"> <!--- Add submission button -->
+        <h2 id="insertHere"></h2>
+        <input type="text"id="pname" style="visibility:hidden">
     </div>
 </body>
 </html>
