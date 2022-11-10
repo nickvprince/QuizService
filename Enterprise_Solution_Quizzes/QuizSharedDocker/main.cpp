@@ -1,6 +1,4 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
 using namespace std;
 
 #ifdef _WIN32
@@ -17,7 +15,8 @@ using namespace std;
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 #include <vector>
-
+#include <fstream>
+#include <sstream>
 using namespace crow;
 
 void sendFile(response& res, string filename, string contentType);
@@ -114,6 +113,13 @@ void sendPool(response& res, string filename) {
 void sendJson(response& res, string filename){
 	sendFile(res, "json/" + filename, "application/json");
 }
+
+void sendJsonArray(response& res, nlohmann::json text) {
+	res.set_header("Content-Type", "application/json");
+	res.write(to_string(text));
+	res.end();
+}
+	
 
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
@@ -233,16 +239,28 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			Database db;
 
 			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM qp;");
-			std::vector<std::string> results;
+			nlohmann::json jArray = nlohmann::json::array();
+
+			int i = 0;
 			while (dbRes->next()) { 
-				results.push_back(dbRes->getString("poolid"));
+				jArray[i] = dbRes->getString("poolid");
+				i++;
 			}
 
-			/*
-			for (int i = 0; i < results.size(); i++){
-				std::cout << "Pool: " << results.at(i) << std::endl;
+			//std::cout << "Pool: " << jArray << std::endl;
+			
+			std::ofstream jsonFile;
+			jsonFile.open("../public/json/pools.json");
+			if (jsonFile.is_open()) {
+				jsonFile << jArray;
+			} else {
+				std::cout << "Failed to write question pools to json file" << std::endl;
 			}
-			*/
+			jsonFile.close();
+
+			sendJson(res, "pools.json");
+			
+			
 
 			auto quizTitle = req.url_params.get("quizTitle");
 			auto quizDuration = req.url_params.get("quizDuration");
