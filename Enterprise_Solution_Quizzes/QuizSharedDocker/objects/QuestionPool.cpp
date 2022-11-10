@@ -335,7 +335,7 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 		return false;
 	}
 
-void QuestionPool::deleteQuestionPool(std::string poolid)
+void QuestionPool::deleteQuestionPool()
 {
 	try 
 	{
@@ -351,7 +351,7 @@ void QuestionPool::deleteQuestionPool(std::string poolid)
 		con->setSchema("QuizMYSQL");
 
 		stmt = con->createStatement();
-		stmt->execute("Delete from qp Using qp join question join answer where qp.poolid = question.qp_poolid and question.idquestion = answer.question_idquestion and qp.poolid = "  + poolid);
+		stmt->execute("Delete from qp Using qp join question join answer where qp.poolid = question.qp_poolid and question.idquestion = answer.question_idquestion and qp.poolid = "  + "'" + this->ID +"'";
 
 		delete stmt;
 		delete res;
