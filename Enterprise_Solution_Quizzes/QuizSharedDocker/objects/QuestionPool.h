@@ -20,5 +20,6 @@ public:
 	bool setAnswer(std::string question, std::string option, bool answer);
 	bool save(int overWrite);
 	bool load();
+	void deleteQuestionPool(std::string poolid);
 	std::string getID();
 };

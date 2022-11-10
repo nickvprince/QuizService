@@ -335,5 +335,37 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 		return false;
 	}
 
+void QuestionPool::deleteQuestionPool(std::string poolid)
+{
+	try 
+	{
+		sql::Driver* driver;
+		sql::Connection* con;
+		sql::Statement* stmt;
+		sql::ResultSet* res;
+
+		/* Create a connection */
+		driver = get_driver_instance();
+		con = driver->connect("tcp://192.168.2.160:3306", "root", "admin");
+		/* Connect to the MySQL test database */
+		con->setSchema("QuizMYSQL");
+
+		stmt = con->createStatement();
+		stmt->execute("Delete from qp Using qp join question join answer where qp.poolid = question.qp_poolid and question.idquestion = answer.question_idquestion and qp.poolid = "  + poolid);
+
+		delete stmt;
+		delete res;
+		delete con;
+	}
+	catch (sql::SQLException& e) {
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line "
+			<< __LINE__ << endl;
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() <<
+			" )" << endl;
+	}
+}
 
 
