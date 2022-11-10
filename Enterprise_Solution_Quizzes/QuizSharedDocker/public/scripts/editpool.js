@@ -31,7 +31,7 @@ function load() {
         window.location.replace('/selectPool.html?type=edit');
     }
     var data = xmlHttp.responseText.toString();
-    alert(data);
+  
     if (data[0] == "[") {
         var done = data.slice(1, data.length );
         data = " "+done;
