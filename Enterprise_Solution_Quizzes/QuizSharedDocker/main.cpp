@@ -256,17 +256,16 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			std::ofstream jsonFile;
 			jsonFile.open("../public/json/pools.json");
 			if (jsonFile.is_open()) {
+
 				std::string str = jArray.dump().replace(0, 1, "[");
                 str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
                 jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
+
 			} else {
 				std::cout << "Failed to write question pools to json file" << std::endl;
 			}
-			jsonFile.close();
 
-			//sendJson(res, "pools.json");
-			
-			
+			jsonFile.close();
 
 			auto quizTitle = req.url_params.get("quizTitle");
 			auto quizDuration = req.url_params.get("quizDuration");
@@ -288,10 +287,52 @@ std::cout <<"Hello world! -- This is not a windows project!";
 				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
 				currentQuiz.saveQuiz();
 				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
+				filename = "quizLandingPage.html";
 			}
+
+		} else if(filename == "deleteQuiz.html") {
+
+			Database db;
+
+			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
+	
+			std::ofstream jsonFile;
+			jsonFile.open("../public/json/quizzes.json");
+			if (jsonFile.is_open()) {
+
+				std::string str;
+
+				while (dbRes->next()) { 
+					str += "'" + dbRes->getString("idquiz") + "': {\n";
+					str += "'title': '" + dbRes->getString("title") + "'\n},\n";
+				}
+
+				str.replace(str.length() - 2, str.length(), "\n");
+
+				jsonFile << "{\n" << str << "}";
+
+			} else {
+				std::cout << "Failed to write quizzez to json file" << std::endl;
+			}
+
+			jsonFile.close();
+
+			auto quizID = req.url_params.get("quizID");
+	
+			ostringstream quizIDString;
+
+			quizIDString << quizID ? quizID : "";
+			
+			if (quizIDString.str() != "") {
+				Quiz currentQuiz(stoi(quizIDString.str()));
+				currentQuiz.deleteQuiz();
+				filename = "quizLandingPage.html";
+			}
+
 		}
 
 		sendHtml(res, filename);
+
 	});
 
 	CROW_ROUTE(app, "/scripts/<string>")

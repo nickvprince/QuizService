@@ -16,6 +16,7 @@ class Quiz {
 	int pointsAchieved;
 public:
 	Quiz(std::string title, std::string startDate, std::string endDate, int duration, std::string pool);
+	Quiz(int id);
 	bool setTitle(std::string);
 	std::string getTitle();
 	bool saveQuiz();

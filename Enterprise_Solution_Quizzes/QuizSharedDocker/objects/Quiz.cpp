@@ -16,6 +16,17 @@ Quiz::Quiz(std::string title, std::string startDate, std::string endDate, int du
 	this->pointsAchieved = 0;
 }
 
+Quiz::Quiz(int id) {
+	this->id = id;
+	this->title = "";
+	this->startDate = "";
+	this->endDate = "";
+	this->duration = 0;
+	this->pool = "";
+	this->totalPoints = 0;
+	this->pointsAchieved = 0;
+}
+
 /// <summary>
 /// Modify the existing title of a Quiz
 /// </summary>
@@ -67,6 +78,11 @@ bool Quiz::saveQuiz() {
 }
 
 bool Quiz::deleteQuiz() {
-	return false;
+
+	Database db;
+	db.executeQuery("DELETE FROM quiz WHERE idquiz = " + std::to_string(this->id) + ";");
+	return true;
+
 }
+
 #endif //__linux__

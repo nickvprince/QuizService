@@ -39,8 +39,8 @@ sql::ResultSet* Database::executeQuery(std::string query) {
 }
 
 Database::~Database() {
-    delete this->con;
-    delete this->res;
+    // delete this->con;
+    // delete this->res;
 }
 
 #endif // __linux__

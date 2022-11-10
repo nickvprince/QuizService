@@ -13,7 +13,7 @@ function buttonclick(id){
             break;
         }
         case "delete-quiz-button": {
-            location.href = "";s
+            location.href = "../deleteQuiz.html";
             break;
         }
         default:
