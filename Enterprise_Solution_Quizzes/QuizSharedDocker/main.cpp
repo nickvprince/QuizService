@@ -56,6 +56,10 @@ void sendFile(response& res, string filename, string contentType) {
 
 	}
 
+	if (filename == "json/pools.json"){
+		sendHtml(res, "createQuiz.html");
+	}
+
 	res.end();
 
 }
@@ -252,7 +256,9 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			std::ofstream jsonFile;
 			jsonFile.open("../public/json/pools.json");
 			if (jsonFile.is_open()) {
-				jsonFile << jArray;
+				std::string str = jArray.dump().replace(0, 1, "[");
+                str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
+                jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
 			} else {
 				std::cout << "Failed to write question pools to json file" << std::endl;
 			}

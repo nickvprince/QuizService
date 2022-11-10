@@ -5,27 +5,36 @@ function sendAlert(alertString) {
 
 
 function setMenuOptions() {
-
-    console.log("TELL ME I GOT HERE");
-
     // Look for the corresponding GET request
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "../json/pools.json", false);
     xmlHttp.send(null);
 
-    // Parse the services json file
-    const json = xmlHttp.responseText;
-    const obj = JSON.parse(json);
-    
+    const invalidjson = xmlHttp.responseText.slice(0, xmlHttp.responseText.indexOf("\n"));
+    const validJson = invalidjson.replaceAll(`'`, `"`);
+
+    console.log(validJson);
+
+    const obj = JSON.parse(validJson);  // JSON Object
+    const str = JSON.stringify(obj);    // String Version
+    indexOBracket = str.indexOf('[');   // Get Index Of Brackets
+    indexCBracket = str.indexOf(']');
+    const subString = str.substring(indexOBracket + 1, indexCBracket); // Create Substring Within The Brackets
+    const subsubString = subString.replaceAll(`"`,``); // Remove Double Quotes
+    const arr = subsubString.split(','); // Split Into Array By Comma
+
     var select = document.getElementById("quizPool");
-    for (var i = 0; i < obj.length; i++) {
-        var opt = obj[i];
+
+
+    for (let x in arr) {
+       
+        var opt = arr[x];
         var el = document.createElement("option");
         el.textContent = opt;
         el.value = opt;
         select.appendChild(el);
+
     }
-
-    window.location.replace("createQuiz.html");
-
+    
 }
+    
