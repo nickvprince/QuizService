@@ -1690,4 +1690,16 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /QuizSharedDocker/./objects/./././Question.h \
  /QuizSharedDocker/./objects/./././Answer.cpp \
  /QuizSharedDocker/./objects/././././Answer.h \
- /QuizSharedDocker/objects/Quiz.cpp /QuizSharedDocker/objects/Quiz.h
+ /QuizSharedDocker/objects/Quiz.cpp /QuizSharedDocker/objects/Quiz.h \
+ /QuizSharedDocker/objects/Database.cpp \
+ /QuizSharedDocker/objects/Database.h /usr/include/mysql_connection.h \
+ /usr/include/cppconn/connection.h /usr/include/cppconn/build_config.h \
+ /usr/include/cppconn/warning.h /usr/include/cppconn/sqlstring.h \
+ /usr/include/cppconn/variant.h /usr/include/cppconn/exception.h \
+ /usr/include/boost/scoped_ptr.hpp \
+ /usr/include/boost/smart_ptr/scoped_ptr.hpp \
+ /usr/include/cppconn/driver.h /usr/include/cppconn/connection.h \
+ /usr/include/cppconn/exception.h /usr/include/cppconn/resultset.h \
+ /usr/include/cppconn/config.h /usr/include/cppconn/resultset_metadata.h \
+ /usr/include/cppconn/datatype.h /usr/include/cppconn/statement.h \
+ /usr/include/cppconn/resultset.h

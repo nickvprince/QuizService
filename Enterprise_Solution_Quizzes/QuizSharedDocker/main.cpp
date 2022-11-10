@@ -15,7 +15,6 @@ using namespace std;
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 
-
 using namespace crow;
 
 void sendFile(response& res, string filename, string contentType);
@@ -125,6 +124,11 @@ std::cout <<"Hello world! -- This is not a windows project!"
 
 #ifdef __linux__
 	crow::SimpleApp app;
+	// Default Route
+	CROW_ROUTE(app, "/")
+		([](const request& req, response& res) {
+		sendHtml(res, "index.html");
+	});
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
@@ -155,12 +159,8 @@ std::cout <<"Hello world! -- This is not a windows project!"
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();
-			});
-	// Default Route
-	CROW_ROUTE(app, "/")
-		([](const request& req, response& res) {
-		sendHtml(res, "index.html");
-			});
+	});
+	
 	/// <summary>
 	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
 	/// </summary>
@@ -213,7 +213,7 @@ std::cout <<"Hello world! -- This is not a windows project!"
 			sendHtml(res, "savepoolFail.html");
 		}
 		 
-			});
+	});
 
 	// Calling html from products pages
 	CROW_ROUTE(app, "/<string>")
@@ -244,7 +244,7 @@ std::cout <<"Hello world! -- This is not a windows project!"
 		}
 
 		sendHtml(res, filename);
-			});
+	});
 
 	CROW_ROUTE(app, "/scripts/<string>")
 		([](const request& req, response& res, string filename) {

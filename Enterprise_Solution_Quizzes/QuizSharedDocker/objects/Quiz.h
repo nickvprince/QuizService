@@ -1,6 +1,9 @@
 #pragma once
+#ifdef __linux__
+
 #include <string>
 #include <fstream>
+#include "Database.cpp"
 
 class Quiz {
 	int id;
@@ -18,3 +21,5 @@ public:
 	bool saveQuiz();
 	bool deleteQuiz();
 };
+
+#endif //__linux__

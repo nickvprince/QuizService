@@ -1,5 +1,5 @@
 #include "Quiz.h"
-
+#ifdef __linux__
 /// <summary>
 /// Constructor for Quiz
 /// Constructor is called whenever a Quiz is to be created
@@ -42,6 +42,7 @@ std::string Quiz::getTitle() {
 }
 
 bool Quiz::saveQuiz() {
+
 	std::ofstream output;
 	output.open("../public/quizzes/quizList.txt", std::ios::app);
 	if (!output) {
@@ -56,3 +57,4 @@ bool Quiz::saveQuiz() {
 bool Quiz::deleteQuiz() {
 	return false;
 }
+#endif //__linux__

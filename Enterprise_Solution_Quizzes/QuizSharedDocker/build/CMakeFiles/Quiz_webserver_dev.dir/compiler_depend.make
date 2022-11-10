@@ -1868,8 +1868,46 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
   ../objects/Answer.cpp \
   ../objects/Answer.h \
   ../objects/Quiz.cpp \
-  ../objects/Quiz.h
+  ../objects/Quiz.h \
+  ../objects/Database.cpp \
+  ../objects/Database.h \
+  /usr/include/mysql_connection.h \
+  /usr/include/cppconn/connection.h \
+  /usr/include/cppconn/build_config.h \
+  /usr/include/cppconn/warning.h \
+  /usr/include/cppconn/sqlstring.h \
+  /usr/include/cppconn/variant.h \
+  /usr/include/cppconn/exception.h \
+  /usr/include/boost/scoped_ptr.hpp \
+  /usr/include/boost/smart_ptr/scoped_ptr.hpp \
+  /usr/include/cppconn/driver.h \
+  /usr/include/cppconn/connection.h \
+  /usr/include/cppconn/exception.h \
+  /usr/include/cppconn/resultset.h \
+  /usr/include/cppconn/config.h \
+  /usr/include/cppconn/resultset_metadata.h \
+  /usr/include/cppconn/datatype.h \
+  /usr/include/cppconn/statement.h \
+  /usr/include/cppconn/resultset.h
 
+
+/usr/include/cppconn/statement.h:
+
+/usr/include/cppconn/datatype.h:
+
+/usr/include/cppconn/driver.h:
+
+/usr/include/boost/smart_ptr/scoped_ptr.hpp:
+
+/usr/include/boost/scoped_ptr.hpp:
+
+/usr/include/cppconn/exception.h:
+
+/usr/include/cppconn/build_config.h:
+
+../objects/Database.h:
+
+../objects/Database.cpp:
 
 ../objects/Quiz.cpp:
 
@@ -2391,6 +2429,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/predef/compiler/ibm.h:
 
+/usr/include/mysql_connection.h:
+
 /usr/include/boost/predef/compiler/iar.h:
 
 /usr/include/boost/predef/compiler/hp_acc.h:
@@ -2692,6 +2732,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/asio/ip/address_v4_iterator.hpp:
 
 /usr/include/boost/numeric/conversion/detail/bounds.hpp:
+
+/usr/include/cppconn/variant.h:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/less.hpp:
 
@@ -3239,6 +3281,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/system/system_error.hpp:
 
+/usr/include/cppconn/resultset.h:
+
 /usr/include/c++/11/thread:
 
 /usr/include/boost/asio/detail/wrapped_handler.hpp:
@@ -3368,6 +3412,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/predef/hardware/simd/arm.h:
 
 /usr/include/c++/11/forward_list:
+
+/usr/include/cppconn/connection.h:
 
 /usr/include/boost/core/enable_if.hpp:
 
@@ -4350,6 +4396,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/asio/traits/query_free.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
+
+/usr/include/cppconn/resultset_metadata.h:
 
 /usr/include/c++/11/bits/this_thread_sleep.h:
 
@@ -5437,6 +5485,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/asio/detail/scheduler_thread_info.hpp:
 
+/usr/include/cppconn/config.h:
+
 /usr/include/boost/asio/detail/thread_group.hpp:
 
 /usr/include/boost/asio/is_read_buffered.hpp:
@@ -5501,6 +5551,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 
 /usr/include/boost/asio/basic_deadline_timer.hpp:
 
+/usr/include/cppconn/sqlstring.h:
+
 /usr/include/boost/lexical_cast/detail/converter_numeric.hpp:
 
 /usr/include/boost/asio/detail/reactive_socket_recvfrom_op.hpp:
@@ -5522,6 +5574,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/asio/detail/reactive_socket_send_op.hpp:
 
 /usr/include/boost/asio/detail/reactive_wait_op.hpp:
+
+/usr/include/cppconn/warning.h:
 
 /usr/include/boost/asio/detail/impl/reactive_socket_service_base.ipp:
 
