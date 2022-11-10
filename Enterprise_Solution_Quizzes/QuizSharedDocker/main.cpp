@@ -177,7 +177,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		auto isOverwrite = req.url_params.get("type");
 		ostringstream isOverwriteString;
 		isOverwriteString << isOverwrite ? isOverwrite : "";
-		string overWrite = isOverwriteString.str();
+		string overWrite = "2";
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
