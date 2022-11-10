@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 #ifdef _WIN32
@@ -15,7 +17,6 @@ using namespace std;
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 #include <vector>
-
 
 using namespace crow;
 
@@ -110,14 +111,20 @@ void sendPool(response& res, string filename) {
 	res.end();
 }
 
+void sendJson(response& res, string filename){
+	sendFile(res, "json/" + filename, "application/json");
+}
+
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
 }
+
 
 #endif //__linux__
 
 
 int main() {
+
 
 #ifdef _WIN32
 
@@ -266,23 +273,24 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	CROW_ROUTE(app, "/scripts/<string>")
 		([](const request& req, response& res, string filename) {
 		sendScript(res, filename);
-			});
+	});
 
 	CROW_ROUTE(app, "/styles/<string>")
 		([](const request& req, response& res, string filename) {
 		sendStyle(res, filename);
-			});
+	});
 
 	// Images in parent images folder
 	CROW_ROUTE(app, "/images/<string>")
 		([](const request& req, response& res, string filename) {
 		sendImage(res, filename);
-			});
+	});
 
 	CROW_ROUTE(app, "/quizzes/<string>")
 		([](const request& req, response& res, string filename) {
 		sendQuizText(res, filename);
-			});
+	});
+
 	/// <summary>
 	/// gets the text file of all the question pools
 	/// </summary>
@@ -290,9 +298,14 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	CROW_ROUTE(app, "/QuestionPool/<string>/<string>")
 		([](const request& req, response& res, string folder, string name) {
 		sendPool(res, folder+"/"+name);
-			});
+	});
 
-	//serice port
+	CROW_ROUTE(app, "/json/<string>")
+	([](const request& req, response& res, string filename) {
+		sendJson(res, filename);
+	});
+	
+	//service port
 	app.port(27501).multithreaded().run();
 	return 1;
 
