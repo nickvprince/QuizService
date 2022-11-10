@@ -63,7 +63,7 @@ bool QuestionPool::save(int overWrite)
 			cout << ", SQLState: " << e.getSQLState() <<
 				" )" << endl;
 		}
-
+		return true;
 
 	}
 
