@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/QuizSharedDocker")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/QuizSharedDocker/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/QuizSharedDocker/Build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)
