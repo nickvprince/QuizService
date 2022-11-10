@@ -4,7 +4,7 @@
 Database::Database() {
 
     this->protocol = "tcp://";
-    this->ipAddress = "10.0.0.14";
+    this->ipAddress = "192.168.0.246";
     this->port = "3306";
     this->username = "root";
     this->password = "admin";

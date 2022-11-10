@@ -1,5 +1,4 @@
 #include <iostream>
-#include "./objects/json.hpp"
 using namespace std;
 
 #ifdef _WIN32
@@ -12,8 +11,11 @@ using namespace std;
 #define CROW_MAIN
 #include <bits/stdc++.h> 
 #include "crow_all.h"
+#include "./objects/json.hpp"
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+#include <vector>
+
 
 using namespace crow;
 
@@ -119,7 +121,7 @@ int main() {
 
 #ifdef _WIN32
 
-std::cout <<"Hello world! -- This is not a windows project!"
+std::cout <<"Hello world! -- This is not a windows project!";
 #endif // _WIN32
 
 #ifdef __linux__
@@ -220,6 +222,21 @@ std::cout <<"Hello world! -- This is not a windows project!"
 		([](const request& req, response& res, string filename) {
 		//createQuiz Query
 		if (filename == "createQuiz.html") {
+
+			Database db;
+
+			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM qp;");
+			std::vector<std::string> results;
+			while (dbRes->next()) { 
+				results.push_back(dbRes->getString("poolid"));
+			}
+
+			/*
+			for (int i = 0; i < results.size(); i++){
+				std::cout << "Pool: " << results.at(i) << std::endl;
+			}
+			*/
+
 			auto quizTitle = req.url_params.get("quizTitle");
 			auto quizDuration = req.url_params.get("quizDuration");
 			auto quizPool = req.url_params.get("quizPool");
@@ -280,4 +297,5 @@ std::cout <<"Hello world! -- This is not a windows project!"
 	return 1;
 
 #endif //__linux__
+
 }

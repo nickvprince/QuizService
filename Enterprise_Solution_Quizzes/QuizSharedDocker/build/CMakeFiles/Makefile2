@@ -57,7 +57,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /QuizSharedDocker
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /QuizSharedDocker/build
+CMAKE_BINARY_DIR = /QuizSharedDocker/Build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/Quiz_webserver_dev.dir/clean
 CMakeFiles/Quiz_webserver_dev.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Quiz_webserver_dev.dir/build.make CMakeFiles/Quiz_webserver_dev.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Quiz_webserver_dev.dir/build.make CMakeFiles/Quiz_webserver_dev.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/QuizSharedDocker/build/CMakeFiles --progress-num=1,2 "Built target Quiz_webserver_dev"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/QuizSharedDocker/Build/CMakeFiles --progress-num=1,2 "Built target Quiz_webserver_dev"
 .PHONY : CMakeFiles/Quiz_webserver_dev.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Quiz_webserver_dev.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /QuizSharedDocker/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /QuizSharedDocker/Build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Quiz_webserver_dev.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /QuizSharedDocker/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /QuizSharedDocker/Build/CMakeFiles 0
 .PHONY : CMakeFiles/Quiz_webserver_dev.dir/rule
 
 # Convenience name for target.
