@@ -56,9 +56,9 @@ void sendFile(response& res, string filename, string contentType) {
 
 	}
 
-	if (filename == "json/pools.json"){
-		sendHtml(res, "createQuiz.html");
-	}
+	//if (filename == "json/pools.json"){
+	//	sendHtml(res, "createQuiz.html");
+	//}
 
 	res.end();
 
@@ -264,7 +264,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 			jsonFile.close();
 
-			sendJson(res, "pools.json");
+			//sendJson(res, "pools.json");
 			
 			
 
