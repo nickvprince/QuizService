@@ -47,10 +47,9 @@ function Enter() { // submit question pool to be saved
             fromEdit = true;
         }
     }
-    alert("here");
+
     query += "pool=" +document.getElementById("pname").value + "&&";
     var ids = document.querySelectorAll('[id]');
-    alert(ids.toString());
     Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
         // "el" is your element
         if (el.id.toString().includes("Q")) {
@@ -111,7 +110,6 @@ function Enter() { // submit question pool to be saved
             }
         }
     });
-    alert(query.toString());
     query += "&";
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host; // direct to new page with all data in query string
