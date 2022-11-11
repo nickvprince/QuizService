@@ -190,7 +190,8 @@ function AddQuestion(i, k) {
 
 
 
-function option(i, c,name) { // add option to a question
+function option(i, c, name) { // add option to a question
+ 
     var n = document.createElement('br');
     var b = String(i);
     var i = document.createElement('input');
