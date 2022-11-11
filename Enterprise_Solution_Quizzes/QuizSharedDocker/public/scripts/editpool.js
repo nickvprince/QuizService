@@ -31,11 +31,11 @@ function load() {
         window.location.replace('/selectPool.html?type=edit');
     }
     var data = xmlHttp.responseText.toString();
-  
     if (data[0] == "[") {
         var done = data.slice(1, data.length );
         data = " "+done;
     }
+    console.log(data);
     // parse information from data || use questionPoolForm.js functions, modify to input values
     data = data.replace("[", " ");
     var question; // holds next question
@@ -51,6 +51,7 @@ function load() {
         if (index == 0) { // question
  
             question = data[i];
+            console.log(question);
         }
         else { // not question
             if (data[i][0] == "," || data[i][0]==" ") {// remove un-needed seperator info from string such as [{,}]
@@ -77,8 +78,8 @@ function load() {
                       
                         var x = AddQuestion(1, String(question)); // multiple answer
                         for (var v = 0; v < answers.length; v++) {
-                           
-                            if (tmp[2].length > 1 || tmp[2] == "1" || tmp[2] == "0") {
+                            
+                            if (tmp[2].length > 1 || tmp[2] == "1" || tmp[2] == "0" || answers.length>2) {
                                 option(x, 1, answers[v]);
                         }
                         else {
@@ -87,13 +88,13 @@ function load() {
                         }
                         if (tmp[0] != tmp[tmp.length - 1][1]) {
                             for (var b = 1; b < tmp.length - 1; b++) {
-                                
+                                console.log("Selected : " + String(x) + "-" + tmp[b]);
                                 document.getElementById(String(x) + "-" + tmp[b]).checked = true;
                             }
                         }
                         else {
                             for (var b = 1; b < tmp.length; b++) {
-                            
+                                console.log("Selected : " + String(x) + "-" + tmp[b]);
                                 document.getElementById(String(x) + "-" + tmp[b][0]).checked = true;
                             }
                         
@@ -104,12 +105,12 @@ function load() {
                     else {
                         var x=AddQuestion(0, String(question)); // multiple choice
                         for (var v = 0; v < answers.length; v++) { // add options under question
-                        
+                       
                             option(x, 0, answers[v]);
                         }
                      
                            // check radio button that was selected
-                       
+                        console.log("Selected : " + String(x) + "-" + tmp[1]);
                         document.getElementById(String(x) + "-" + tmp[1]).setAttribute("checked", "true");
                  
                      
