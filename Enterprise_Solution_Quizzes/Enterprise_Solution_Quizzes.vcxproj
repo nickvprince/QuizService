@@ -33,12 +33,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="QuizSharedDocker\public\createPool.html" />
+    <None Include="QuizSharedDocker\public\createQuiz.html" />
     <None Include="QuizSharedDocker\public\deletePool.html" />
     <None Include="QuizSharedDocker\public\editPool.html" />
     <None Include="QuizSharedDocker\public\questionPool.html" />
     <None Include="QuizSharedDocker\public\index.html" />
+    <None Include="QuizSharedDocker\public\quizLandingPage.html" />
     <None Include="QuizSharedDocker\public\scripts\editpool.js" />
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
+    <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js" />
     <None Include="QuizSharedDocker\public\scripts\selectPool.js" />
     <None Include="QuizSharedDocker\public\selectPool.html" />
   </ItemGroup>

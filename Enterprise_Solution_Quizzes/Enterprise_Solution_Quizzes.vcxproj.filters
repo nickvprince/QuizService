@@ -79,5 +79,14 @@
     <None Include="QuizSharedDocker\public\scripts\editpool.js">
       <Filter>JS</Filter>
     </None>
+    <None Include="QuizSharedDocker\public\createQuiz.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\quizLandingPage.html">
+      <Filter>HTML</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js">
+      <Filter>JS</Filter>
+    </None>
   </ItemGroup>
 </Project>
