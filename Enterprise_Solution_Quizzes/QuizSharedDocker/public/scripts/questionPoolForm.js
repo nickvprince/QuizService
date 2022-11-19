@@ -6,10 +6,10 @@ function start() { // on startup if query string it created then alert the user 
     const urlParams = new URLSearchParams(location.search);
     for (const [key, value] of urlParams) {
         if (key == "created" && value == "true") {
-            alert("Quiz Created");
+            alert("Question Pool Created");
         }
         else if (key == "created" && value == "false") { // if query is false then alert user pool failed to create
-            alert("Quiz not Created");
+            alert("Question Pool not Created");
         }
     }
 }
