@@ -23,19 +23,38 @@ function load() {
     // http request for pool data
  
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/getPool/" + pool.toString(), false);
+    xmlHttp.open("GET", "./json/tmpPoolData.json", false);
     xmlHttp.send(null);
-    // if file doesnt exist or fails to load go back to selectpool after alerting the user
-    if (xmlHttp.responseText.toString() == "fail") {
-        alert("Error : Failed to find question pool");
-        window.location.replace('/selectPool.html?type=edit');
+
+    // Parse the services json file
+    const json = xmlHttp.responseText;
+    const obj = JSON.parse(json);
+
+    console.log(obj);
+    for (let x in obj) {
+        console.log(x);
+        var b = x.toString();
+        for (let n in obj[b]) {
+           
+            console.log(n);
+            console.log(obj[b][n]);
+        }
+
     }
+
+
+
+
+
+    /*
     var data = xmlHttp.responseText.toString();
-  
+    console.log(data);
     if (data[0] == "[") {
         var done = data.slice(1, data.length );
         data = " "+done;
     }
+    console.log(data);
+
     // parse information from data || use questionPoolForm.js functions, modify to input values
     data = data.replace("[", " ");
     var question; // holds next question
@@ -130,7 +149,7 @@ function load() {
        
     }
 
-    
+    */
 }
 
 

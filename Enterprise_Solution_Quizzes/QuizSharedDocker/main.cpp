@@ -3,6 +3,7 @@ using namespace std;
 
 #ifdef _WIN32
 #include "./objects/QuestionPool.h"
+#include "./objects/json.hpp"
 #endif
 
 
@@ -131,14 +132,36 @@ void sendHtml(response& res, string filename) {
 
 
 #endif //__linux__
-
+string boolToString(bool input) {
+	if (input == 1) {
+		return "true";
+	}
+	else if (input == 0) {
+		return "false";
+	}
+	else {
+		return NULL;
+	}
+}
 
 int main() {
 
 
 #ifdef _WIN32
 
-std::cout <<"Hello world! -- This is not a windows project!";
+//std::cout <<"Hello world! -- This is not a windows project!";
+std::ofstream jsonFile;
+jsonFile.open("./QuizSharedDocker/public/json/tmpPoolData.json");
+QuestionPool pool=QuestionPool("pool1");
+pool.addQuestion("Hello", 1);
+pool.addOption("Hello", "One", 0);
+pool.addOption("Hello", "Two", 1);
+pool.addOption("Hello", "Three", 0);
+pool.addQuestion("Goodbye", 1);
+pool.addOption("Goodbye", "One", 0);
+pool.addOption("Goodbye", "Two", 1);
+pool.addOption("Goodbye", "Three", 1);
+
 
 #endif // _WIN32
 
@@ -151,6 +174,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	});
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
+		/*
 		QuestionPool pool(poolname);
 		std::cout <<pool.load();
 		std::cout << pool.getID();
@@ -179,6 +203,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();
+		*/
 	});
 	
 	/// <summary>
