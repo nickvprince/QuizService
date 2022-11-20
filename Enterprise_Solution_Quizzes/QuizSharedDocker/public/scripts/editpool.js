@@ -1,4 +1,3 @@
-var flag = false;
 function load() {
 
     var pool;
@@ -23,19 +22,73 @@ function load() {
     // http request for pool data
  
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/getPool/" + pool.toString(), false);
+    xmlHttp.open("GET", "./getPool/"+String(pool), false);
     xmlHttp.send(null);
-    // if file doesnt exist or fails to load go back to selectpool after alerting the user
-    if (xmlHttp.responseText.toString() == "fail") {
-        alert("Error : Failed to find question pool");
-        window.location.replace('/selectPool.html?type=edit');
+
+    // Parse the services json file
+    const json = xmlHttp.responseText;
+    const obj = JSON.parse(json);
+
+    console.log(obj);
+    for (let x in obj) { // add questions
+        console.log(x);
+       
+        var b = x.toString();
+        var counter = 0;
+        var type = 0;
+
+        for (let k in obj[b]) { // get number of correct answers
+            // console.log(obj[b][k]);
+            if (obj[b][k] == "true") {
+                type++;
+            }
+        }
+        if (type > 1) { // if multiple choice or multiple answer
+            var ques = AddQuestion(1, String(x));
+        } else {
+            var ques = AddQuestion(0, String(x));
+        }
+        type = 0;
+
+        for (let n in obj[b]) { // add options
+            
+            console.log("Option : ");
+            for (let k in obj[b]) {
+               // console.log(obj[b][k]);
+                if (obj[b][k] == "true") {
+                    type++;
+                }
+            }
+            if (type > 1) {
+                option(ques, 1, String(n));
+            } else {
+                option(ques, 0, String(n));
+            }
+            type = 0;
+            if (obj[b][n] == "true") {
+                document.getElementById(String(ques) + "-" + counter).checked = true;
+            } else {
+                document.getElementById(String(ques) + "-" + counter).checked = false;
+            }
+            counter++;
+           
+        }
+
     }
+
+
+
+
+
+    /*
     var data = xmlHttp.responseText.toString();
-  
+    console.log(data);
     if (data[0] == "[") {
         var done = data.slice(1, data.length );
         data = " "+done;
     }
+    console.log(data);
+
     // parse information from data || use questionPoolForm.js functions, modify to input values
     data = data.replace("[", " ");
     var question; // holds next question
@@ -130,7 +183,7 @@ function load() {
        
     }
 
-    
+    */
 }
 
 

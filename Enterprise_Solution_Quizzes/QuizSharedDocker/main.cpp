@@ -3,6 +3,7 @@ using namespace std;
 
 #ifdef _WIN32
 #include "./objects/QuestionPool.h"
+#include "./objects/json.hpp"
 #endif
 
 
@@ -86,21 +87,21 @@ void sendQuizText(response& res, string filename) {
 	sendFile(res, "quizzes/" + filename, "text/plain");
 }
 
-	
+
 void sendPool(response& res, string filename) {
 	std::cout << "SENDPOOL" << " QuestionPool/" + filename;
 	ifstream file;
-	file.open("../public/QuestionPool/"+filename);
+	file.open("../public/QuestionPool/" + filename);
 	if (!file.is_open())
 	{
 		res.code = 500;
 		res.write("Available pools File Error");
-		}
+	}
 
 	string line;
 	while (getline(file, line))
 	{
-		string output = "Question Pool :" + line +"\n";
+		string output = "Question Pool :" + line + "\n";
 		res.write(output);
 	}
 	file.close();
@@ -114,7 +115,7 @@ void sendPool(response& res, string filename) {
 	res.end();
 }
 
-void sendJson(response& res, string filename){
+void sendJson(response& res, string filename) {
 	sendFile(res, "json/" + filename, "application/json");
 }
 
@@ -123,7 +124,7 @@ void sendJsonArray(response& res, nlohmann::json text) {
 	res.write(to_string(text));
 	res.end();
 }
-	
+
 
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
@@ -131,14 +132,65 @@ void sendHtml(response& res, string filename) {
 
 
 #endif //__linux__
-
+string boolToString(bool input) {
+	if (input == 1) {
+		return "true";
+	}
+	else if (input == 0) {
+		return "false";
+	}
+	else {
+		return NULL;
+	}
+}
 
 int main() {
 
 
 #ifdef _WIN32
 
-std::cout <<"Hello world! -- This is not a windows project!";
+	//std::cout <<"Hello world! -- This is not a windows project!";
+	std::ofstream jsonFile;
+	
+	QuestionPool pool = QuestionPool("pool1");
+	pool.addQuestion("Hello", 1);
+	pool.addOption("Hello", "One", 0);
+	pool.addOption("Hello", "Two", 1);
+	pool.addOption("Hello", "Three", 0);
+	pool.addQuestion("Goodbye", 1);
+	pool.addOption("Goodbye", "One", 0);
+	pool.addOption("Goodbye", "Two", 1);
+	pool.addOption("Goodbye", "Three", 1);
+	jsonFile.open("./QuizSharedDocker/public/json/tmpPoolData.json");
+	if (jsonFile.is_open()) {
+		std::string str;
+		jsonFile << "{\n";
+		std::vector<std::string> questions = pool.getQuestions();
+		for (int i = 0; i < questions.size(); i++) {
+			std::vector<std::string> answers = pool.getOptions(questions.at(i));
+			jsonFile << '"' + questions.at(i) + '"' + ": {\n"; // write question
+
+			for (int b = 0; b < answers.size(); b++) {
+				string str = "";
+				if (b == answers.size() - 1) {
+					str = '"' + answers.at(b) + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + "\n";
+				}
+				else {
+					str = '"' + answers.at(b) + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + ", \n";
+				}
+				jsonFile << str;
+
+			}
+			if (i == questions.size() - 1) {
+				jsonFile << "}\n";
+			}
+			else {
+				jsonFile << "},\n";
+			}
+		}
+		jsonFile << "}";
+		jsonFile.close();
+	}
 
 #endif // _WIN32
 
@@ -148,39 +200,51 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
 		sendHtml(res, "index.html");
-	});
+			});
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
-		std::cout <<pool.load();
-		std::cout << pool.getID();
-	
-		nlohmann::json c;
-		fstream outfile;
-		outfile.open("../public/QuestionPool/pools/"+poolname+".pool", std::ios::in);
-		string tp;
-		if (outfile.is_open()) {
-			for (int i = 0; i < pool.getQuestions().size(); i++) {
-				c += pool.getQuestions().at(i);
-				c += pool.getOptions(pool.getQuestions().at(i));
-				for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
-					if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == 1) {
-						c += b;
+		pool.load(); // load pool
+		std::ofstream jsonFile;
+		jsonFile.open("../public/json/tmpPoolData.json");//fill temp file
+		if (jsonFile.is_open()) {
+			std::string str;
+			jsonFile << "{\n";
+			std::vector<std::string> questions = pool.getQuestions();
+			for (int i = 0; i < questions.size(); i++) {
+				std::vector<std::string> answers = pool.getOptions(questions.at(i));
+				std::string tmp = questions.at(i);
+				tmp.pop_back();
+				jsonFile << '"' + tmp + '"' + ": {\n"; // write question
+
+				for (int b = 0; b < answers.size(); b++) {
+					string str = "";
+					if (b == answers.size() - 1) {
+						std::string tmp2 = answers.at(b);
+						tmp2.pop_back();
+						str = '"' + tmp2 + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + "\n";
 					}
+					else {
+						std::string tmp2 = answers.at(b);
+						tmp2.pop_back();
+						str = '"' + tmp2 + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + ", \n";
+					}
+					jsonFile << str;
+
+				}
+				if (i == questions.size() - 1) {
+					jsonFile << "}\n";
+				}
+				else {
+					jsonFile << "},\n";
 				}
 			}
-			res.write(to_string(c));
+			jsonFile << "}";
+			jsonFile.close();
 		}
-		else {
-			std::cout << "not open" << endl;
-			res.write("fail");
-		}
-		outfile.close();
-		res.set_header("Content-Type", "text/plain");
-		res.code = 200;
-		res.end();
-	});
-	
+		sendJson(res, "../json/tmpPoolData.json");
+			});
+
 	/// <summary>
 	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
 	/// </summary>
@@ -194,14 +258,14 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
-		for (int i = 0; i < questions.size(); i++) {
+		for (int i = questions.size()-1; i >-1; i--) {
 			q.addQuestion(questions.at(i), 1); // add question to pool
-			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(questions.size()-1-i) + "A"); // options for question
+			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(questions.size() - 1 - i) + "A"); // options for question
 			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(questions.size() - 1 - i)); // selected for question
 			for (int b = 0; b < answers.size(); b++) { // add all options to question
 				bool selectTrueFalse = false;
 				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
-					if (strcmp(answers.at(b),selected.at(c)) == 0) { // if match found
+					if (strcmp(answers.at(b), selected.at(c)) == 0) { // if match found
 						selectTrueFalse = true;
 					}
 				}
@@ -217,13 +281,13 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		bool result;
 		if (overWrite != "") {
 			result = q.save(1);
-			
+
 		}
 		else {
 			result = q.save(0);
 		}
 		if (result == true && overWrite != "") {
-		
+
 			sendHtml(res, "selectPool.html");
 		}
 		else if (result == true) {
@@ -232,8 +296,8 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		else {
 			sendHtml(res, "savepoolFail.html");
 		}
-		 
-	});
+
+			});
 
 	// Calling html from products pages
 	CROW_ROUTE(app, "/<string>")
@@ -247,22 +311,23 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			nlohmann::json jArray = nlohmann::json::array();
 
 			int i = 0;
-			while (dbRes->next()) { 
+			while (dbRes->next()) {
 				jArray[i] = dbRes->getString("poolid");
 				i++;
 			}
 
 			//std::cout << "Pool: " << jArray << std::endl;
-			
+
 			std::ofstream jsonFile;
 			jsonFile.open("../public/json/pools.json");
 			if (jsonFile.is_open()) {
 
 				std::string str = jArray.dump().replace(0, 1, "[");
-                str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
-                jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
+				str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
+				jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
 
-			} else {
+			}
+			else {
 				std::cout << "Failed to write question pools to json file" << std::endl;
 			}
 
@@ -291,19 +356,20 @@ std::cout <<"Hello world! -- This is not a windows project!";
 				filename = "quizLandingPage.html";
 			}
 
-		} else if(filename == "deleteQuiz.html") {
+		}
+		else if (filename == "deleteQuiz.html") {
 
 			Database db;
 
 			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
-	
+
 			std::ofstream jsonFile;
 			jsonFile.open("../public/json/quizzes.json");
 			if (jsonFile.is_open()) {
 
 				std::string str;
 
-				while (dbRes->next()) { 
+				while (dbRes->next()) {
 					str += "'" + dbRes->getString("idquiz") + "': {\n";
 					str += "'title': '" + dbRes->getString("title") + "'\n},\n";
 				}
@@ -312,18 +378,19 @@ std::cout <<"Hello world! -- This is not a windows project!";
 
 				jsonFile << "{\n" << str << "}";
 
-			} else {
+			}
+			else {
 				std::cout << "Failed to write quizzez to json file" << std::endl;
 			}
 
 			jsonFile.close();
 
 			auto quizID = req.url_params.get("quizID");
-	
+
 			ostringstream quizIDString;
 
 			quizIDString << quizID ? quizID : "";
-			
+
 			if (quizIDString.str() != "") {
 				Quiz currentQuiz(stoi(quizIDString.str()));
 				currentQuiz.deleteQuiz();
@@ -334,28 +401,28 @@ std::cout <<"Hello world! -- This is not a windows project!";
 
 		sendHtml(res, filename);
 
-	});
+			});
 
 	CROW_ROUTE(app, "/scripts/<string>")
 		([](const request& req, response& res, string filename) {
 		sendScript(res, filename);
-	});
+			});
 
 	CROW_ROUTE(app, "/styles/<string>")
 		([](const request& req, response& res, string filename) {
 		sendStyle(res, filename);
-	});
+			});
 
 	// Images in parent images folder
 	CROW_ROUTE(app, "/images/<string>")
 		([](const request& req, response& res, string filename) {
 		sendImage(res, filename);
-	});
+			});
 
 	CROW_ROUTE(app, "/quizzes/<string>")
 		([](const request& req, response& res, string filename) {
 		sendQuizText(res, filename);
-	});
+			});
 
 	/// <summary>
 	/// gets the text file of all the question pools
@@ -363,14 +430,14 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	/// <returns></returns>
 	CROW_ROUTE(app, "/QuestionPool/<string>/<string>")
 		([](const request& req, response& res, string folder, string name) {
-		sendPool(res, folder+"/"+name);
-	});
+		sendPool(res, folder + "/" + name);
+			});
 
 	CROW_ROUTE(app, "/json/<string>")
-	([](const request& req, response& res, string filename) {
+		([](const request& req, response& res, string filename) {
 		sendJson(res, filename);
-	});
-	
+			});
+
 	//service port
 	app.port(27501).multithreaded().run();
 	return 1;
