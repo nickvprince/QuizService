@@ -1,4 +1,3 @@
-var flag = false;
 function load() {
 
     var pool;
@@ -23,7 +22,7 @@ function load() {
     // http request for pool data
  
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "./json/tmpPoolData.json", false);
+    xmlHttp.open("GET", "./getPool/"+String(pool), false);
     xmlHttp.send(null);
 
     // Parse the services json file
@@ -31,13 +30,48 @@ function load() {
     const obj = JSON.parse(json);
 
     console.log(obj);
-    for (let x in obj) {
+    for (let x in obj) { // add questions
         console.log(x);
+       
         var b = x.toString();
-        for (let n in obj[b]) {
+        var counter = 0;
+        var type = 0;
+
+        for (let k in obj[b]) { // get number of correct answers
+            // console.log(obj[b][k]);
+            if (obj[b][k] == "true") {
+                type++;
+            }
+        }
+        if (type > 1) { // if multiple choice or multiple answer
+            var ques = AddQuestion(1, String(x));
+        } else {
+            var ques = AddQuestion(0, String(x));
+        }
+        type = 0;
+
+        for (let n in obj[b]) { // add options
+            
+            console.log("Option : ");
+            for (let k in obj[b]) {
+               // console.log(obj[b][k]);
+                if (obj[b][k] == "true") {
+                    type++;
+                }
+            }
+            if (type > 1) {
+                option(ques, 1, String(n));
+            } else {
+                option(ques, 0, String(n));
+            }
+            type = 0;
+            if (obj[b][n] == "true") {
+                document.getElementById(String(ques) + "-" + counter).checked = true;
+            } else {
+                document.getElementById(String(ques) + "-" + counter).checked = false;
+            }
+            counter++;
            
-            console.log(n);
-            console.log(obj[b][n]);
         }
 
     }
