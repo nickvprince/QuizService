@@ -258,7 +258,7 @@ int main() {
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		std::vector<char*> questions = req.url_params.get_list("Questions");
-		for (int i = 0; i < questions.size(); i++) {
+		for (int i = questions.size()-1; i >-1; i--) {
 			q.addQuestion(questions.at(i), 1); // add question to pool
 			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(questions.size() - 1 - i) + "A"); // options for question
 			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(questions.size() - 1 - i)); // selected for question
