@@ -111,6 +111,15 @@ function nextID(b) { // get the next available ID
 }
 function removeQuestion(buttonID) {
     console.log("Remove : " + buttonID);
+    document.getElementById(buttonID).remove();
+    var ids = document.querySelectorAll('[id]');
+
+    Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
+        // "el" is your element
+        if (el.id.toString().includes(buttonID + "-") || el.id.toString().includes(buttonID + ":")) {
+            document.getElementById(el.id).remove();
+        }
+    });
 }
 
 function AddQuestion(i, k) {
