@@ -109,13 +109,27 @@ function nextID(b) { // get the next available ID
     });
     return x;
 }
-
+function removeQuestion(buttonID) {
+    console.log("Remove : " + buttonID);
+}
 
 function AddQuestion(i, k) {
     var t = String(i);
     var b = document.createElement('input');
     var d = document.createElement('input'); // create a button and textfield for a question, button allows you to add options
     var z = document.createElement('br');
+
+
+
+    var deleteQuestionButton = document.createElement('input');
+    deleteQuestionButton.setAttribute("type", "button");
+    deleteQuestionButton.setAttribute("id", buttonID);
+    deleteQuestionButton.setAttribute("value", "Remove Question");
+    deleteQuestionButton.setAttribute("onclick", "removeQuestion(" + buttonID +")"); // set button function to use params of this button id and if its multiple answer or multiple choice.
+
+
+
+
     d.setAttribute("type", "text");
     d.setAttribute("value", String(k));
     d.setAttribute("id", "Q" + formID);
@@ -129,6 +143,7 @@ function AddQuestion(i, k) {
     formID++;
     i.appendChild(d);
     i.appendChild(b);
+    i.appendChild(deleteQuestionButton);
    
     document.getElementById("insertHere").insertAdjacentElement("afterend", i);
     document.getElementById("insertHere").insertAdjacentElement("afterend", z); // add elements
