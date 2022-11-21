@@ -149,49 +149,9 @@ int main() {
 
 #ifdef _WIN32
 
-	//std::cout <<"Hello world! -- This is not a windows project!";
-	std::ofstream jsonFile;
+	std::cout <<"Hello world! -- This is not a windows project!";
 	
-	QuestionPool pool = QuestionPool("pool1");
-	pool.addQuestion("Hello", 1);
-	pool.addOption("Hello", "One", 0);
-	pool.addOption("Hello", "Two", 1);
-	pool.addOption("Hello", "Three", 0);
-	pool.addQuestion("Goodbye", 1);
-	pool.addOption("Goodbye", "One", 0);
-	pool.addOption("Goodbye", "Two", 1);
-	pool.addOption("Goodbye", "Three", 1);
-	jsonFile.open("./QuizSharedDocker/public/json/tmpPoolData.json");
-	if (jsonFile.is_open()) {
-		std::string str;
-		jsonFile << "{\n";
-		std::vector<std::string> questions = pool.getQuestions();
-		for (int i = 0; i < questions.size(); i++) {
-			std::vector<std::string> answers = pool.getOptions(questions.at(i));
-			jsonFile << '"' + questions.at(i) + '"' + ": {\n"; // write question
-
-			for (int b = 0; b < answers.size(); b++) {
-				string str = "";
-				if (b == answers.size() - 1) {
-					str = '"' + answers.at(b) + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + "\n";
-				}
-				else {
-					str = '"' + answers.at(b) + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + ", \n";
-				}
-				jsonFile << str;
-
-			}
-			if (i == questions.size() - 1) {
-				jsonFile << "}\n";
-			}
-			else {
-				jsonFile << "},\n";
-			}
-		}
-		jsonFile << "}";
-		jsonFile.close();
-	}
-
+	
 #endif // _WIN32
 
 #ifdef __linux__
@@ -257,11 +217,22 @@ int main() {
 		string overWrite = isOverwriteString.str();
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
+		int countFrom = 100; // max questions
 		std::vector<char*> questions = req.url_params.get_list("Questions");
-		for (int i = questions.size()-1; i >-1; i--) {
+		for (int i = 0; i <questions.size(); i++) {
+			
 			q.addQuestion(questions.at(i), 1); // add question to pool
-			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(questions.size() - 1 - i) + "A"); // options for question
-			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(questions.size() - 1 - i)); // selected for question
+
+			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(countFrom) + "A"); // options for question || alter this |	Start at 100 work backwards if size is zero assume no answers and move on until answers are found work until 0 ( note 100 max questions and speed hinge {fix later})
+
+			while (answers.size() == 0) {
+				countFrom--;
+				answers = req.url_params.get_list("Q" + to_string(countFrom) + "A");
+			}
+			std::cout << "Answers : Q" << countFrom << "A\n";
+			countFrom--;
+			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(countFrom+1)); // selected for question || alter this
+			std::cout << "Selected : Checked" << (countFrom+1) << "\n";
 			for (int b = 0; b < answers.size(); b++) { // add all options to question
 				bool selectTrueFalse = false;
 				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
@@ -277,6 +248,7 @@ int main() {
 				}
 				selectTrueFalse = false;
 			}
+			
 		}
 		bool result;
 		if (overWrite != "") {
