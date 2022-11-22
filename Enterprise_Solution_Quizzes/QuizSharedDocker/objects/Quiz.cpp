@@ -1,17 +1,28 @@
 #include "Quiz.h"
-
+#ifdef __linux__
 /// <summary>
 /// Constructor for Quiz
 /// Constructor is called whenever a Quiz is to be created
 /// </summary>
 /// <param name="title"></param>
-Quiz::Quiz(std::string title, std::string startDate, std::string endDate, int duration) {
+Quiz::Quiz(std::string title, std::string startDate, std::string endDate, int duration, std::string pool) {
 	this->id = 0;
 	this->title = title;
 	this->startDate = startDate;
 	this->endDate = endDate;
 	this->duration = duration;
-	this->pool = "No Current Pool";
+	this->pool = pool;
+	this->totalPoints = 0;
+	this->pointsAchieved = 0;
+}
+
+Quiz::Quiz(int id) {
+	this->id = id;
+	this->title = "";
+	this->startDate = "";
+	this->endDate = "";
+	this->duration = 0;
+	this->pool = "";
 	this->totalPoints = 0;
 	this->pointsAchieved = 0;
 }
@@ -42,6 +53,19 @@ std::string Quiz::getTitle() {
 }
 
 bool Quiz::saveQuiz() {
+
+	Database db;
+
+	db.executeQuery("INSERT INTO quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) VALUES ('" + 
+	this->pool + "','" +
+	this->title + "','" +
+	this->startDate + "','" +
+	this->endDate + "'," +
+	std::to_string(this->duration) + "," +
+	std::to_string(this->totalPoints) + ");");
+
+
+	//For testing - will be removed
 	std::ofstream output;
 	output.open("../public/quizzes/quizList.txt", std::ios::app);
 	if (!output) {
@@ -54,5 +78,11 @@ bool Quiz::saveQuiz() {
 }
 
 bool Quiz::deleteQuiz() {
-	return false;
+
+	Database db;
+	db.executeQuery("DELETE FROM quiz WHERE idquiz = " + std::to_string(this->id) + ";");
+	return true;
+
 }
+
+#endif //__linux__

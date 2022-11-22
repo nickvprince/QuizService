@@ -5,7 +5,7 @@
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <title>Quiz Creation</title>
     </head>
-    <body>
+    <body onload="setMenuOptions()">
         <h1>Create Quiz</h1>
         <form>
             <label for="quizTitle">Title:</label><br>
@@ -16,7 +16,7 @@
 
             <label for="quizPool">Question Pool:</label><br>
             <select id="quizPool" name="quizPool">
-                <option value="quizPoolOption1">quizPoolOption1</option>
+                <option></option>
             </select><br>
 
             <label for="quizStartDate">Start Date:</label><br>

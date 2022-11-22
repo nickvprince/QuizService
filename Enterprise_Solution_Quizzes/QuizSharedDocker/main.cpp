@@ -1,7 +1,4 @@
 #include <iostream>
-#include "./objects/json.hpp"
-#include <fstream>
-#include <sstream>
 using namespace std;
 
 #ifdef _WIN32
@@ -14,9 +11,12 @@ using namespace std;
 #define CROW_MAIN
 #include <bits/stdc++.h> 
 #include "crow_all.h"
+#include "./objects/json.hpp"
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
-
+#include <vector>
+#include <fstream>
+#include <sstream>
 using namespace crow;
 
 void sendFile(response& res, string filename, string contentType);
@@ -55,6 +55,10 @@ void sendFile(response& res, string filename, string contentType) {
 		res.write("404 Not Found");
 
 	}
+
+	//if (filename == "json/pools.json"){
+	//	sendHtml(res, "createQuiz.html");
+	//}
 
 	res.end();
 
@@ -114,6 +118,13 @@ void sendJson(response& res, string filename){
 	sendFile(res, "json/" + filename, "application/json");
 }
 
+void sendJsonArray(response& res, nlohmann::json text) {
+	res.set_header("Content-Type", "application/json");
+	res.write(to_string(text));
+	res.end();
+}
+	
+
 void sendHtml(response& res, string filename) {
 	sendFile(res, filename, "text/html");
 }
@@ -128,10 +139,16 @@ int main() {
 #ifdef _WIN32
 
 std::cout <<"Hello world! -- This is not a windows project!";
+
 #endif // _WIN32
 
 #ifdef __linux__
 	crow::SimpleApp app;
+	// Default Route
+	CROW_ROUTE(app, "/")
+		([](const request& req, response& res) {
+		sendHtml(res, "index.html");
+	});
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
@@ -162,12 +179,8 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();
-			});
-	// Default Route
-	CROW_ROUTE(app, "/")
-		([](const request& req, response& res) {
-		sendHtml(res, "index.html");
 	});
+	
 	/// <summary>
 	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
 	/// </summary>
@@ -231,6 +244,34 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res, string filename) {
 		//createQuiz Query
 		if (filename == "createQuiz.html") {
+
+			Database db;
+
+			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM qp;");
+			nlohmann::json jArray = nlohmann::json::array();
+
+			int i = 0;
+			while (dbRes->next()) { 
+				jArray[i] = dbRes->getString("poolid");
+				i++;
+			}
+
+			//std::cout << "Pool: " << jArray << std::endl;
+			
+			std::ofstream jsonFile;
+			jsonFile.open("../public/json/pools.json");
+			if (jsonFile.is_open()) {
+
+				std::string str = jArray.dump().replace(0, 1, "[");
+                str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
+                jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
+
+			} else {
+				std::cout << "Failed to write question pools to json file" << std::endl;
+			}
+
+			jsonFile.close();
+
 			auto quizTitle = req.url_params.get("quizTitle");
 			auto quizDuration = req.url_params.get("quizDuration");
 			auto quizPool = req.url_params.get("quizPool");
@@ -247,11 +288,52 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			quizEndDateString << quizEndDate ? quizEndDate : "";
 
 			if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
-				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "")) {
-				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()));
+				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
+				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
 				currentQuiz.saveQuiz();
 				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
+				filename = "quizLandingPage.html";
 			}
+
+		} else if(filename == "deleteQuiz.html") {
+
+			Database db;
+
+			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
+	
+			std::ofstream jsonFile;
+			jsonFile.open("../public/json/quizzes.json");
+			if (jsonFile.is_open()) {
+
+				std::string str;
+
+				while (dbRes->next()) { 
+					str += "'" + dbRes->getString("idquiz") + "': {\n";
+					str += "'title': '" + dbRes->getString("title") + "'\n},\n";
+				}
+
+				str.replace(str.length() - 2, str.length(), "\n");
+
+				jsonFile << "{\n" << str << "}";
+
+			} else {
+				std::cout << "Failed to write quizzez to json file" << std::endl;
+			}
+
+			jsonFile.close();
+
+			auto quizID = req.url_params.get("quizID");
+	
+			ostringstream quizIDString;
+
+			quizIDString << quizID ? quizID : "";
+			
+			if (quizIDString.str() != "") {
+				Quiz currentQuiz(stoi(quizIDString.str()));
+				currentQuiz.deleteQuiz();
+				filename = "quizLandingPage.html";
+			}
+
 		}
 
 		sendHtml(res, filename);
@@ -298,4 +380,5 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	return 1;
 
 #endif //__linux__
+
 }
