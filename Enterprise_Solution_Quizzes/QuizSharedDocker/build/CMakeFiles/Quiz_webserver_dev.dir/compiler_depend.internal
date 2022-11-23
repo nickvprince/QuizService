@@ -1890,4 +1890,6 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o
  /usr/include/cppconn/datatype.h
  /usr/include/cppconn/statement.h
  /usr/include/cppconn/resultset.h
+ /QuizSharedDocker/objects/JsonDTO.cpp
+ /QuizSharedDocker/objects/JsonDTO.h
 

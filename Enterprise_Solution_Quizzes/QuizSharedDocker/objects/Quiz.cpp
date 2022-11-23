@@ -1,3 +1,4 @@
+#pragma once
 #include "Quiz.h"
 #ifdef __linux__
 /// <summary>

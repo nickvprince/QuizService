@@ -1702,4 +1702,5 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /usr/include/cppconn/exception.h /usr/include/cppconn/resultset.h \
  /usr/include/cppconn/config.h /usr/include/cppconn/resultset_metadata.h \
  /usr/include/cppconn/datatype.h /usr/include/cppconn/statement.h \
- /usr/include/cppconn/resultset.h
+ /usr/include/cppconn/resultset.h /QuizSharedDocker/objects/JsonDTO.cpp \
+ /QuizSharedDocker/objects/JsonDTO.h

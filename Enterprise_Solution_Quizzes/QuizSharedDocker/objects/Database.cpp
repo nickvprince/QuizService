@@ -1,3 +1,4 @@
+#pragma once
 #include "Database.h"
 #ifdef __linux__
 
