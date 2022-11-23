@@ -238,6 +238,32 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	// Calling html from products pages
 	CROW_ROUTE(app, "/<string>")
 		([](const request& req, response& res, string filename) {
+
+		Database db;
+
+		sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
+
+		std::ofstream jsonFile;
+		jsonFile.open("../public/json/quizzes.json");
+		if (jsonFile.is_open()) {
+
+			std::string str;
+
+			while (dbRes->next()) { 
+				str += "'" + dbRes->getString("idquiz") + "': {\n";
+				str += "'title': '" + dbRes->getString("title") + "'\n},\n";
+			}
+
+			str.replace(str.length() - 2, str.length(), "\n");
+
+			jsonFile << "{\n" << str << "}";
+
+		} else {
+			std::cout << "Failed to write quizzes to json file" << std::endl;
+		}
+
+		jsonFile.close();
+
 		//createQuiz Query
 		if (filename == "createQuiz.html" || filename == "selectQuiz.html") {
 
@@ -327,31 +353,6 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 
 		} else if(filename == "deleteQuiz.html") {
-
-			Database db;
-
-			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
-	
-			std::ofstream jsonFile;
-			jsonFile.open("../public/json/quizzes.json");
-			if (jsonFile.is_open()) {
-
-				std::string str;
-
-				while (dbRes->next()) { 
-					str += "'" + dbRes->getString("idquiz") + "': {\n";
-					str += "'title': '" + dbRes->getString("title") + "'\n},\n";
-				}
-
-				str.replace(str.length() - 2, str.length(), "\n");
-
-				jsonFile << "{\n" << str << "}";
-
-			} else {
-				std::cout << "Failed to write quizzez to json file" << std::endl;
-			}
-
-			jsonFile.close();
 
 			auto quizID = req.url_params.get("quizID");
 	
