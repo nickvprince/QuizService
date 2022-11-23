@@ -68,6 +68,7 @@ function loadQuiz() {
 
     document.getElementById("quizTitle").value = obj["quiz"].title;
     document.getElementById("quizDuration").value = obj["quiz"].duration;
+    document.getElementById("quizPool").value = obj["quiz"].qp_poolid;
     document.getElementById("quizStartDate").value = obj["quiz"].startdate;
     document.getElementById("quizEndDate").value = obj["quiz"].enddate;
 
