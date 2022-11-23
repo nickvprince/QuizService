@@ -14,6 +14,7 @@ using namespace std;
 #include "./objects/json.hpp"
 #include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+#include "objects/JsonDTO.cpp"
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -238,85 +239,81 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	// Calling html from products pages
 	CROW_ROUTE(app, "/<string>")
 		([](const request& req, response& res, string filename) {
+
+		updateQuizJson();
+
 		//createQuiz Query
-		if (filename == "createQuiz.html") {
+		if (filename == "createQuiz.html" || filename == "selectQuiz.html" || filename == "editQuiz.html") {
 
-			Database db;
+			updateQuizPoolJson();
 
-			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM qp;");
-			nlohmann::json jArray = nlohmann::json::array();
+			if (filename == "createQuiz.html") {
+				auto quizTitle = req.url_params.get("quizTitle");
+				auto quizDuration = req.url_params.get("quizDuration");
+				auto quizPool = req.url_params.get("quizPool");
+				auto quizStartDate = req.url_params.get("quizStartDate");
+				auto quizEndDate = req.url_params.get("quizEndDate");
 
-			int i = 0;
-			while (dbRes->next()) { 
-				jArray[i] = dbRes->getString("poolid");
-				i++;
-			}
+				ostringstream quizTitleString, quizDurationString, quizPoolString,
+					quizStartDateString, quizEndDateString;
 
-			//std::cout << "Pool: " << jArray << std::endl;
-			
-			std::ofstream jsonFile;
-			jsonFile.open("../public/json/pools.json");
-			if (jsonFile.is_open()) {
+				quizTitleString << quizTitle ? quizTitle : "";
+				quizDurationString << quizDuration ? quizDuration : "";
+				quizPoolString << quizPool ? quizPool : "";
+				quizStartDateString << quizStartDate ? quizStartDate : "";
+				quizEndDateString << quizEndDate ? quizEndDate : "";
 
-				std::string str = jArray.dump().replace(0, 1, "[");
-                str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
-                jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
-
-			} else {
-				std::cout << "Failed to write question pools to json file" << std::endl;
-			}
-
-			jsonFile.close();
-
-			auto quizTitle = req.url_params.get("quizTitle");
-			auto quizDuration = req.url_params.get("quizDuration");
-			auto quizPool = req.url_params.get("quizPool");
-			auto quizStartDate = req.url_params.get("quizStartDate");
-			auto quizEndDate = req.url_params.get("quizEndDate");
-
-			ostringstream quizTitleString, quizDurationString, quizPoolString,
-				quizStartDateString, quizEndDateString;
-
-			quizTitleString << quizTitle ? quizTitle : "";
-			quizDurationString << quizDuration ? quizDuration : "";
-			quizPoolString << quizPool ? quizPool : "";
-			quizStartDateString << quizStartDate ? quizStartDate : "";
-			quizEndDateString << quizEndDate ? quizEndDate : "";
-
-			if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
-				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
-				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
-				currentQuiz.saveQuiz();
-				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
-				filename = "quizLandingPage.html";
-			}
-
-		} else if(filename == "deleteQuiz.html") {
-
-			Database db;
-
-			sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz;");
-	
-			std::ofstream jsonFile;
-			jsonFile.open("../public/json/quizzes.json");
-			if (jsonFile.is_open()) {
-
-				std::string str;
-
-				while (dbRes->next()) { 
-					str += "'" + dbRes->getString("idquiz") + "': {\n";
-					str += "'title': '" + dbRes->getString("title") + "'\n},\n";
+				if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
+					quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
+					Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
+					currentQuiz.saveQuiz();
+					std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
+					filename = "quizLandingPage.html";
 				}
+			} else if (filename == "editQuiz.html") {
+				auto quizID = req.url_params.get("quizID");
+				auto quizTitle = req.url_params.get("quizTitle");
+				auto quizDuration = req.url_params.get("quizDuration");
+				auto quizPool = req.url_params.get("quizPool");
+				auto quizStartDate = req.url_params.get("quizStartDate");
+				auto quizEndDate = req.url_params.get("quizEndDate");
 
-				str.replace(str.length() - 2, str.length(), "\n");
+				ostringstream quizIDString, quizTitleString, quizDurationString, quizPoolString,
+					quizStartDateString, quizEndDateString;
 
-				jsonFile << "{\n" << str << "}";
+				quizIDString << quizID ? quizID : "";
+				quizTitleString << quizTitle ? quizTitle : "";
+				quizDurationString << quizDuration ? quizDuration : "";
+				quizPoolString << quizPool ? quizPool : "";
+				quizStartDateString << quizStartDate ? quizStartDate : "";
+				quizEndDateString << quizEndDate ? quizEndDate : "";
 
-			} else {
-				std::cout << "Failed to write quizzez to json file" << std::endl;
+				if ((quizIDString.str() != "" && quizTitleString.str() != "" && quizDurationString.str() != "" &&
+					quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
+					Quiz currentQuiz(stoi(quizIDString.str()), quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
+					cout << "----------------------------I got here\n\n";
+					currentQuiz.updateQuiz();
+					std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
+
+					updateQuizJson();
+					updateQuizPoolJson(quizIDString.str());
+
+					filename = "selectQuiz.html";
+				}
+			} else if (filename == "selectQuiz.html") {
+
+				auto quizID = req.url_params.get("quizID");
+				ostringstream quizIDString;
+
+				quizIDString << quizID ? quizID : "";
+
+				if(quizIDString.str() != ""){
+					updateQuizPoolJson(quizIDString.str());
+					
+					filename = "editQuiz.html";
+				}
 			}
-
-			jsonFile.close();
+		} else if(filename == "deleteQuiz.html") {
 
 			auto quizID = req.url_params.get("quizID");
 	

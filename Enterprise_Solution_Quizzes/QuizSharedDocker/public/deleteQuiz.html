@@ -2,10 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <script type="text/javascript" src="./scripts/deleteQuiz.js"></script>
+        <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
+        <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
+        <script type="text/javascript" src="./scripts/redirect.js"></script>
         <title>Quiz Deletion</title>
     </head>
-    <body onload="setMenuOptions()">
+    <body onload="loadQuizList()">
         <input type="" onclick="redirectToAddr('quizLandingPage.html')"value="Return to Quiz Landing Page"/>
         <h1>Delete Quiz</h1>
         <h3>Reminder: All actions submitted on this page are irreversible</h3>
@@ -15,6 +17,7 @@
                 <option></option>
             </select><br>
             <input type="submit" onclick="alertProfessor('Quiz Deletion Submitted')"value="Submit"/>
+            <!--- communication to calendar (REMOVE)-->
         </form>
     </body>
 </html>

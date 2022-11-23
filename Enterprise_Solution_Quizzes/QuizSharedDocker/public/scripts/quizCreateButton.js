@@ -8,8 +8,8 @@ function buttonclick(id){
             location.href = "../createQuiz.html";
             break;
         }
-        case "edit-quiz-button": {
-            location.href = "";
+        case "select-quiz-button": {
+            location.href = "../selectQuiz.html";
             break;
         }
         case "delete-quiz-button": {

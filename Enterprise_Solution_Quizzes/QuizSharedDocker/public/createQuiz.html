@@ -3,16 +3,18 @@
     <head>
         <meta charset="utf-8">
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
+        <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
         <title>Quiz Creation</title>
     </head>
-    <body onload="setMenuOptions()">
-        <h1>Create Quiz</h1>
+    <body onload="loadPool()">
+        <h1>Create Quiz</h1> 
         <form>
             <label for="quizTitle">Title:</label><br>
             <input type="text" id="quizTitle" name="quizTitle"><br>
 
-            <label for="quizDuration">Time Allotted:</label><br>
-            <input type="text" id="quizDuration" name="quizDuration"><br>
+            <label for="quizDuration">Time Allotted (min):</label><br>
+            <input oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+            type="number" id="quizDuration" name="quizDuration" min="1" max="1440" value="60"><br>
 
             <label for="quizPool">Question Pool:</label><br>
             <select id="quizPool" name="quizPool">
@@ -28,6 +30,7 @@
             <br>
 
             <input type="submit" onclick="sendAlert('Quiz Entry Submitted')"value="Submit"/>
+            <!--- communication to calendar (ADD)-->
           </form>
     </body>
 </html>

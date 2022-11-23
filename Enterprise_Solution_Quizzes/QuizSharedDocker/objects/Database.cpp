@@ -1,10 +1,11 @@
+#pragma once
 #include "Database.h"
 #ifdef __linux__
 
 Database::Database() {
 
     this->protocol = "tcp://";
-    this->ipAddress = "192.168.0.246";
+    this->ipAddress = "10.0.0.14";
     this->port = "3306";
     this->username = "root";
     this->password = "admin";

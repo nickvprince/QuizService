@@ -1888,8 +1888,12 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
   /usr/include/cppconn/resultset_metadata.h \
   /usr/include/cppconn/datatype.h \
   /usr/include/cppconn/statement.h \
-  /usr/include/cppconn/resultset.h
+  /usr/include/cppconn/resultset.h \
+  ../objects/JsonDTO.cpp \
+  ../objects/JsonDTO.h
 
+
+../objects/JsonDTO.cpp:
 
 /usr/include/cppconn/statement.h:
 
@@ -4620,6 +4624,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 /usr/include/boost/asio/uses_executor.hpp:
 
 /usr/include/boost/preprocessor/variadic/elem.hpp:
+
+../objects/JsonDTO.h:
 
 /usr/include/boost/asio/traits/require_member.hpp:
 
