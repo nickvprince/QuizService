@@ -1,10 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "./QuestionPool.h"
-#include "mysql_connection.h"
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
+
+#include "QuestionPool.h"
+#ifdef __linux__
 
 /// <summary>
 /// saves the question pool into the QuestionPool directory
@@ -14,22 +10,11 @@ bool QuestionPool::save(int overWrite)
 	{
 	if (overWrite == 2)
 	{
-		try {
-			sql::Driver* driver;
-			sql::Connection* con;
-			sql::Statement* stmt;
-			sql::ResultSet* res;
-
-			/* Create a connection */
-			driver = get_driver_instance();
-			con = driver->connect("tcp://192.168.2.160:3306", "root", "admin");
-			/* Connect to the MySQL test database */
-			con->setSchema("QuizMYSQL");
+		Database db;
 			
-			string poolid = this->ID + "pool";
+			string poolid = this->ID;
 
-			stmt = con->createStatement();
-			stmt->execute("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
+			db.executeQuery("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
 
 			int size = this->questions.size();
 			for (int i = 0; i < size; i++)
@@ -39,30 +24,17 @@ bool QuestionPool::save(int overWrite)
 				string points = to_string(this->questions.at(i).getPoints());
 				std::vector<std::string> options = this->questions.at(i).getAnswers();
 
-				stmt->execute("INSERT INTO question(idquestion, question, points, qp_poolid) VALUES ('"+questionid+"','"+question+"','"+points+"','"+poolid+"')");
+				db.executeQuery("INSERT INTO question(idquestion, question, points, qp_poolid) VALUES ('"+questionid+"','"+question+"','"+points+"','"+poolid+"')");
 
 				for (int b = 0; b < options.size(); b++)
 				{
 					string option = options.at(b);
 					string answer = to_string(this->questions.at(i).getExpected(options.at(b)));
 
-					stmt->execute("INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ('" + option + "','" + answer + "','" + "0" + "','" + questionid + "')");
+					db.executeQuery("INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ('" + option + "','" + answer + "','" + "0" + "','" + questionid + "')");
 				}
 			}
 
-			delete stmt;
-			delete res;
-			delete con;
-		}
-		catch (sql::SQLException& e) {
-			cout << "# ERR: SQLException in " << __FILE__;
-			cout << "(" << __FUNCTION__ << ") on line "
-				<< __LINE__ << endl;
-			cout << "# ERR: " << e.what();
-			cout << " (MySQL error code: " << e.getErrorCode();
-			cout << ", SQLState: " << e.getSQLState() <<
-				" )" << endl;
-		}
 		return true;
 
 	}
@@ -71,12 +43,14 @@ bool QuestionPool::save(int overWrite)
 		bool passed = false;
 		ofstream outfile;
 		FILE* file;
+#endif
 #ifdef __linux__
 		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef _WIN32
 		string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
+#ifdef __linux__
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
 			fclose(file);
 			if (overWrite == false) {
@@ -88,12 +62,14 @@ bool QuestionPool::save(int overWrite)
 			outfile << this->ID << endl;
 			outfile.close();
 		}
+#endif
 #ifdef _WIN32
 		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out); // write pool
 #endif
+#ifdef __linux__
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
 			outfile << "---Question Start---" << endl;
@@ -112,6 +88,7 @@ bool QuestionPool::save(int overWrite)
 		return passed;
 	}
 
+
 /// <summary>
 /// load data from file into this object
 /// </summary>
@@ -121,18 +98,21 @@ bool QuestionPool::load()
 
 	FILE* file;
 	fstream outfile;
+#endif
 #ifdef __linux__
 	string tmp = ("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str();
 #endif
 #ifdef _WIN32
 	string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
+#ifdef __linux__
 	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
 		fclose(file);
 	}
 	else {
 		return false;
 	}
+#endif
 #ifdef __linux__
 	outfile.open(("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str(), std::ios::in);
 #endif
@@ -140,7 +120,7 @@ bool QuestionPool::load()
 
 	outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
 #endif
-	
+#ifdef __linux__
 	if (outfile.is_open()) {   //checking whether the file is open
 		std::vector<answer> answers;
 		std::string title;
@@ -157,12 +137,14 @@ bool QuestionPool::load()
 			}
 
 			int checkIndex;
+#endif
 #ifdef _WIN32
 			checkIndex = 0;
 #endif
 #ifdef __linux__
 			checkIndex = 13;
 #endif
+#ifdef __linux__
 			if (strcmp(tp.c_str(), "---Question Start---") == checkIndex) {
 				index = -1;
 			}
@@ -337,3 +319,4 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 
 
 
+#endif

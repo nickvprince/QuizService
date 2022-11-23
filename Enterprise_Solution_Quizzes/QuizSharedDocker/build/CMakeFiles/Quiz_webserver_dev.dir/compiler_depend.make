@@ -1861,12 +1861,6 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
   /usr/include/boost/date_time/filetime_functions.hpp \
   /usr/include/boost/date_time/posix_time/time_parsers.hpp \
   ../objects/json.hpp \
-  ../objects/QuestionPool.cpp \
-  ../objects/QuestionPool.h \
-  ../objects/Question.cpp \
-  ../objects/Question.h \
-  ../objects/Answer.cpp \
-  ../objects/Answer.h \
   ../objects/Quiz.cpp \
   ../objects/Quiz.h \
   ../objects/Database.cpp \
@@ -1888,8 +1882,18 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
   /usr/include/cppconn/resultset_metadata.h \
   /usr/include/cppconn/datatype.h \
   /usr/include/cppconn/statement.h \
-  /usr/include/cppconn/resultset.h
+  /usr/include/cppconn/resultset.h \
+  ../objects/QuestionPool.cpp \
+  ../objects/QuestionPool.h \
+  ../objects/Question.cpp \
+  ../objects/Question.h \
+  ../objects/Answer.cpp \
+  ../objects/Answer.h
 
+
+../objects/Answer.h:
+
+../objects/QuestionPool.cpp:
 
 /usr/include/cppconn/statement.h:
 
@@ -1910,10 +1914,6 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: ../main.cpp \
 ../objects/Database.cpp:
 
 ../objects/Quiz.cpp:
-
-../objects/Answer.h:
-
-../objects/QuestionPool.cpp:
 
 /usr/include/boost/date_time/posix_time/time_parsers.hpp:
 

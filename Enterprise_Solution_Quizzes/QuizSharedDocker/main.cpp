@@ -12,7 +12,7 @@ using namespace std;
 #include <bits/stdc++.h> 
 #include "crow_all.h"
 #include "./objects/json.hpp"
-#include "./objects/QuestionPool.cpp"
+//#include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 #include <vector>
 #include <fstream>
@@ -139,7 +139,6 @@ int main() {
 #ifdef _WIN32
 
 std::cout <<"Hello world! -- This is not a windows project!";
-
 #endif // _WIN32
 
 #ifdef __linux__
@@ -215,12 +214,8 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 		}
 		bool result;
-		if (overWrite == "2")
-		{
+		if (overWrite != "") {
 			result = q.save(2);
-		}
-		else if (overWrite != "") {
-			result = q.save(1);
 			
 		}
 		else {

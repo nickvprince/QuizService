@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Database.cpp"
+#include "QuestionPool.cpp"
 
 class Quiz {
 	int id;

@@ -6,6 +6,8 @@
 #include "./Question.h"
 #endif
 
+#ifdef __linux__
+
 class QuestionPool {
 	std::string ID;
 	std::vector<question> questions;
@@ -22,3 +24,4 @@ public:
 	bool load();
 	std::string getID();
 };
+#endif

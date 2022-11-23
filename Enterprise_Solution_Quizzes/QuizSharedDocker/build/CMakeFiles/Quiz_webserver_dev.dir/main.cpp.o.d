@@ -1683,15 +1683,8 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /usr/include/boost/date_time/posix_time/conversion.hpp \
  /usr/include/boost/date_time/filetime_functions.hpp \
  /usr/include/boost/date_time/posix_time/time_parsers.hpp \
- /QuizSharedDocker/./objects/json.hpp \
- /QuizSharedDocker/./objects/QuestionPool.cpp \
- /QuizSharedDocker/./objects/./QuestionPool.h \
- /QuizSharedDocker/./objects/././Question.cpp \
- /QuizSharedDocker/./objects/./././Question.h \
- /QuizSharedDocker/./objects/./././Answer.cpp \
- /QuizSharedDocker/./objects/././././Answer.h \
- /QuizSharedDocker/objects/Quiz.cpp /QuizSharedDocker/objects/Quiz.h \
- /QuizSharedDocker/objects/Database.cpp \
+ /QuizSharedDocker/./objects/json.hpp /QuizSharedDocker/objects/Quiz.cpp \
+ /QuizSharedDocker/objects/Quiz.h /QuizSharedDocker/objects/Database.cpp \
  /QuizSharedDocker/objects/Database.h /usr/include/mysql_connection.h \
  /usr/include/cppconn/connection.h /usr/include/cppconn/build_config.h \
  /usr/include/cppconn/warning.h /usr/include/cppconn/sqlstring.h \
@@ -1702,4 +1695,10 @@ CMakeFiles/Quiz_webserver_dev.dir/main.cpp.o: /QuizSharedDocker/main.cpp \
  /usr/include/cppconn/exception.h /usr/include/cppconn/resultset.h \
  /usr/include/cppconn/config.h /usr/include/cppconn/resultset_metadata.h \
  /usr/include/cppconn/datatype.h /usr/include/cppconn/statement.h \
- /usr/include/cppconn/resultset.h
+ /usr/include/cppconn/resultset.h \
+ /QuizSharedDocker/objects/QuestionPool.cpp \
+ /QuizSharedDocker/objects/QuestionPool.h \
+ /QuizSharedDocker/objects/./Question.cpp \
+ /QuizSharedDocker/objects/././Question.h \
+ /QuizSharedDocker/objects/././Answer.cpp \
+ /QuizSharedDocker/objects/./././Answer.h
