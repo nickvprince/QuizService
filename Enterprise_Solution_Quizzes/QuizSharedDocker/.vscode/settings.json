@@ -80,6 +80,9 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "coroutine": "cpp",
-        "resumable": "cpp"
+        "resumable": "cpp",
+        "string_view": "cpp",
+        "xthread": "cpp",
+        "xmemory0": "cpp"
     }
 }

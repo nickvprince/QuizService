@@ -239,7 +239,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	CROW_ROUTE(app, "/<string>")
 		([](const request& req, response& res, string filename) {
 		//createQuiz Query
-		if (filename == "createQuiz.html") {
+		if (filename == "createQuiz.html" || filename == "selectQuiz.html") {
 
 			Database db;
 
@@ -257,9 +257,10 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			std::ofstream jsonFile;
 			jsonFile.open("../public/json/pools.json");
 			if (jsonFile.is_open()) {
-
+				//not being used
 				std::string str = jArray.dump().replace(0, 1, "[");
                 str.replace(jArray.dump().length() - 1, jArray.dump().length(), "]");
+
                 jsonFile << "{'pools': " << jArray.dump() << "}\r\n";
 
 			} else {
@@ -268,27 +269,61 @@ std::cout <<"Hello world! -- This is not a windows project!";
 
 			jsonFile.close();
 
-			auto quizTitle = req.url_params.get("quizTitle");
-			auto quizDuration = req.url_params.get("quizDuration");
-			auto quizPool = req.url_params.get("quizPool");
-			auto quizStartDate = req.url_params.get("quizStartDate");
-			auto quizEndDate = req.url_params.get("quizEndDate");
+			if (filename == "createQuiz.html") {
+				auto quizTitle = req.url_params.get("quizTitle");
+				auto quizDuration = req.url_params.get("quizDuration");
+				auto quizPool = req.url_params.get("quizPool");
+				auto quizStartDate = req.url_params.get("quizStartDate");
+				auto quizEndDate = req.url_params.get("quizEndDate");
 
-			ostringstream quizTitleString, quizDurationString, quizPoolString,
-				quizStartDateString, quizEndDateString;
+				ostringstream quizTitleString, quizDurationString, quizPoolString,
+					quizStartDateString, quizEndDateString;
 
-			quizTitleString << quizTitle ? quizTitle : "";
-			quizDurationString << quizDuration ? quizDuration : "";
-			quizPoolString << quizPool ? quizPool : "";
-			quizStartDateString << quizStartDate ? quizStartDate : "";
-			quizEndDateString << quizEndDate ? quizEndDate : "";
+				quizTitleString << quizTitle ? quizTitle : "";
+				quizDurationString << quizDuration ? quizDuration : "";
+				quizPoolString << quizPool ? quizPool : "";
+				quizStartDateString << quizStartDate ? quizStartDate : "";
+				quizEndDateString << quizEndDate ? quizEndDate : "";
 
-			if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
-				quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
-				Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
-				currentQuiz.saveQuiz();
-				std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
-				filename = "quizLandingPage.html";
+				if ((quizTitleString.str() != "" && quizDurationString.str() != "" &&
+					quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
+					Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
+					currentQuiz.saveQuiz();
+					std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
+					filename = "quizLandingPage.html";
+				}
+			} else if (filename == "selectQuiz.html") {
+
+				auto quizID = req.url_params.get("quizID");
+				ostringstream quizIDString;
+
+				quizIDString << quizID ? quizID : "";
+
+				if(quizIDString.str() != ""){
+					dbRes = db.executeQuery("SELECT * FROM quiz WHERE idquiz = '" + quizIDString.str() + "';");
+					nlohmann::json jArray;
+
+					while(dbRes->next()){
+						jArray["id"] = dbRes->getString("idquiz");
+						jArray["qp_poolid"] = dbRes->getString("qp_poolid");
+						jArray["title"] = dbRes->getString("title");
+						jArray["startdate"] = dbRes->getString("startdate");
+						jArray["enddate"] = dbRes->getString("enddate");
+						jArray["duration"] = dbRes->getString("duration");
+					}
+
+					std::ofstream jsonFile;
+					jsonFile.open("../public/json/currentQuiz.json");
+
+					if (jsonFile.is_open()) {
+						jsonFile << "{\"quiz\": " << jArray.dump() << "}\r\n";
+					} else {
+						std::cout << "Failed to write question pools to json file" << std::endl;
+					}
+
+					jsonFile.close();
+				}
+
 			}
 
 		} else if(filename == "deleteQuiz.html") {

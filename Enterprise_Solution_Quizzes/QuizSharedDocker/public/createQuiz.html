@@ -11,8 +11,9 @@
             <label for="quizTitle">Title:</label><br>
             <input type="text" id="quizTitle" name="quizTitle"><br>
 
-            <label for="quizDuration">Time Allotted:</label><br>
-            <input type="text" id="quizDuration" name="quizDuration"><br>
+            <label for="quizDuration">Time Allotted (min):</label><br>
+            <input oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+            type="number" id="quizDuration" name="quizDuration" min="1" max="1440" value="60"><br>
 
             <label for="quizPool">Question Pool:</label><br>
             <select id="quizPool" name="quizPool">
