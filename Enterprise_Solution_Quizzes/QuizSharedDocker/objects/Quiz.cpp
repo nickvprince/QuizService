@@ -16,6 +16,17 @@ Quiz::Quiz(std::string title, std::string startDate, std::string endDate, int du
 	this->pointsAchieved = 0;
 }
 
+Quiz::Quiz(int id, std::string title, std::string startDate, std::string endDate, int duration, std::string pool) {
+	this->id = id;
+	this->title = title;
+	this->startDate = startDate;
+	this->endDate = endDate;
+	this->duration = duration;
+	this->pool = pool;
+	this->totalPoints = 0;
+	this->pointsAchieved = 0;
+}
+
 Quiz::Quiz(int id) {
 	this->id = id;
 	this->title = "";
@@ -64,17 +75,22 @@ bool Quiz::saveQuiz() {
 	std::to_string(this->duration) + "," +
 	std::to_string(this->totalPoints) + ");");
 
-
-	//For testing - will be removed
-	std::ofstream output;
-	output.open("../public/quizzes/quizList.txt", std::ios::app);
-	if (!output) {
-		return false;
-	}
-	output << this->title << " | " << this->duration << " | " << this->pool << " | " << this->startDate << " | " << this->endDate << std::endl;
-	output.close();
 	return true;
 
+}
+
+bool Quiz::updateQuiz() {
+
+	Database db;
+
+	db.executeQuery("UPDATE quiz SET qp_poolid = '" + this->pool + 
+	"', title = '" + this->title +
+	"', startdate = '" + this->startDate +
+	"', enddate = '" + this->endDate +
+	"', duration = " + std::to_string(this->duration) +
+	" WHERE idquiz = " + std::to_string(this->id) + ";");
+
+	return true;
 }
 
 bool Quiz::deleteQuiz() {

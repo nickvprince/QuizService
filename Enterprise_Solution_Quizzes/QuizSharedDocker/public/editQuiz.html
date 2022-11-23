@@ -4,11 +4,14 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
+        <script type="text/javascript" src="./scripts/redirect.js"></script>
         <title>Edit Quiz</title>
     </head>
-    <body onload="loadPool();loadQuiz()">
+    <body onload="loadPool();loadQuiz();changeUrl('editQuiz.html')">
         <h1>Edit Quiz</h1>
         <form>
+            <input hidden type="number" id="quizID" name="quizID" value="0">
+
             <label for="quizTitle">Title:</label><br>
             <input type="text" id="quizTitle" name="quizTitle"><br>
 
@@ -29,7 +32,7 @@
 
             <br>
 
-            <input type="submit" onclick="sendAlert('Quiz Entry Submitted')"value="Submit"/>
+            <input type="submit" onclick="sendAlert('Quiz Entry Submitted'); redirectToAddr('../editQuiz.html')"value="Submit"/>
           </form>
     </body>
 </html>

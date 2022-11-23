@@ -66,6 +66,7 @@ function loadQuiz() {
 
     const obj = JSON.parse(xmlHttp.responseText);
 
+    document.getElementById("quizID").value = obj["quiz"].id;
     document.getElementById("quizTitle").value = obj["quiz"].title;
     document.getElementById("quizDuration").value = obj["quiz"].duration;
     document.getElementById("quizPool").value = obj["quiz"].qp_poolid;
