@@ -346,8 +346,8 @@ std::cout <<"Hello world! -- This is not a windows project!";
 					} else {
 						std::cout << "Failed to write question pools to json file" << std::endl;
 					}
-
 					jsonFile.close();
+					filename = "editQuiz.html";
 				}
 
 			}

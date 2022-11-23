@@ -57,3 +57,18 @@ function loadQuizList() {
     }
 
 }
+
+function loadQuiz() {
+    // Look for the corresponding GET request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "../json/currentQuiz.json", false);
+    xmlHttp.send(null);
+
+    const obj = JSON.parse(xmlHttp.responseText);
+
+    document.getElementById("quizTitle").value = obj["quiz"].title;
+    document.getElementById("quizDuration").value = obj["quiz"].duration;
+    document.getElementById("quizStartDate").value = obj["quiz"].startdate;
+    document.getElementById("quizEndDate").value = obj["quiz"].enddate;
+
+}
