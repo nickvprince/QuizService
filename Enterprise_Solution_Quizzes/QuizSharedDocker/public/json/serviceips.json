@@ -8,7 +8,7 @@
     "port": 8080
   },
   "calendar": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.0.0.79",
     "port": 8080
   },
   "classlist": {

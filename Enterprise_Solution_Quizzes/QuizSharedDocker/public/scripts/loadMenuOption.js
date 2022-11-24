@@ -7,8 +7,6 @@ function loadPool() {
     const invalidjson = xmlHttp.responseText.slice(0, xmlHttp.responseText.indexOf("\n"));
     const validJson = invalidjson.replaceAll(`'`, `"`);
 
-    console.log(validJson);
-
     const obj = JSON.parse(validJson);  // JSON Object
     const str = JSON.stringify(obj);    // String Version
     indexOBracket = str.indexOf('[');   // Get Index Of Brackets

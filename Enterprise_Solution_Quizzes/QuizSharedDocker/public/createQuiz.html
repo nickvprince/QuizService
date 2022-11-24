@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
+        <script type="text/javascript" src="./scripts/communication.js"></script>
         <title>Quiz Creation</title>
     </head>
     <body onload="loadPool()">
@@ -28,8 +29,8 @@
             <input type="date" id="quizEndDate" name="quizEndDate"><br>
 
             <br>
-
-            <input type="submit" onclick="sendAlert('Quiz Entry Submitted')"value="Submit"/>
+            <script>pushToCalendar()</script>
+            <input type="submit" onclick="sendAlert('Quiz Entry Submitted'); pushToCalendar()"value="Submit"/>
             <!--- communication to calendar (ADD)-->
           </form>
     </body>
