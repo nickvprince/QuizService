@@ -109,13 +109,59 @@ function nextID(b) { // get the next available ID
     });
     return x;
 }
+function alter(ID) {
+    console.log("Change : " + ID);
+    var ids = document.querySelectorAll('[id]');
 
+    Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
+        // "el" is your element
+        if (el.id.toString().includes(ID + "-")) {
+            if (document.getElementById(el.id).getAttribute("type").toString() == "radio") {
+                document.getElementById(el.id).setAttribute("type", "checkbox")
+            } else {
+                document.getElementById(el.id).setAttribute("type", "radio")
+            }
+        }
+    });
+
+}
+function removeQuestion(buttonID) {
+    console.log("Remove : " + buttonID);
+    document.getElementById(buttonID).remove();
+    var ids = document.querySelectorAll('[id]');
+
+    Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
+        // "el" is your element
+        if (el.id.toString().includes(buttonID + "-") || el.id.toString().includes(buttonID + ":")) {
+            document.getElementById(el.id).remove();
+        }
+    });
+}
 
 function AddQuestion(i, k) {
     var t = String(i);
     var b = document.createElement('input');
     var d = document.createElement('input'); // create a button and textfield for a question, button allows you to add options
     var z = document.createElement('br');
+
+
+    // delete button
+    var deleteQuestionButton = document.createElement('input');
+    deleteQuestionButton.setAttribute("type", "button");
+    deleteQuestionButton.setAttribute("id", buttonID);
+    deleteQuestionButton.setAttribute("value", "Remove Question");
+    deleteQuestionButton.setAttribute("onclick", "removeQuestion(" + buttonID +")"); // set button function to use params of this button id and if its multiple answer or multiple choice.
+
+    //switch between multiple answer and multiple choice
+    var deleteQuestionButton = document.createElement('input');
+    deleteQuestionButton.setAttribute("type", "button");
+    deleteQuestionButton.setAttribute("id", buttonID);
+    deleteQuestionButton.setAttribute("value", "Change Type");
+    deleteQuestionButton.setAttribute("onclick", "alter(" + buttonID + ")"); // set button function to use params of this button id and if its multiple answer or multiple choice.
+
+
+
+
     d.setAttribute("type", "text");
     d.setAttribute("value", String(k));
     d.setAttribute("id", "Q" + formID);
@@ -129,6 +175,7 @@ function AddQuestion(i, k) {
     formID++;
     i.appendChild(d);
     i.appendChild(b);
+    i.appendChild(deleteQuestionButton);
    
     document.getElementById("insertHere").insertAdjacentElement("afterend", i);
     document.getElementById("insertHere").insertAdjacentElement("afterend", z); // add elements
