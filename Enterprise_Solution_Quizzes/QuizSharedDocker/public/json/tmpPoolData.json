@@ -1,15 +1,10 @@
 {
-"Hello": {
-"One": "false", 
-"Two": "false", 
-"Three": "false", 
-"Answer": "false", 
-"Answer2": "true"
+"Nick pick Dog and cat": {
+"Cat": "true", 
+"Dog": "true"
 },
-"Goodbye": {
-"One": "false", 
-"Two": "true", 
-"Three": "true", 
-"Answer": "false"
+"Nick pick Cat": {
+"Dog": "false", 
+"Cat": "true"
 }
 }
