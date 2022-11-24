@@ -6,35 +6,12 @@ function start() { // on startup if query string it created then alert the user 
     const urlParams = new URLSearchParams(location.search);
     for (const [key, value] of urlParams) {
         if (key == "created" && value == "true") {
-            alert("Quiz Created");
+            alert("Question Pool Created");
         }
         else if (key == "created" && value == "false") { // if query is false then alert user pool failed to create
-            alert("Quiz not Created");
+            alert("Question Pool not Created");
         }
     }
-}
-function AddQuestion(i) {
-    var t = String(i);
-    var b = document.createElement('input');
-    var d = document.createElement('input'); // create a button and textfield for a question, button allows you to add options
-    var z = document.createElement('br');
-    d.setAttribute("type", "text");
-    d.setAttribute("value", "question" + formID);
-    d.setAttribute("id", "Q" + formID);
-    b.setAttribute("type", "button");
-    b.setAttribute("id", buttonID);
-    b.setAttribute("value", "Add option");
-    b.setAttribute("onclick", "option(" + buttonID + "," + t + ")"); // set button function to use params of this button id and if its multiple answer or multiple choice.
-    buttonID++;
-    var i = document.createElement('form');
-    i.setAttribute("id", formID);
-    formID++;
-    i.appendChild(d);
-    i.appendChild(b);
-    document.getElementById("insertHere").insertAdjacentElement("afterend", i);
-    document.getElementById("insertHere").insertAdjacentElement("afterend", z); // add elements
-    document.getElementById((formID - 1) + "Q").insertAdjacentElement("beforebegin", z);
-
 }
 
 function Enter() { // submit question pool to be saved
@@ -116,35 +93,7 @@ function Enter() { // submit question pool to be saved
         window.location.replace('/savepool' + tmp);
     
 }
-function option(i, c) { // add option to a question
-    var n = document.createElement('br');
-    var b = String(i);
-    var i = document.createElement('input');
-    var z = document.createElement('input'); // add a textfield and either a radio button or check box
-    i.setAttribute("id", b + "-" + nextID(b + "-").toString());
-    i.setAttribute("name", b);
-    z.setAttribute("type", "text");
-    z.setAttribute("value", "answer");
-    z.setAttribute("id", b + ":" + nextID(b + ":").toString());
-    optionID++;
-    if (c == 0) { // add radio button
-        i.setAttribute("type", "radio")
 
-        document.getElementById(b).insertAdjacentElement("afterend", i);
-        document.getElementById(b).insertAdjacentElement("afterend", z);
-        document.getElementById(b).insertAdjacentElement("afterend", n);
-    }
-    else if (c == 1) { // add checkbox
-        i.setAttribute("type", "checkbox")
-        document.getElementById(b).insertAdjacentElement("afterend", i);
-        document.getElementById(b).insertAdjacentElement("afterend", z);
-        document.getElementById(b).insertAdjacentElement("afterend", n);
-    }
-    else {
-        alert("Unexpected input");
-    }
-
-}
 
 function nextID(b) { // get the next available ID
 
@@ -171,7 +120,7 @@ function AddQuestion(i, k) {
     b.setAttribute("type", "button");
     b.setAttribute("id", buttonID);
     b.setAttribute("value", "add option");
-    b.setAttribute("onclick", "option(" + buttonID + "," + t + ")"); // set button function to use params of this button id and if its multiple answer or multiple choice.
+    b.setAttribute("onclick", "option(" + buttonID + "," + t + ", 'Answer')"); // set button function to use params of this button id and if its multiple answer or multiple choice.
     buttonID++;
     var i = document.createElement('form');
     i.setAttribute("id", formID);

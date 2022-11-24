@@ -1,3 +1,0 @@
-/QuizSharedDocker/Build/CMakeFiles/Quiz_webserver_dev.dir
-/QuizSharedDocker/Build/CMakeFiles/edit_cache.dir
-/QuizSharedDocker/Build/CMakeFiles/rebuild_cache.dir
