@@ -12,27 +12,35 @@ function getExecutionMode(){
     var ip = serviceObj["adminactivities"].ip;
     var port = serviceObj["adminactivities"].port;
 
-    var professor;
-
+    var professor = false;
+    var professorObj;
     //get request mode
     try {
         var xmlHttpMODE = new XMLHttpRequest();
         xmlHttpMODE.open("GET", "http://" + ip + ":" + port + "/modeofoperation", false);
+        xmlHttpMODE.timeout();
+        xmlHttpMODE
         xmlHttpMODE.send(null);
     
         // Parse the services json file
-        professor = xmlHttpMODE.responseText;
+        professorJson = xmlHttpIP.responseText;
+        professorObj = JSON.parse(professorJson);
     } catch (error) {
-        professor = "true";
+        professor = true;
     }
 
-    if(professor == "true") {
-        redirectToAddr("../index.html")
+    if(professor == false) {
+        if(professorObj["modeofoperation"] == true) {
+            redirectToAddr("../index.html");
+        } else {
+            redirectToAddr("../studentIndex.html");
+        }
     } else {
-        redirectToAddr("../studentIndex.html")
+        redirectToAddr("../index.html");
     }
 }
-
+    
 function redirectToAddr (addr) {
     window.location.replace(addr);
 }
+
