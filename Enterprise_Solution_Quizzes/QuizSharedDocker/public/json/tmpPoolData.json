@@ -1,10 +1,6 @@
 {
-"Nick pick Dog and cat": {
-"Cat": "true", 
-"Dog": "true"
-},
-"Nick pick Cat": {
-"Dog": "false", 
-"Cat": "true"
+"ds": {
+"hrrh": "true", 
+"gfg": "true"
 }
 }

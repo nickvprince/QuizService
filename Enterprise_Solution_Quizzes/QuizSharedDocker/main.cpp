@@ -12,7 +12,7 @@ using namespace std;
 #include <bits/stdc++.h> 
 #include "crow_all.h"
 #include "./objects/json.hpp"
-#include "./objects/QuestionPool.cpp"
+//#include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 #include "objects/JsonDTO.cpp"
 #include <vector>
@@ -150,7 +150,6 @@ int main() {
 #ifdef _WIN32
 
 std::cout <<"Hello world! -- This is not a windows project!";
-
 #endif // _WIN32
 
 #ifdef __linux__
@@ -160,10 +159,11 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res) {
 		sendHtml(res, "index.html");
 	});
+	
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
-		pool.load(); // load pool
+		pool.loadFromDb(); // load pool
 		std::ofstream jsonFile;
 		jsonFile.open("../public/json/tmpPoolData.json");//fill temp file
 		if (jsonFile.is_open()) {
@@ -216,7 +216,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		auto isOverwrite = req.url_params.get("type");
 		ostringstream isOverwriteString;
 		isOverwriteString << isOverwrite ? isOverwrite : "";
-		string overWrite = isOverwriteString.str();
+		string overWrite = "2";
 		std::string poolname = req.url_params.get("pool");
 		QuestionPool q(poolname);
 		int countFrom = 100; // max questions
@@ -254,14 +254,17 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		}
 		bool result;
 		if (overWrite != "") {
-			result = q.save(1);
-
+			result = q.save(2);
+			
 		}
 		else {
 			result = q.save(0);
 		}
-		if (result == true && overWrite != "") {
 
+		overWrite = "";
+
+		if (result == true && overWrite != "") {
+			updateQuizPoolJson();
 			sendHtml(res, "selectPool.html");
 		}
 		else if (result == true) {
@@ -278,11 +281,10 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res, string filename) {
 
 		updateQuizJson();
+		updateQuizPoolJson();
 
 		//createQuiz Query
 		if (filename == "createQuiz.html" || filename == "selectQuiz.html" || filename == "editQuiz.html") {
-
-			updateQuizPoolJson();
 
 			if (filename == "createQuiz.html") {
 				auto quizTitle = req.url_params.get("quizTitle");
@@ -397,6 +399,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	/// <returns></returns>
 	CROW_ROUTE(app, "/QuestionPool/<string>/<string>")
 		([](const request& req, response& res, string folder, string name) {
+		updateQuizPoolJson();
 		sendPool(res, folder+"/"+name);
 	});
 

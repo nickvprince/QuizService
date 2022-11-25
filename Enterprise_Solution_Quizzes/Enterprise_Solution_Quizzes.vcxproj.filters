@@ -36,6 +36,9 @@
     <ClCompile Include="QuizSharedDocker\objects\QuestionPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuizSharedDocker\objects\Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QuizSharedDocker\objects\Answer.h">
@@ -48,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QuizSharedDocker\objects\QuestionPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuizSharedDocker\objects\Database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuizSharedDocker\objects\json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuizSharedDocker\objects\json_fwd.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

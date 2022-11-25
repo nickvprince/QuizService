@@ -1,20 +1,59 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "./QuestionPool.h"
+#pragma once__
+#include "QuestionPool.h"
+#ifdef __linux__
+
 /// <summary>
 /// saves the question pool into the QuestionPool directory
 /// </summary>
 /// <returns></returns>
 bool QuestionPool::save(int overWrite)
 	{
+	if (overWrite == 2)
+	{
+		Database db;
+			
+			string poolid = this->ID;
+
+			db.executeQuery("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
+
+			int size = this->questions.size();
+			for (int i = 0; i < size; i++)
+			{
+				string question = this->questions.at(i).getQuestion();
+				string questionid = to_string(this->questions.at(i).getQuestionID());
+				string points = to_string(this->questions.at(i).getPoints());
+				std::vector<std::string> options = this->questions.at(i).getAnswers();
+
+				db.executeQuery("INSERT INTO question(idquestion, question, points, qp_poolid) VALUES ('"+questionid+"','"+question+"','"+points+"','"+poolid+"')");
+
+				for (int b = 0; b < options.size(); b++)
+				{
+					string option = options.at(b);
+					string answer = to_string(this->questions.at(i).getExpected(options.at(b)));
+
+					db.executeQuery("INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ('" + option + "','" + answer + "','" + "0" + "','" + questionid + "')");
+				}
+			}
+
+
+
+
+		return true;
+
+	}
+
+
 		bool passed = false;
 		ofstream outfile;
 		FILE* file;
+#endif
 #ifdef __linux__
 		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef _WIN32
 		string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
+#ifdef __linux__
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
 			fclose(file);
 			if (overWrite == false) {
@@ -26,12 +65,14 @@ bool QuestionPool::save(int overWrite)
 			outfile << this->ID << endl;
 			outfile.close();
 		}
+#endif
 #ifdef _WIN32
 		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out); // write pool
 #endif
+#ifdef __linux__
 		int size = this->questions.size();
 		for(int i=0; i < size; i++) {
 			outfile << "---Question Start---" << endl;
@@ -50,6 +91,7 @@ bool QuestionPool::save(int overWrite)
 		return passed;
 	}
 
+
 /// <summary>
 /// load data from file into this object
 /// </summary>
@@ -59,18 +101,21 @@ bool QuestionPool::load()
 
 	FILE* file;
 	fstream outfile;
+#endif
 #ifdef __linux__
 	string tmp = ("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str();
 #endif
 #ifdef _WIN32
 	string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
+#ifdef __linux__
 	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
 		fclose(file);
 	}
 	else {
 		return false;
 	}
+#endif
 #ifdef __linux__
 	outfile.open(("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str(), std::ios::in);
 #endif
@@ -78,7 +123,7 @@ bool QuestionPool::load()
 
 	outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
 #endif
-	
+#ifdef __linux__
 	if (outfile.is_open()) {   //checking whether the file is open
 		std::vector<answer> answers;
 		std::string title;
@@ -95,12 +140,14 @@ bool QuestionPool::load()
 			}
 
 			int checkIndex;
+#endif
 #ifdef _WIN32
 			checkIndex = 0;
 #endif
 #ifdef __linux__
 			checkIndex = 13;
 #endif
+#ifdef __linux__
 			if (strcmp(tp.c_str(), "---Question Start---") == checkIndex) {
 				index = -1;
 			}
@@ -151,8 +198,66 @@ bool QuestionPool::load()
 	if (this->questions.size() == 0) {
 		return false;
 	}
+	return true;
+}
+	
+
+bool QuestionPool::loadFromDb(){
+		Database db;
+		std::vector<answer> answers;
+		std::string title;
+		float points = 0;
+		std::string Answer;
+		int expected;
+		std::string idquestion;
+		bool exp = false;
+
+		
+		sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + this->ID + "';");
+
+		while (dbRes->next())
+		{
+			title = dbRes->getString("question");
+			points = stof(dbRes->getString("points"));
+
+			question q(title, points);
+
+			idquestion = dbRes->getString("idquestion");
+
+			sql::ResultSet* dbRes2 = db.executeQuery("SELECT * FROM answer where question_idquestion = '" + idquestion + "';");
+			while (dbRes2->next())
+			{
+				Answer = dbRes2->getString("answer");
+				expected = stoi(dbRes2->getString("expected"));
+				
+				if (expected == 1)
+				{
+					exp = true;
+				}
+
+				answer ans(Answer, exp, stoi(idquestion));
+
+				answers.push_back(ans);	
+			}
+			while (!answers.empty())
+			{
+				q.addAnswer(answers.at(answers.size() - 1).getAnswer(), answers.at(answers.size() - 1).getExpected());
+				answers.pop_back();
+			}
+
+			this->questions.push_back(q);
+
+		}
+		if (questions.size() == 0)
+		{
+			return false;
+		}
 		return true;
 	}
+
+
+
+
 
 /// <summary>
 /// gets the current pool name
@@ -274,4 +379,4 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 	}
 
 
-
+#endif
