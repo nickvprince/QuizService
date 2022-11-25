@@ -26,7 +26,7 @@ function getExecutionMode(){
         professor = "true";
     }
 
-    if(professor == "tr7ue") {
+    if(professor == "true") {
         redirectToAddr("../index.html")
     } else {
         redirectToAddr("../studentIndex.html")
