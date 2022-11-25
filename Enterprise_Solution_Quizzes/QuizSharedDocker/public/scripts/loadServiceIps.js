@@ -29,8 +29,3 @@ function redirectToServiceAddr (addr) {
     console.log(addr);
     window.location.replace("https://" + addr);
 }
-
-
-
-
-

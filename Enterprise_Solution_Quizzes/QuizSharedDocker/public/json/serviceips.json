@@ -1,42 +1,42 @@
 {
   "assignments": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.218.86",
     "port": 8080
   },
   "attendance": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.218.63",
     "port": 8080
   },
   "calendar": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.218.137",
     "port": 8080
   },
   "classlist": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.218.57",
     "port": 8080
   },
   "grades": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.84.251",
     "port": 8080
   },
   "groups": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.82.212",
     "port": 8080
   },
   "rubrics": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.0.0",
     "port": 8080
   },
   "quizzes": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.229.5",
     "port": 8080
   },
   "surveys": {
-    "ip": "xxx.xxx.xxx.xxx",
+    "ip": "10.192.218.242",
     "port": 8080
   },
-  "admimactivities": {
-    "ip": "xxx.xxx.xxx.xxx",
+  "adminactivities": {
+    "ip": "10.192.85.105",
     "port": 8080
   }
 }
