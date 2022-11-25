@@ -5,7 +5,6 @@
 #ifdef _WIN32
 #include "./Question.h"
 #endif
-
 #ifdef __linux__
 
 class QuestionPool {
@@ -24,5 +23,7 @@ public:
 	bool load();
 	bool loadFromDb();
 	std::string getID();
+	bool deletePool(std::string);
 };
+
 #endif

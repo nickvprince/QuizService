@@ -159,7 +159,20 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res) {
 		sendHtml(res, "getMode.html");
 	});
-	
+
+	/// <summary>
+	/// used to delete pools from the filesystem
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/deletePool/<string>").methods(crow::HTTPMethod::POST)
+		([](const request& req, response& res, string poolname) {
+
+		QuestionPool pool(poolname);
+		pool.deletePool(pool.getID());
+		sendHtml(res, "questionPool.html");
+			});
+
+
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
@@ -173,19 +186,19 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			for (int i = 0; i < questions.size(); i++) {
 				std::vector<std::string> answers = pool.getOptions(questions.at(i));
 				std::string tmp = questions.at(i);
-				tmp.pop_back();
+			
 				jsonFile << '"' + tmp + '"' + ": {\n"; // write question
 
 				for (int b = 0; b < answers.size(); b++) {
 					string str = "";
 					if (b == answers.size() - 1) {
 						std::string tmp2 = answers.at(b);
-						tmp2.pop_back();
+						
 						str = '"' + tmp2 + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + "\n";
 					}
 					else {
 						std::string tmp2 = answers.at(b);
-						tmp2.pop_back();
+
 						str = '"' + tmp2 + '"' + ": " + '"' + boolToString(pool.getExpected(questions.at(i), answers.at(b))) + "" + '"' + ", \n";
 					}
 					jsonFile << str;
@@ -207,11 +220,12 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		sendJson(res, "../json/tmpPoolData.json");
 	});
 	
+
 	/// <summary>
 	/// Savepool is called from questionPool.html. This function saves a question pool objects to file and returns to questionPool page with either a pass or fail query string
 	/// </summary>
 	/// <returns></returns>
-	CROW_ROUTE(app, "/savepool")
+	CROW_ROUTE(app, "/savepool").methods(crow::HTTPMethod::GET)
 		([](const request& req, response& res) {
 		auto isOverwrite = req.url_params.get("type");
 		ostringstream isOverwriteString;
@@ -255,7 +269,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		bool result;
 		if (overWrite != "") {
 			result = q.save(2);
-			
+			std::cout << "SAVING WITH INSERT";
 		}
 		else {
 			result = q.save(0);

@@ -92,7 +92,13 @@ function Enter() { // submit question pool to be saved
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host; // direct to new page with all data in query string
     alert(tmp);
-        window.location.replace('/savepool' + tmp);
+    var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open("GET", '/savepool' + tmp, false);
+    
+  
+    xmlHttp.send(null);
+    window.location.replace('../index.html' + tmp);
     
 }
 

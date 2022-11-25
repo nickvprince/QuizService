@@ -1,6 +1,8 @@
 
 function load() {
 
+
+
     const urlParams = new URLSearchParams(location.search);
     var b = document.createElement('input');
     b.setAttribute("type", "button");

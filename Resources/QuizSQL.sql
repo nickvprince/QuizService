@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`question` (
   CONSTRAINT `fk_question_qp1`
     FOREIGN KEY (`qp_poolid`)
     REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
