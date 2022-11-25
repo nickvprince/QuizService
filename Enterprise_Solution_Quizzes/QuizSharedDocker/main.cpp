@@ -161,6 +161,67 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	});
 
 	/// <summary>
+	/// submit a quiz to the gradebook
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/submitQuiz").methods(crow::HTTPMethod::GET)
+		([](const request& req, response& res) {
+
+
+		std::string poolname = req.url_params.get("pool");
+		QuestionPool pool(poolname);
+		pool.loadFromDb();
+		pool.print();
+		/********************************
+		*** Pool data start *************
+		*********************************/
+		QuestionPool q(poolname);
+		int countFrom = 100; // max questions
+		std::vector<char*> questions = req.url_params.get_list("Questions");
+		for (int i = 0; i < questions.size(); i++) {
+
+			q.addQuestion(questions.at(i), 1); // add question to pool
+
+			std::vector<char*> answers = req.url_params.get_list("Q" + to_string(countFrom) + "A"); // options for question || alter this |	Start at 100 work backwards if size is zero assume no answers and move on until answers are found work until 0 ( note 100 max questions and speed hinge {fix later})
+
+			while (answers.size() == 0) {
+				countFrom--;
+				answers = req.url_params.get_list("Q" + to_string(countFrom) + "A");
+			}
+			//std::cout << "Answers : Q" << countFrom << "A\n";
+			countFrom--;
+			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(countFrom + 1)); // selected for question || alter this
+			//std::cout << "Selected : Checked" << (countFrom + 1) << "\n";
+			for (int b = 0; b < answers.size(); b++) { // add all options to question
+				bool selectTrueFalse = false;
+				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
+					if (strcmp(answers.at(b), selected.at(c)) == 0) { // if match found
+						selectTrueFalse = true;
+					}
+				}
+				if (selectTrueFalse == true) { // if this answer is supposed to be true add question with expected true
+					q.addOption(questions.at(i), answers.at(b), 1);
+				}
+				else {
+					q.addOption(questions.at(i), answers.at(b), 0); // else add answer with expected false
+				}
+				selectTrueFalse = false;
+			}
+
+		}
+		q.print();
+		/********************************
+		*** Pool data end *************
+		*********************************/
+		
+		// q = students answers pool && pool = fromDB ie:/ pool is what the answers are supposed to be and q is what the student selected -- under expected instead of selected
+
+
+		res.end();
+	});
+
+
+	/// <summary>
 	/// used to delete pools from the filesystem
 	/// </summary>
 	/// <returns></returns>

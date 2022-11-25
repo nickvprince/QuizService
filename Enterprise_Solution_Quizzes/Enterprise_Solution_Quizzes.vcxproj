@@ -47,7 +47,10 @@
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js" />
     <None Include="QuizSharedDocker\public\scripts\selectPool.js" />
+    <None Include="QuizSharedDocker\public\scripts\takeQuiz.js" />
     <None Include="QuizSharedDocker\public\selectPool.html" />
+    <None Include="QuizSharedDocker\public\studentIndex.html" />
+    <None Include="QuizSharedDocker\public\takeQuiz.html" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

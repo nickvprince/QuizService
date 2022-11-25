@@ -9,7 +9,7 @@ function load() {
     }
     //add the pool being edited
     document.getElementById("pname").value = pool.toString();
-   ;
+   
     var addTitle = document.createElement("h1");
    
     addTitle.textContent = "Editing : " + pool.toString();

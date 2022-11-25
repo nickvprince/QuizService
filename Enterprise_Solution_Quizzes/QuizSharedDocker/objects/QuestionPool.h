@@ -24,6 +24,9 @@ public:
 	bool loadFromDb();
 	std::string getID();
 	bool deletePool(std::string);
-};
+	void print();
+	bool getSelected(std::string question, std::string option);
+		
+	};
 
 #endif

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
-        <script type="text/javascript" src="./scripts/takeQuiz.js"></script>
-        <script type="text/javascript" src="./scripts/communication.js"></script>
-        <title id="urltitle">Take Quiz</title>
-    </head>
-    <body onload="loadTestableQuiz()">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
+    <script type="text/javascript" src="./scripts/takeQuiz.js"></script>
+    <script type="text/javascript" src="./scripts/communication.js"></script>
+    <script src="../scripts/questionPoolForm.js"></script>
+    <title id="urltitle">Take Quiz</title>
+</head>
+    <body onload="loadTestableQuiz(),start()">
 
-        <h1 id="takeQuizTitle">Take Quiz</h1>
-        <h2 id="quizTitle"></h2>
-        <form id="takeQuiz">
+        <h1 id="takeTitle">Take Quiz</h1>
+        <h2 id="Title"></h2>
+        <form id="take">
             <!-- questions/pool-->
+            <input type="text" id="pname" style="visibility:hidden"> <!-- used for var data in Javascript-->
+            <p1 id="insertHere"></p1>
 
-            <input type="submit" onclick="sendAlert('Quiz Entry Submitted');"value="Submit"/>
+            <input type="submit" onclick="Enter()" value="Submit" /> <!-- send data to POST submitQuiz?q1=... etc-->
+            <!-- <input type="submit" onclick="sendAlert('Quiz Entry Submitted');"value="Submit"/> -->
         </form>
         <button type="button" name="pushToGrades" id="pushToGrades" onclick="pushToGrades()">Send to Grades</button>
     </body>

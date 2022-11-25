@@ -401,4 +401,16 @@ bool QuestionPool::deletePool(std::string poolName) {
 	db.executeQuery("delete FROM qp where poolid = '" + poolName + "';"); // delete pool id
 	return true;
 }
+void QuestionPool::print() {
+	std::vector<std::string> questions= this->getQuestions();
+	for (int i = 0; i < questions.size(); i++) {
+		std::cout << "\n"<<"Question : " << questions.at(i)<<"\n";
+		std::vector<std::string> options = this->getOptions(questions.at(i));
+		for (int b = 0; b < options.size(); b++) {
+		
+			std::cout << "Answer : " << options.at(b) << "\t" << "Expected : "<<
+			this->getExpected(questions.at(i),options.at(b))<<"\n";
+		}
+	}
+}
 #endif
