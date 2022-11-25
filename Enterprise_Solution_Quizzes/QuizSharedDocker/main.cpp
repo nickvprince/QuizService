@@ -151,30 +151,31 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
-		std::cout <<pool.load();
-		std::cout << pool.getID();
+		std::cout <<pool.loadFromDb() << std::endl;
+		std::cout << pool.getID() << std::endl;
 	
 		nlohmann::json c;
-		fstream outfile;
+	/*	fstream outfile;
 		outfile.open("../public/QuestionPool/pools/"+poolname+".pool", std::ios::in);
-		string tp;
-		if (outfile.is_open()) {
-			for (int i = 0; i < pool.getQuestions().size(); i++) {
-				c += pool.getQuestions().at(i);
-				c += pool.getOptions(pool.getQuestions().at(i));
-				for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
-					if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == 1) {
-						c += b;
-					}
+		string tp;*/
+		//if (outfile.is_open()) {
+		for (int i = 0; i < pool.getQuestions().size(); i++) {
+			c += pool.getQuestions().at(i);
+			c += pool.getOptions(pool.getQuestions().at(i));
+			for (int b = 0; b < pool.getOptions(pool.getQuestions().at(i)).size(); b++) {
+				if (pool.getExpected(pool.getQuestions().at(i), pool.getOptions(pool.getQuestions().at(i)).at(b)) == 1) {
+					c += b;
 				}
 			}
-			res.write(to_string(c));
 		}
-		else {
-			std::cout << "not open" << endl;
-			res.write("fail");
-		}
-		outfile.close();
+		res.write(to_string(c));
+
+		//}
+		//else {
+		//	std::cout << "not open" << endl;
+		//	res.write("fail");
+		//}
+		//outfile.close();
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();

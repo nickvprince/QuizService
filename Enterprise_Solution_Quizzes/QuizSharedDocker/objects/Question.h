@@ -9,11 +9,11 @@
 #include "answer.h"
 #endif
 class question {
+public:
 	std::string Question;
 	int questionID;
 	std::vector<answer> answers;
 	float points;
-public:
 	int getQuestionID();
 	question(std::string question, float points);
 	bool addAnswer(std::string Answer, bool expected);

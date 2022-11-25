@@ -1,3 +1,4 @@
+#pragma once
 #include "./Question.h"
 #ifdef _WIN32
 std::string file = "QuizSharedDocker/public/QuestionPool/";

@@ -1,4 +1,4 @@
-
+#pragma once__
 #include "QuestionPool.h"
 #ifdef __linux__
 
@@ -197,6 +197,64 @@ bool QuestionPool::load()
 	}
 		return true;
 	}
+
+	bool QuestionPool::loadFromDb()
+	{
+		Database db;
+		std::vector<answer> answers;
+		std::string title;
+		float points = 0;
+		std::string Answer;
+		int expected;
+		std::string idquestion;
+		bool exp = false;
+
+		
+		sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + this->ID + "';");
+
+		while (dbRes->next())
+		{
+			title = dbRes->getString("question");
+			points = stof(dbRes->getString("points"));
+
+			question q(title, points);
+
+			idquestion = dbRes->getString("idquestion");
+
+			sql::ResultSet* dbRes2 = db.executeQuery("SELECT * FROM answer where question_idquestion = '" + idquestion + "';");
+			while (dbRes2->next())
+			{
+				Answer = dbRes2->getString("answer");
+				expected = stoi(dbRes2->getString("expected"));
+				
+				if (expected == 1)
+				{
+					exp = true;
+				}
+
+				answer ans(Answer, exp, stoi(idquestion));
+
+				answers.push_back(ans);	
+			}
+			while (!answers.empty())
+			{
+				q.addAnswer(answers.at(answers.size() - 1).getAnswer(), answers.at(answers.size() - 1).getExpected());
+				answers.pop_back();
+			}
+
+			this->questions.push_back(q);
+
+		}
+		if (questions.size() == 0)
+		{
+			return false;
+		}
+		return true;
+	}
+
+
+
+
 
 /// <summary>
 /// gets the current pool name
