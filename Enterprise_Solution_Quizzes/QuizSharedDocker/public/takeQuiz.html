@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/takeQuiz.js"></script>
+        <script type="text/javascript" src="./scripts/communication.js"></script>
         <title id="urltitle">Take Quiz</title>
     </head>
     <body onload="loadTestableQuiz()">
@@ -15,6 +16,6 @@
 
             <input type="submit" onclick="sendAlert('Quiz Entry Submitted');"value="Submit"/>
         </form>
-        
+        <button type="button" name="pushToGrades" id="pushToGrades" onclick="pushToGrades()">Send to Grades</button>
     </body>
 </html>

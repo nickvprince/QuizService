@@ -5,9 +5,11 @@
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
         <script type="text/javascript" src="./scripts/communication.js"></script>
+        <script type="text/javascript" src="./scripts/redirect.js"></script>
         <title>Quiz Creation</title>
     </head>
     <body onload="loadPool()">
+        <input type="" onclick="redirectToAddr('quizLandingPage.html')"value="Return to Quiz Landing Page"/>
         <h1>Create Quiz</h1> 
         <form>
             <label for="quizTitle">Title:</label><br>
@@ -30,11 +32,7 @@
 
             <br>
             <input type="submit" onclick="sendAlert('Quiz Entry Submitted');"value="Submit"/>
-<<<<<<< HEAD
             <!--- communication to calendar (ADD)-->
-=======
-            <!--- communication to calendar (ADD) -->
->>>>>>> DS3-COMM
           </form>
           <br>
           <button type="button" name="SendtoCalendar" id="SendtoCalendar" onclick="pushToCalendar()">Send to Calendar</button>

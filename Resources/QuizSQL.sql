@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`question` (
   CONSTRAINT `fk_question_qp1`
     FOREIGN KEY (`qp_poolid`)
     REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -86,14 +86,25 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`quiz` (
   `enddate` VARCHAR(45) NOT NULL,
   `duration` INT NOT NULL,
   `totalpoints` INT NOT NULL,
-  `pointsachieved` INT NOT NULL,
   PRIMARY KEY (`idquiz`),
   INDEX `fk_quiz_qp1_idx` (`qp_poolid` ASC) VISIBLE,
   UNIQUE INDEX `idquiz_UNIQUE` (`idquiz` ASC) VISIBLE,
     FOREIGN KEY (`qp_poolid`)
     REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `QuizMYSQL`.`studentQuizzes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `QuizMYSQL`.`studentQuizzes` ;
+
+CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`studentQuizzes` (
+  `idquiz` INT NOT NULL,
+  `idstudent` INT NOT NULL,
+  `pointsAchieved` INT NOT NULL,
+  FOREIGN KEY (`idquiz`) REFERENCES `QuizMYSQL`.`quiz` (`idquiz`))
 ENGINE = InnoDB;
 
 
@@ -102,21 +113,49 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO qp (poolid) values ('pool1');
-INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints,pointsachieved) values (1,'pool1','thequiz','today','tommorow',1,1,1);
-INSERT INTO question (idquestion,question,points,qp_poolid) values (1, 'dogs or cats', 1, 'pool1');
-INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Dogs", 0, 0, 1);
-INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Cats", 1, 0, 1);
-
 INSERT INTO qp (poolid) values ('pool2');
-INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints,pointsachieved) values (2,'pool2','thequiz2','today','tommorow',1,1,1);
-INSERT INTO question (idquestion,question,points,qp_poolid) values (2, 'lizards or monkeys', 1, 'pool2');
-INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Lizards", 0, 0, 2);
-INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("Monkeys", 1, 0, 2);
+
+INSERT INTO question (question,points,qp_poolid) values("Please select the correct answer ( 1 + 2)",1,'pool1');
+INSERT INTO question (question,points,qp_poolid) values("Choose the animal that says woof",1,'pool1');
+
+INSERT INTO question (question,points,qp_poolid) values("Please select the correct answer (2+2)",1,'pool2');
+INSERT INTO question (question,points,qp_poolid) values("Choose the animal that says meow",1,'pool2');
 
 
-
-
-INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ("pet", 0, 0, 1);
 
 select * from qp;
- 
+select * from question;
+select * from answer where quizID =1 and studentID = 123; # get student 123's answers to quiz 1	
+select * from answer where quizID =2 and studentID = 123; # get student 123's answers to quiz 2
+select * from answer where studentID is null; # get question 0 pool info
+select * from question where qp_poolid = "pool1"; # get pool 1 questions
+select * from question where qp_poolid = "pool2"; # get pool 2 questions
+
+
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 1", "2022-11-10", "2022-11-11", 2, 100);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 2", "2022-11-10", "2022-11-11", 2, 213);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 3", "2022-11-10", "2022-11-11", 2, 15);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 4", "2022-11-10", "2022-11-11", 2, 1020);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 5", "2022-11-10", "2022-11-11", 2, 105435);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 6", "2022-11-10", "2022-11-11", 2, 100);
+Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 7", "2022-11-10", "2022-11-11", 2, 10);
+
+
+insert into qp(poolid) values ("pool11");
+insert into qp(poolid) values ("pool111");
+insert into qp(poolid) values ("pool1111");
+insert into qp(poolid) values ("pool11111");
+insert into qp(poolid) values ("pool111111");
+insert into qp(poolid) values ("pool1111111");
+insert into qp(poolid) values ("pool11111111");
+insert into qp(poolid) values ("pool111111111");
+insert into qp(poolid) values ("pool1111111111");
+insert into qp(poolid) values ("pool11111111111");
+insert into qp(poolid) values ("pool111111111111");
+insert into qp(poolid) values ("pool1111111111111");
+
+
+select * from qp;
+
+select * from quiz;
+select * from studentQuizzes;

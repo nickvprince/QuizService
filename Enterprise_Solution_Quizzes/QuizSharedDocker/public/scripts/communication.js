@@ -1,52 +1,71 @@
 function pushToCalendar() {
 
-    // Look for the corresponding GET request
-    var xmlGETHttp = new XMLHttpRequest();
-    xmlGETHttp.open("GET", "../json/serviceips.json", false);
-    xmlGETHttp.send(null);
+  // Look for the corresponding GET request
+  var xmlGETHttp = new XMLHttpRequest();
+  xmlGETHttp.open("GET", "../json/serviceips.json", false);
+  xmlGETHttp.send(null);
 
-    // Parse the services json file
-    const serviceJson = xmlGETHttp.responseText;
-    const serviceObj = JSON.parse(serviceJson);
+  // Parse the services json file
+  const serviceJson = xmlGETHttp.responseText;
+  const serviceObj = JSON.parse(serviceJson);
 
-    var ip = serviceObj["calendar"].ip;
-    var port = serviceObj["calendar"].port;
+  var ip = serviceObj["calendar"].ip;
+  var port = serviceObj["calendar"].port;
 
-    // Look for the corresponding GET request
-    var xmlGETHttpCreateQuizCalendar = new XMLHttpRequest();
-    xmlGETHttpCreateQuizCalendar.open("GET", "../json/createQuizInCalendar.json", false);
-    xmlGETHttpCreateQuizCalendar.send(null);
+  // Look for the corresponding GET request
+  var xmlGETHttpCreateQuizCalendar = new XMLHttpRequest();
+  xmlGETHttpCreateQuizCalendar.open("GET", "../json/createQuizInCalendar.json", false);
+  xmlGETHttpCreateQuizCalendar.send(null);
 
-    const quizCreateCalendarJson = JSON.parse(xmlGETHttpCreateQuizCalendar.responseText);
-    //const quizCreateCalendarObj = JSON.parse(quizCreateCalendarJson);
+  const quizCreateCalendarJson = JSON.parse(xmlGETHttpCreateQuizCalendar.responseText);
+  //const quizCreateCalendarObj = JSON.parse(quizCreateCalendarJson);
 
-    console.log(quizCreateCalendarJson);
+  console.log(quizCreateCalendarJson);
 
-    const xmlPOSTHttp = new XMLHttpRequest();
-    xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "/event", true);
-    
-    // xmlPOSTHttp.setRequestHeader("Content-Type", "application/json");
-    xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Orgin","*");
-    // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Credentials", "true");
-    // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Methods","POST");
-    // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  const xmlPOSTHttp = new XMLHttpRequest();
+  xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "/event", true);
 
-    // xmlPOSTHttp.onreadystatechange = () => {
-    //     if (this.readyState == xmlPOSTHttp.DONE && this.status == 200) {
-    //         console.log("hello");
-    //     }
-    // };
-    // xmlPOSTHttp.send(JSON.stringify(quizCreateCalendarJson));
+  // xmlPOSTHttp.setRequestHeader("Content-Type", "application/json");
+  xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Orgin","*");
+  // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Credentials", "true");
+  // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Methods","POST");
+  // xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
-    xmlPOSTHttp.setRequestHeader("Accept", "application/json");
-    xmlPOSTHttp.setRequestHeader("Content-Type", "application/json;charset=utf8");
-    
-    xmlPOSTHttp.onreadystatechange = function () {
-      if (xmlPOSTHttp.readyState === 4) {
-        console.log(xmlPOSTHttp.status);
-        console.log(xmlPOSTHttp.responseText);
-      }};
-    
-    xmlPOSTHttp.send(JSON.stringify(quizCreateCalendarJson));
+  // xmlPOSTHttp.onreadystatechange = () => {
+  //     if (this.readyState == xmlPOSTHttp.DONE && this.status == 200) {
+  //         console.log("hello");
+  //     }
+  // };
+  // xmlPOSTHttp.send(JSON.stringify(quizCreateCalendarJson));
 
+  xmlPOSTHttp.setRequestHeader("Accept", "application/json");
+  xmlPOSTHttp.setRequestHeader("Content-Type", "application/json;charset=utf8");
+
+  xmlPOSTHttp.onreadystatechange = function () {
+    if (xmlPOSTHttp.readyState === 4) {
+      console.log(xmlPOSTHttp.status);
+      console.log(xmlPOSTHttp.responseText);
+    }};
+
+  xmlPOSTHttp.send(JSON.stringify(quizCreateCalendarJson));
+
+}
+
+function pushToGrades(){
+  // Look for the corresponding GET request
+  var xmlGETHttp = new XMLHttpRequest();
+  xmlGETHttp.open("GET", "../json/serviceips.json", false);
+  xmlGETHttp.send(null);
+
+  // Parse the services json file
+  const serviceJson = xmlGETHttp.responseText;
+  const serviceObj = JSON.parse(serviceJson);
+
+  var ip = serviceObj["grades"].ip;
+  var port = serviceObj["grades"].port;
+
+  // Look for the corresponding GET request
+  const xmlPOSTHttp = new XMLHttpRequest();
+  xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "?grade=100", true);
+  xmlPOSTHttp.send(null);
 }
