@@ -124,10 +124,17 @@ function alter(ID) {
         if (el.id.toString().includes(ID + "-")) {
             if (document.getElementById(el.id).getAttribute("type").toString() == "radio") {
                 document.getElementById(el.id).setAttribute("type", "checkbox")
+                var elements = document.getElementsByName(ID.toString());
+               //elements.forEach(setAttribute("onclick", "option(" + buttonID + "," + 0 + ", 'Answer')")); // set add option to add radio buttons
+                elements.item(0).setAttribute("onclick", "option(" + ID + "," + 1 + ", 'Answer')");
             } else {
                 document.getElementById(el.id).setAttribute("type", "radio")
+                var elements = document.getElementsByName(ID.toString());
+                elements.item(0).setAttribute("onclick", "option(" + ID + "," + 0 + ", 'Answer')");
+                //elements.forEach(setAttribute("onclick", "option(" + buttonID + "," + 1 + ", 'Answer')")); // set add option to add checkboxes
             }
         }
+       
     });
 
 }
@@ -172,6 +179,7 @@ function AddQuestion(i, k) {
     d.setAttribute("value", String(k));
     d.setAttribute("id", "Q" + formID);
     b.setAttribute("type", "button");
+    b.setAttribute("name", buttonID);
     b.setAttribute("id", buttonID);
     b.setAttribute("value", "add option");
     b.setAttribute("onclick", "option(" + buttonID + "," + t + ", 'Answer')"); // set button function to use params of this button id and if its multiple answer or multiple choice.
