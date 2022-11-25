@@ -35,6 +35,10 @@ function out(i) { // got to edit pool or delete pool based on i, with the pool n
         window.location.replace("editPool.html?pool=" + selectedpool.toString());
     }
     else if (i == 1) {
-        window.location.replace("deletePool.html?pool=" + selectedpool.toString());
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("POST", "deletePool/" + selectedpool.toString(), false);
+        xmlHttp.send();
+        alert("pool deleted");
+        window.location.replace("index.html");
     }
 }
