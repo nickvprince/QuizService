@@ -38,8 +38,6 @@ function pushToCalendar() {
     // };
     // xmlPOSTHttp.send(JSON.stringify(quizCreateCalendarJson));
 
-
-
     xmlPOSTHttp.setRequestHeader("Accept", "application/json");
     xmlPOSTHttp.setRequestHeader("Content-Type", "application/json;charset=utf8");
     
