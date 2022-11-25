@@ -1,6 +1,4 @@
-import {redirectToAddr} from "redirect.js";
-
-function getMode(){
+function getExecutionMode(){
 
     // Look for the corresponding GET request
     var xmlHttpIP = new XMLHttpRequest();
@@ -24,13 +22,17 @@ function getMode(){
     
         // Parse the services json file
         professor = xmlHttpMODE.responseText;
-    } catch (e) {
-        professor = true;
+    } catch (error) {
+        professor = "true";
     }
 
-    if(professor == "true") {
-        redirectToAddr("../professorIndex.html")
+    if(professor == "tr7ue") {
+        redirectToAddr("../index.html")
     } else {
         redirectToAddr("../studentIndex.html")
     }
+}
+
+function redirectToAddr (addr) {
+    window.location.replace(addr);
 }

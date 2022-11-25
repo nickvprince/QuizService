@@ -148,7 +148,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	// Default Route
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
-		sendHtml(res, "index.html");
+		sendHtml(res, "getMode.html");
 	});
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
@@ -327,6 +327,15 @@ std::cout <<"Hello world! -- This is not a windows project!";
 				filename = "quizLandingPage.html";
 			}
 
+		} else if(filename == "takeQuiz.html"){
+			auto quizID = req.url_params.get("quizID");
+			ostringstream quizIDString;
+
+			quizIDString << quizID ? quizID : "";
+			
+			if (quizIDString.str() != "") {
+				updateQuizPoolJson(quizIDString.str());
+			}
 		}
 
 		sendHtml(res, filename);

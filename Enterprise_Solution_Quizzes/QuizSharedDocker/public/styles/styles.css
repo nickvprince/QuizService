@@ -181,7 +181,14 @@
     min-width: 196px;
   }
 }
-
+.selectQuiz li {
+    list-style-type: none;
+}
+.selectQuiz button{
+    display: block;
+    width: 150%;
+    padding: 10px 100px 10px 100px;
+}
 
 /* ------------ Developers ------------*/
 
