@@ -5,7 +5,8 @@
     <title>Quizes</title>
     <link rel="stylesheet" href="styles/createEditDeletePool.css">
     <script src="../scripts/selectPool.js"></script>
-    
+    <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
+
 </head>
 <body onload="load()">
     <!--- add edit or delete button -->
@@ -19,6 +20,9 @@
     </nav>
     <!--- Main class for background colouring -->
     <div class="main" id="selections">
+        <select id="quizPool" name="quizPool">
+            <option></option>
+        </select><br>
         <h1> Choose Pool </h1>
         <div>
             <embed id="input" type="text/plain" src="./QuestionPool/pools/currentPools.pool" height="100%" width="100%"> <!--- Read question pools from files -->

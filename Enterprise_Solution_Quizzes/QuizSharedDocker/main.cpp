@@ -154,11 +154,13 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		std::cout <<pool.loadFromDb() << std::endl;
 		std::cout << pool.getID() << std::endl;
 	
+		cout << poolname << endl;
+
 		nlohmann::json c;
-	/*	fstream outfile;
+		fstream outfile;
 		outfile.open("../public/QuestionPool/pools/"+poolname+".pool", std::ios::in);
-		string tp;*/
-		//if (outfile.is_open()) {
+		string tp;
+		if (outfile.is_open()) {
 		for (int i = 0; i < pool.getQuestions().size(); i++) {
 			c += pool.getQuestions().at(i);
 			c += pool.getOptions(pool.getQuestions().at(i));
@@ -170,12 +172,12 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		}
 		res.write(to_string(c));
 
-		//}
-		//else {
-		//	std::cout << "not open" << endl;
-		//	res.write("fail");
-		//}
-		//outfile.close();
+		}
+		else {
+			std::cout << "not open" << endl;
+			res.write("fail");
+		}
+		outfile.close();
 		res.set_header("Content-Type", "text/plain");
 		res.code = 200;
 		res.end();

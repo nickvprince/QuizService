@@ -9,9 +9,9 @@
 #ifdef __linux__
 
 class QuestionPool {
-public:
 	std::string ID;
 	std::vector<question> questions;
+public:
 	QuestionPool(std::string poolname);
 	bool addQuestion(std::string question, float points);
 	bool getExpected(std::string question, std::string answer);
@@ -23,7 +23,6 @@ public:
 	bool save(int overWrite);
 	bool load();
 	bool loadFromDb();
-
 	std::string getID();
 };
 #endif
