@@ -90,4 +90,55 @@ bool updateQuizPoolJson(std::string id) {
 
     return true;
 }
+
+bool updateQuizQuestionList(std::string id) {
+    Database db;
+
+    sql::ResultSet* dbRes = db.executeQuery("SELECT qp_poolid FROM quiz WHERE idquiz = '" + id + "';");
+
+    string poolid = "";
+
+    while(dbRes->next()){
+        poolid = dbRes->getString("qp_poolid");
+    }
+    
+    if(poolid != "") {
+        dbRes = db.executeQuery("SELECT * FROM question WHERE qp_poolid = '" + poolid + "';");
+
+        nlohmann::json jArray;
+
+        while(dbRes->next()){
+
+            sql::ResultSet* dbResAnswers = db.executeQuery("SELECT * FROM answer WHERE quizID = '" + id + "'AND studentID = 123;");
+            nlohmann::json jArrayAnswers;
+
+            jArray["idquestion"] = dbRes->getString("idquestion");
+            jArray["question"] = dbRes->getString("question");
+            jArray["points"] = dbRes->getString("points");
+
+            while(dbResAnswers->next()){
+                string answerID = dbResAnswers->getString("idAnswer");
+                jArrayAnswers[answerID] = dbResAnswers->getString("answer");
+            }
+
+            jArray["answers"] = jArrayAnswers.dump();
+            
+        }
+
+        std::ofstream jsonFile;
+        jsonFile.open("../public/json/currentQuestions.json");
+        
+        cout << "---------------test-" << poolid << endl;
+        if (jsonFile.is_open()) {
+            jsonFile << "{\"Questions\": " << jArray.dump() << "}\r\n";
+        } else {
+            std::cout << "Failed to write question pools to json file" << std::endl;
+        }
+        jsonFile.close();
+
+        return true;
+    }
+    return false;
+}
+
 #endif

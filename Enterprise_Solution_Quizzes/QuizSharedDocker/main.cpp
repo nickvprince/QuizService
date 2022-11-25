@@ -335,6 +335,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			
 			if (quizIDString.str() != "") {
 				updateQuizPoolJson(quizIDString.str());
+				//updateQuizQuestionList(quizIDString.str());
 			}
 		}
 
