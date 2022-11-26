@@ -209,14 +209,42 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 
 		}
-		q.print();
+		
 		/********************************
 		*** Pool data end *************
 		*********************************/
 		
 		// q = students answers pool && pool = fromDB ie:/ pool is what the answers are supposed to be and q is what the student selected -- under expected instead of selected
+		std::vector<std::string> questions2 = q.getQuestions();
+		float availablePoints = questions2.size();
+		float totalPoints = 0;
+		for (int i = 0; i < questions2.size(); i++) {
+			float correctOptions = 0;
+			float correctSelected = 0;
+			std::vector<std::string> options2 = q.getOptions(questions2.at(i));
+			for (int b = 0; b < options2.size(); b++) {
+				
+				bool studentAnswer = q.getExpected(questions2.at(i), options2.at(b));
+				bool Answer = pool.getExpected(questions2.at(i), options2.at(b));
+				if (Answer == true) {
+					correctOptions++;
+				}
+				if (studentAnswer==true&& Answer == true) {
+					correctSelected++;
+				}
+			}// for all options
+			if (correctSelected == 0 || correctOptions == 0) {
 
-
+			}
+			else {
+				totalPoints += float(correctSelected / correctOptions);
+			}
+			//std::cout << "Print float attempt : " << atof(correctSelected / correctOptions);
+		}
+		std::cout << "\n\n";
+		q.print();
+		
+		std::cout << "\n" << "Points Earned : " << totalPoints << "\t" << "TotalPoints : " << availablePoints << "\n";
 		res.end();
 	});
 
