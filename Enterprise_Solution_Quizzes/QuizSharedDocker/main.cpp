@@ -19,7 +19,7 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 using namespace crow;
-
+int passFail = 0;
 void sendFile(response& res, string filename, string contentType);
 void sendScript(response& res, string filename);
 void sendStyle(response& res, string filename);
@@ -159,6 +159,25 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res) {
 		sendHtml(res, "getMode.html");
 	});
+	/// <summary>
+	/// used as a route to see if success or failure
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/succeeded").methods(crow::HTTPMethod::GET)
+		([](const request& req, response& res) {
+
+		if (passFail == 0) {
+			res.write("Pool Deletion Failed");
+		}
+		else if (passFail == 1) {
+			res.write("pool Deletion Successful");
+		}
+		else {
+			res.write("Error 500 : Unknown Error");
+		}
+		res.end();
+			});
+
 
 	/// <summary>
 	/// used to delete pools from the filesystem
@@ -168,7 +187,12 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res, string poolname) {
 
 		QuestionPool pool(poolname);
-		pool.deletePool(pool.getID());
+		if (pool.deletePool(pool.getID()) == false) {
+			passFail = 0;
+		}
+		else {
+			passFail = 1;
+		}
 		sendHtml(res, "questionPool.html");
 			});
 
@@ -177,6 +201,10 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res, string poolname) {
 		QuestionPool pool(poolname);
 		pool.loadFromDb(); // load pool
+		std::vector<std::string> questions = pool.getQuestions();
+		if (questions.size() <= 0) {
+			sendHtml(res,"index.html");
+		}
 		std::ofstream jsonFile;
 		jsonFile.open("../public/json/tmpPoolData.json");//fill temp file
 		if (jsonFile.is_open()) {

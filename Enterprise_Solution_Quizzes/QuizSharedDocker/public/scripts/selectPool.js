@@ -38,7 +38,11 @@ function out(i) { // got to edit pool or delete pool based on i, with the pool n
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("POST", "deletePool/" + selectedpool.toString(), false);
         xmlHttp.send();
-        alert("pool deleted");
+
+        var xmlHttp2 = new XMLHttpRequest();
+        xmlHttp2.open("GET", "/succeeded", false);
+        xmlHttp2.send();
+        alert(xmlHttp2.response);
         window.location.replace("index.html");
     }
 }

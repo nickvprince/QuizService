@@ -392,6 +392,15 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 bool QuestionPool::deletePool(std::string poolName) {
 	Database db;
 	sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + poolName + "';");
+	int count = 0;
+	while (dbRes->next()) // for all questions delete all answers
+	{
+		count++;; // not found in db
+	}
+	if (count == 0) {
+		return false;
+	}
+	dbRes->first();
 	while (dbRes->next()) // for all questions delete all answers
 	{
 		std::string idquestion = dbRes->getString("idquestion");
