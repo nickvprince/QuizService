@@ -199,12 +199,22 @@ std::cout <<"Hello world! -- This is not a windows project!";
 
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
+		Database db;
+		sql::ResultSet* dbRes2 = db.executeQuery("SELECT * from qp where poolid = '" + poolname + "';");
+		int count = 0;
+
+		while (dbRes2->next()) {
+			count++;
+		}
+		if (count <= 0) {
+			sendHtml(res, "index.html");
+		}
+
 		QuestionPool pool(poolname);
 		pool.loadFromDb(); // load pool
 		std::vector<std::string> questions = pool.getQuestions();
-		if (questions.size() <= 0) {
-			sendHtml(res,"index.html");
-		}
+		
+	
 		std::ofstream jsonFile;
 		jsonFile.open("../public/json/tmpPoolData.json");//fill temp file
 		if (jsonFile.is_open()) {
