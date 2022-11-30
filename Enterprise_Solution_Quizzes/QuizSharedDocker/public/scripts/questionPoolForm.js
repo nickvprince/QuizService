@@ -15,11 +15,13 @@ function start() { // on startup if query string it created then alert the user 
         else if (key == "quizID") {
             REMOVE_BUTTONS = 1;
         }
+       
     }
+    
 }
 
 function Enter() { // submit question pool to be saved
-    alert("hi");
+    window.location.replace('../index.html');
     var query = "?"
     var fromEdit = false;
     var fromQuiz = false;
@@ -32,13 +34,13 @@ function Enter() { // submit question pool to be saved
         }
         else if (key == "quizID") {
             fromQuiz = true;
-            alert("fromQuiz=true");
+         
         }
     }
   
     query += "pool=" +document.getElementById("pname").value + "&&";
     var ids = document.querySelectorAll('[id]');
-    alert("made it");
+  
     Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array
         // "el" is your element
         if (el.id.toString().includes("Q")) {
@@ -102,14 +104,15 @@ function Enter() { // submit question pool to be saved
     query += "&";
     var tmp = query.slice(0, -2);
     var currentHost = window.location.host; // direct to new page with all data in query string
-    alert("here");
+
     var xmlHttp = new XMLHttpRequest();
     if (fromQuiz == true) {
-        alert("submitQuiz");
-        alert(tmp);
+    
         xmlHttp.open("GET", '/submitQuiz' + tmp, false);
         xmlHttp.send(null);
-        alert("here");
+        window.location.replace('../index.html');
+
+      
     }
     else {
         xmlHttp.open("GET", '/savepool' + tmp, false);

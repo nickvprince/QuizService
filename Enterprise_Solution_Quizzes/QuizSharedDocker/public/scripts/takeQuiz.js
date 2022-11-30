@@ -1,4 +1,5 @@
-function loadTestableQuiz(){
+
+function loadTestableQuiz() {
     // Look for the corresponding GET request
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "../json/currentQuiz.json", false);
@@ -11,9 +12,10 @@ function loadTestableQuiz(){
 
     document.getElementById("Title").innerHTML = obj1["quiz"].title;
     
+   
+    
  
- 
-    var poolName = "pool1111"; // hardcoded -- needs to be set for below functionality to work
+    var poolName = obj1["quiz"].qp_poolid;// hardcoded -- needs to be set for below functionality to work
     /***************************************
      ********* Question pool data start ****
      ***************************************/
@@ -28,7 +30,7 @@ function loadTestableQuiz(){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "./getPool/" + poolName.toString(), false);
     xmlHttp.send(null);
-
+    
     // Parse the services json file
     const json = xmlHttp.responseText;
 
@@ -99,4 +101,48 @@ function loadTestableQuiz(){
     //document.getElementById("quizPool").value = obj["quiz"].qp_poolid;
     //document.getElementById("quizStartDate").value = obj["quiz"].startdate;
     //document.getElementById("quizEndDate").value = obj["quiz"].enddate;
+}
+function startTimer() {
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "../json/currentQuiz.json", false);
+    xmlHttp.send(null);
+
+    const obj1 = JSON.parse(xmlHttp.responseText);
+    var duration = obj1["quiz"].duration;
+    var today = new Date();
+    var toadd = today.getMinutes();
+  
+    today.setMinutes(parseInt(duration) + parseInt(toadd));
+   
+// Set the date we're counting down to
+        var countDownDate = new Date(today).getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            Enter();
+  }
+}, 500);
+
+
 }

@@ -476,8 +476,12 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			quizIDString << quizID ? quizID : "";
 			
 			if (quizIDString.str() != "") {
+			
 				updateQuizPoolJson(quizIDString.str());
 				//updateQuizQuestionList(quizIDString.str());
+			}
+			else {
+				sendHtml(res, "studentIndex.html");
 			}
 		}
 
