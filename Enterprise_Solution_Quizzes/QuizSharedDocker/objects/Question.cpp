@@ -1,5 +1,6 @@
 #pragma once
 #include "./Question.h"
+#include "./Logger.cpp"
 #ifdef _WIN32
 std::string file = "QuizSharedDocker/public/QuestionPool/";
 #endif
@@ -24,6 +25,7 @@ question::question(std::string Question, float points) {
 	this->Question = Question;
 	this->points = points;
 	this->questionID = 0;
+	Logger::log("Question " + this->Question + " created", 0, "questionLog");
 
 	//set question id to next available number
 	ifstream infile;

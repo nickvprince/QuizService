@@ -1,4 +1,5 @@
 #include "./Answer.h"
+#include "./Logger.cpp"
 /// <summary>
 /// initializer with the answer, what the expected result should be, and the question ID that goes with it
 /// </summary>
@@ -6,10 +7,12 @@
 /// <param name="expected"></param>
 /// <param name="questionID"></param>
 answer::answer(std::string answer, bool expected, int questionID) {
+	
 	this->Answer = answer;
 	this->expected = expected;
 	this->questionID = questionID;
 	this->selected = false;
+	Logger::log("Answer "+this->Answer+" Created", 0, "answerLog");
 }
 /// <summary>
 /// alters the state of this answer, if false becomes true, if true becomes false
@@ -18,15 +21,19 @@ answer::answer(std::string answer, bool expected, int questionID) {
 bool answer::select() {
 	if (this->selected == false) {
 		this->selected = true;
+		Logger::log("Answer " + this->Answer + " set to selected", 0, "answerLog");
 		return true;
 	}
 	else if (this->selected == true) {
 		this->selected = false;
+		Logger::log("Answer " + this->Answer + " set to diselected", 0, "answerLog");
 		return false;
 	}
 	else {
+		Logger::log("Error Select not equals true or false", 0, "Errors");
 		throw "Error Select not equal true or false... Is it initialized?";
 	}
+	Logger::log("ERROR - Answer::select returned false", 0, "answerLog");
 	return false;
 }
 /// <summary>

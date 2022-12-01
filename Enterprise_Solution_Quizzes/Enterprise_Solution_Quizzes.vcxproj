@@ -22,6 +22,7 @@
     <ClCompile Include="QuizSharedDocker\main.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Answer.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Database.cpp" />
+    <ClCompile Include="QuizSharedDocker\objects\Logger.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Question.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\QuestionPool.cpp" />
     <ClCompile Include="QuizSharedDocker\objects\Quiz.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="QuizSharedDocker\objects\Database.h" />
     <ClInclude Include="QuizSharedDocker\objects\json.hpp" />
     <ClInclude Include="QuizSharedDocker\objects\json_fwd.hpp" />
+    <ClInclude Include="QuizSharedDocker\objects\Logger.h" />
     <ClInclude Include="QuizSharedDocker\objects\Question.h" />
     <ClInclude Include="QuizSharedDocker\objects\QuestionPool.h" />
     <ClInclude Include="QuizSharedDocker\objects\Quiz.h" />

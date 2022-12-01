@@ -54,7 +54,7 @@ bool QuestionPool::save(int overWrite)
 		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef _WIN32
-		string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
+		//string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef __linux__
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
@@ -70,7 +70,7 @@ bool QuestionPool::save(int overWrite)
 		}
 #endif
 #ifdef _WIN32
-		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
+		//outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out); // write pool
@@ -109,7 +109,7 @@ bool QuestionPool::load()
 	string tmp = ("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str();
 #endif
 #ifdef _WIN32
-	string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
+	//string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
@@ -124,7 +124,7 @@ bool QuestionPool::load()
 #endif
 #ifdef _WIN32
 
-	outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
+	//outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
 #endif
 #ifdef __linux__
 	if (outfile.is_open()) {   //checking whether the file is open
@@ -145,7 +145,7 @@ bool QuestionPool::load()
 			int checkIndex;
 #endif
 #ifdef _WIN32
-			checkIndex = 0;
+			//checkIndex = 0;
 #endif
 #ifdef __linux__
 			checkIndex = 13;
