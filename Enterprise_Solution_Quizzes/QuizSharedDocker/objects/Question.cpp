@@ -49,6 +49,7 @@ question::question(std::string Question, float points) {
 /// <returns></returns>
 bool question::addAnswer(std::string Answer, bool expected) {
 	answer ans(Answer, expected, this->questionID);
+	Logger::log("Answer " +Answer + " Added to " + this->Question, 0, "questionLog");
 	this->answers.push_back(ans);
 	return true;
 }
@@ -58,6 +59,7 @@ bool question::addAnswer(std::string Answer, bool expected) {
 /// <param name="Answer"></param>
 /// <returns></returns>
 bool question::deleteAnswer(std::string Answer) {
+	Logger::log("Answer " + Answer + " Deleted from " + this->Question, 0, "questionLog");
 	int size = this->answers.size();
 	for (int i = 0; i < size; i++) {
 		if (this->answers.at(i).getAnswer() == Answer) {
@@ -86,6 +88,7 @@ float question::getPointsEarned() {
 			correctCount--;
 		}
 	}
+	
 	return this->points * (correctCount / possibleAnswers);
 }
 /// <summary>
@@ -107,6 +110,7 @@ int question::getType() {
 		return 1;
 	}
 	else {
+		Logger::log("Question has no answers! was this meant to be a written question?", 2, "Errors");
 		throw "Question has no answers! was this meant to be a written question? Not currently implemented...";
 	}
 }
@@ -121,9 +125,11 @@ bool question::selectAnswer(std::string Answer) {
 	for (int i = 0; i < size; i++) {
 		if (this->answers.at(i).getAnswer() == Answer) {
 			return this->answers.at(i).select();
+			Logger::log("Answer " + Answer + " found", 0, "questionLog");
 			
 		}
 	}
+	Logger::log("Answer "+Answer + " not found", 2, "Errors");
 	return false;
 }
 /// <summary>
@@ -161,7 +167,7 @@ bool question::getExpected(std::string option)
 			return this->answers.at(i).getExpected();
 		}
 	}
-
+	Logger::log("Answer " + option + " not found", 2, "Errors");
 	return false;
 }
 
@@ -182,5 +188,6 @@ bool question::setExpected(bool expected,std::string option)
 		
 		}
 	}
+	Logger::log("Answer " + option + " not found", 2, "Errors");
 	return false;
 }
