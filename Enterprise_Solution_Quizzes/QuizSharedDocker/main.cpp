@@ -174,6 +174,15 @@ Logger::log("STARTUP", -1, "startLogs");
 		sendHtml(res, "getMode.html");
 	});
 	/// <summary>
+	/// Used to log errors using javascript
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/log/<string>/<int>").methods(crow::HTTPMethod::POST)
+		([](const request& req, response& res, std::string log, int severity) {
+		Logger::log(log, severity, "webLogs");
+		res.end();
+			});
+	/// <summary>
 	/// used as a route to see if success or failure
 	/// </summary>
 	/// <returns></returns>

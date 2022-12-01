@@ -1,4 +1,10 @@
 function getExecutionMode(){
+    //log startup
+    var xmlHttpLog = new XMLHttpRequest();
+    xmlHttpLog.open("POST", "../log/gettingMode/0", false);
+    xmlHttpLog.send(null);
+
+
 
     // Look for the corresponding GET request
     var xmlHttpIP = new XMLHttpRequest();

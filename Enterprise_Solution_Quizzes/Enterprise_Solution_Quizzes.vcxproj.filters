@@ -106,5 +106,8 @@
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js">
       <Filter>JS</Filter>
     </None>
+    <None Include="QuizSharedDocker\public\scripts\getMode.js">
+      <Filter>JS</Filter>
+    </None>
   </ItemGroup>
 </Project>

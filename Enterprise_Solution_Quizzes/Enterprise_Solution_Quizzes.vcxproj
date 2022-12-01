@@ -46,6 +46,7 @@
     <None Include="QuizSharedDocker\public\index.html" />
     <None Include="QuizSharedDocker\public\quizLandingPage.html" />
     <None Include="QuizSharedDocker\public\scripts\editpool.js" />
+    <None Include="QuizSharedDocker\public\scripts\getMode.js" />
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js" />
     <None Include="QuizSharedDocker\public\scripts\selectPool.js" />
