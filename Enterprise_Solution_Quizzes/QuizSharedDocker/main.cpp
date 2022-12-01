@@ -187,52 +187,65 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			while (answers.size() == 0) {
 				countFrom--;
 				answers = req.url_params.get_list("Q" + to_string(countFrom) + "A");
+
 			}
 			//std::cout << "Answers : Q" << countFrom << "A\n";
 			countFrom--;
 			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(countFrom + 1)); // selected for question || alter this
 			//std::cout << "Selected : Checked" << (countFrom + 1) << "\n";
+
 			for (int b = 0; b < answers.size(); b++) { // add all options to question
 				bool selectTrueFalse = false;
+
 				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not
 					if (strcmp(answers.at(b), selected.at(c)) == 0) { // if match found
 						selectTrueFalse = true;
 					}
 				}
 				if (selectTrueFalse == true) { // if this answer is supposed to be true add question with expected true
+
 					q.addOption(questions.at(i), answers.at(b), 1);
 				}
 				else {
+
 					q.addOption(questions.at(i), answers.at(b), 0); // else add answer with expected false
 				}
+
 				selectTrueFalse = false;
 			}
 
 		}
-		
+
 		/********************************
 		*** Pool data end *************
 		*********************************/
 		
 		// q = students answers pool && pool = fromDB ie:/ pool is what the answers are supposed to be and q is what the student selected -- under expected instead of selected
 		std::vector<std::string> questions2 = q.getQuestions();
+
 		float availablePoints = questions2.size();
 		float totalPoints = 0;
 		for (int i = 0; i < questions2.size(); i++) {
 			float correctOptions = 0;
 			float correctSelected = 0;
 			std::vector<std::string> options2 = q.getOptions(questions2.at(i));
+
 			for (int b = 0; b < options2.size(); b++) {
-				
+
 				bool studentAnswer = q.getExpected(questions2.at(i), options2.at(b));
+
 				bool Answer = pool.getExpected(questions2.at(i), options2.at(b));
+
 				if (Answer == true) {
+
 					correctOptions++;
 				}
 				if (studentAnswer==true&& Answer == true) {
+
 					correctSelected++;
 				}
 			}// for all options
+
 			if (correctSelected == 0 || correctOptions == 0) {
 
 			}
@@ -241,9 +254,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			}
 			//std::cout << "Print float attempt : " << atof(correctSelected / correctOptions);
 		}
-		std::cout << "\n\n";
 		q.print();
-		
 		std::cout << "\n" << "Points Earned : " << totalPoints << "\t" << "TotalPoints : " << availablePoints << "\n";
 		res.end();
 	});
@@ -334,10 +345,8 @@ std::cout <<"Hello world! -- This is not a windows project!";
 				countFrom--;
 				answers = req.url_params.get_list("Q" + to_string(countFrom) + "A");
 			}
-			std::cout << "Answers : Q" << countFrom << "A\n";
 			countFrom--;
 			std::vector<char*> selected = req.url_params.get_list("Checked" + to_string(countFrom+1)); // selected for question || alter this
-			std::cout << "Selected : Checked" << (countFrom+1) << "\n";
 			for (int b = 0; b < answers.size(); b++) { // add all options to question
 				bool selectTrueFalse = false;
 				for (int c = 0; c < selected.size(); c++) { // check if this option is selected or not

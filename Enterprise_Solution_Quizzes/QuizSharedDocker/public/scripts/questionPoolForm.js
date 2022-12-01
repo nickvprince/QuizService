@@ -45,8 +45,9 @@ function Enter() { // submit question pool to be saved
         // "el" is your element
         if (el.id.toString().includes("Q")) {
             query += "Questions[]=";
+            
             var f = document.getElementById(el.id).value
-            query += f;
+            query += encodeURIComponent(f);
             query += "&";
 
         }
@@ -68,12 +69,12 @@ function Enter() { // submit question pool to be saved
             }
             if (d[0] == tmp) {
                 query += ("Q" + d[0] + "A[]="); //Q0A for question 0 array Q1A for question 1 array and so on
-                query += f;
+                query += encodeURIComponent(f);
                 query += "&";
             }
             else {
                 query += ("&Q" + d[0] + "A[]=");
-                query += f;
+                query += encodeURIComponent(f);
                 query += "&";
                 tmp--;
             }
@@ -96,7 +97,7 @@ function Enter() { // submit question pool to be saved
                 var n = document.getElementById(string.toString()).value;
                
                 query += "Checked" + d[0].toString()+"[]=";
-                query += n;
+                query += encodeURIComponent(n);
                 query += "&";
             }
         }
