@@ -25,6 +25,12 @@ function load() {
     xmlHttp.open("GET", "./getPool/"+String(pool), false);
     xmlHttp.send(null);
 
+    if (xmlHttp.getResponseHeader("content-type") == "application/json") {
+     
+    }
+    else {
+        window.location.replace('../index.html');
+    }
     // Parse the services json file
     const json = xmlHttp.responseText;
 

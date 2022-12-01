@@ -1,6 +1,8 @@
 
 function load() {
 
+
+
     const urlParams = new URLSearchParams(location.search);
     var b = document.createElement('input');
     b.setAttribute("type", "button");
@@ -33,6 +35,14 @@ function out(i) { // got to edit pool or delete pool based on i, with the pool n
         window.location.replace("editPool.html?pool=" + selectedpool.toString());
     }
     else if (i == 1) {
-        window.location.replace("deletePool.html?pool=" + selectedpool.toString());
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("POST", "deletePool/" + selectedpool.toString(), false);
+        xmlHttp.send();
+
+        var xmlHttp2 = new XMLHttpRequest();
+        xmlHttp2.open("GET", "/succeeded", false);
+        xmlHttp2.send();
+        alert(xmlHttp2.response);
+        window.location.replace("index.html");
     }
 }

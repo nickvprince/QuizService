@@ -8,12 +8,12 @@
 /// <returns></returns>
 bool QuestionPool::save(int overWrite)
 	{
-	if (overWrite == 2)
+	if (overWrite == 2 || overWrite == 3)
 	{
 		Database db;
 			
 			string poolid = this->ID;
-
+			this->deletePool(this->ID); // delete pool before writing into it
 			db.executeQuery("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
 
 			int size = this->questions.size();
@@ -30,8 +30,11 @@ bool QuestionPool::save(int overWrite)
 				{
 					string option = options.at(b);
 					string answer = to_string(this->questions.at(i).getExpected(options.at(b)));
-
+					
+					
 					db.executeQuery("INSERT INTO answer (answer, expected, selected, question_idquestion) VALUES ('" + option + "','" + answer + "','" + "0" + "','" + questionid + "')");
+					
+				
 				}
 			}
 
@@ -215,9 +218,11 @@ bool QuestionPool::loadFromDb(){
 		
 		sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + this->ID + "';");
 
-		while (dbRes->next())
+		while (dbRes->next())// check has next instead of use next since you want the first index too
 		{
+			
 			title = dbRes->getString("question");
+		
 			points = stof(dbRes->getString("points"));
 
 			question q(title, points);
@@ -228,23 +233,21 @@ bool QuestionPool::loadFromDb(){
 			while (dbRes2->next())
 			{
 				Answer = dbRes2->getString("answer");
+			
 				expected = stoi(dbRes2->getString("expected"));
-				
-				if (expected == 1)
-				{
-					exp = true;
-				}
-
-				answer ans(Answer, exp, stoi(idquestion));
+			
+		
+				answer ans(Answer, expected, stoi(idquestion));
 
 				answers.push_back(ans);	
 			}
 			while (!answers.empty())
 			{
+				
 				q.addAnswer(answers.at(answers.size() - 1).getAnswer(), answers.at(answers.size() - 1).getExpected());
+				
 				answers.pop_back();
 			}
-
 			this->questions.push_back(q);
 
 		}
@@ -379,4 +382,33 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 	}
 
 
+
+/// <summary>
+/// Removes all entries of the pool id passed in. Removed qp poolid question table data related to qp 
+/// poolid and answers that are grandchildren of qp poolid
+/// </summary>
+/// <param name="poolName"></param>
+/// <returns></returns>
+bool QuestionPool::deletePool(std::string poolName) {
+	Database db;
+	sql::ResultSet* dbRes2 = db.executeQuery("SELECT * from qp where poolid = '" + poolName + "';");
+	int count = 0;
+
+	while (dbRes2->next()) {
+		count++;
+	}
+	if (count <= 0) {
+		return false;
+	}
+	sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + poolName + "';");
+
+	while (dbRes->next()) // for all questions delete all answers
+	{
+		std::string idquestion = dbRes->getString("idquestion");
+		db.executeQuery("delete FROM answer where question_idquestion = '" + idquestion + "';"); // delete all answers to question id x
+		db.executeQuery("delete FROM question where idquestion = '" + idquestion + "';"); // delete question id x
+	}
+	db.executeQuery("delete FROM qp where poolid = '" + poolName + "';"); // delete pool id
+	return true;
+}
 #endif
