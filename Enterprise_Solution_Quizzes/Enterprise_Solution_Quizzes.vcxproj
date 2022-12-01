@@ -50,6 +50,7 @@
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js" />
     <None Include="QuizSharedDocker\public\scripts\selectPool.js" />
+    <None Include="QuizSharedDocker\public\scripts\takeQuiz.js" />
     <None Include="QuizSharedDocker\public\selectPool.html" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

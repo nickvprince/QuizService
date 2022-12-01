@@ -179,7 +179,8 @@ Logger::log("STARTUP", -1, "startLogs");
 	/// <returns></returns>
 	CROW_ROUTE(app, "/log/<string>/<int>").methods(crow::HTTPMethod::POST)
 		([](const request& req, response& res, std::string log, int severity) {
-		Logger::log(log, severity, "webLogs");
+		std::string output = std::string(log);
+		Logger::log(output, severity, "webLogs");
 		res.end();
 			});
 	/// <summary>
