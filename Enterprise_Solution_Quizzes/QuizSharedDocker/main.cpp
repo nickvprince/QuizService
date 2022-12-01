@@ -13,7 +13,6 @@ using namespace std;
 #include <bits/stdc++.h> 
 #include "crow_all.h"
 #include "./objects/json.hpp"
-#include "./objects/Logger.cpp"
 //#include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
 #include "objects/JsonDTO.cpp"
