@@ -24,7 +24,12 @@ function load() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "./getPool/"+String(pool), false);
     xmlHttp.send(null);
-
+   
+    if (xmlHttp.status != 200) {
+        var xmlHttpLog = new XMLHttpRequest();
+        xmlHttpLog.open("POST", "../log/getPool " + xmlHttp.status+"/0", false);
+        xmlHttpLog.send(null);
+    }
     if (xmlHttp.getResponseHeader("content-type") == "application/json") {
      
     }

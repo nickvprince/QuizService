@@ -88,11 +88,7 @@ CREATE TABLE IF NOT EXISTS `QuizMYSQL`.`quiz` (
   `totalpoints` INT NOT NULL,
   PRIMARY KEY (`idquiz`),
   INDEX `fk_quiz_qp1_idx` (`qp_poolid` ASC) VISIBLE,
-  UNIQUE INDEX `idquiz_UNIQUE` (`idquiz` ASC) VISIBLE,
-    FOREIGN KEY (`qp_poolid`)
-    REFERENCES `QuizMYSQL`.`qp` (`poolid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `idquiz_UNIQUE` (`idquiz` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -153,9 +149,10 @@ insert into qp(poolid) values ("pool1111111111");
 insert into qp(poolid) values ("pool11111111111");
 insert into qp(poolid) values ("pool111111111111");
 insert into qp(poolid) values ("pool1111111111111");
-
+set global max_connections = 10000;
 
 select * from qp;
-
+select * from question;
+select * from answer where question_idquestion=518;
 select * from quiz;
 select * from studentQuizzes;

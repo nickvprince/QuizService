@@ -1,15 +1,6 @@
 {
-"Question3": {
-"Answer3": "true", 
-"Answer2": "true", 
-"Answer1": "false"
+"Please select the correct answer ( 1 + 2)": {
 },
-"Question1": {
-"Answer2": "false", 
-"Answer1": "true"
-},
-"Question2": {
-"Answer2": "true", 
-"Answer1": "false"
+"Choose the animal that says woof": {
 }
 }

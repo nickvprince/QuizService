@@ -39,6 +39,9 @@
     <ClCompile Include="QuizSharedDocker\objects\Database.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuizSharedDocker\objects\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QuizSharedDocker\objects\Answer.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QuizSharedDocker\objects\json_fwd.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuizSharedDocker\objects\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,6 +104,12 @@
       <Filter>HTML</Filter>
     </None>
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js">
+      <Filter>JS</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\getMode.js">
+      <Filter>JS</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\takeQuiz.js">
       <Filter>JS</Filter>
     </None>
   </ItemGroup>
