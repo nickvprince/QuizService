@@ -15,7 +15,7 @@ function loadTestableQuiz() {
    
     
  
-    var poolName = obj1["quiz"].qp_poolid;// hardcoded -- needs to be set for below functionality to work
+    var poolName = obj1["quiz"].qp_poolid;
     /***************************************
      ********* Question pool data start ****
      ***************************************/
@@ -31,7 +31,7 @@ function loadTestableQuiz() {
     xmlHttp.open("GET", "./getPool/" + poolName.toString(), false);
     xmlHttp.send(null);
     
-    // Parse the services json file
+    // Parse the pool json file
     const json = xmlHttp.responseText;
 
     const obj = JSON.parse(json);

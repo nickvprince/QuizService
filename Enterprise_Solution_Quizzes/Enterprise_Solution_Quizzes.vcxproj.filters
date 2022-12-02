@@ -28,6 +28,15 @@
     <Filter Include="HTML\Other">
       <UniqueIdentifier>{36a59f9c-780f-41ee-b084-11cbd98aedf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JS\pool">
+      <UniqueIdentifier>{c625e04b-7dbb-4c36-b4d5-1a9c76c91471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JS\quiz">
+      <UniqueIdentifier>{aa7f5101-21e1-4d45-b7c1-662199ccd923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JS\other">
+      <UniqueIdentifier>{041ac040-9e80-4a6b-9db9-ec774393a2d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuizSharedDocker\main.cpp">
@@ -79,22 +88,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js">
-      <Filter>JS</Filter>
-    </None>
-    <None Include="QuizSharedDocker\public\scripts\selectPool.js">
-      <Filter>JS</Filter>
-    </None>
-    <None Include="QuizSharedDocker\public\scripts\editpool.js">
-      <Filter>JS</Filter>
-    </None>
-    <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js">
-      <Filter>JS</Filter>
-    </None>
-    <None Include="QuizSharedDocker\public\scripts\takeQuiz.js">
-      <Filter>JS</Filter>
-    </None>
-    <None Include="QuizSharedDocker\public\scripts\getMode.js" />
     <None Include="QuizSharedDocker\public\createQuiz.html">
       <Filter>HTML\Quiz</Filter>
     </None>
@@ -131,14 +124,35 @@
     <None Include="QuizSharedDocker\public\viewQuiz.html">
       <Filter>HTML\Quiz</Filter>
     </None>
-    <None Include="QuizSharedDocker\public\scripts\loadMenuOption.js">
-      <Filter>JS</Filter>
-    </None>
     <None Include="QuizSharedDocker\public\quizViewer.html">
       <Filter>HTML\Quiz</Filter>
     </None>
     <None Include="QuizSharedDocker\public\editQuiz.html">
       <Filter>HTML\Quiz</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\editpool.js">
+      <Filter>JS\pool</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js">
+      <Filter>JS\pool</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\selectPool.js">
+      <Filter>JS\pool</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\takeQuiz.js">
+      <Filter>JS\quiz</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js">
+      <Filter>JS\quiz</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\loadMenuOption.js">
+      <Filter>JS\other</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\getMode.js">
+      <Filter>JS\other</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\viewQuiz.js">
+      <Filter>JS\quiz</Filter>
     </None>
   </ItemGroup>
 </Project>

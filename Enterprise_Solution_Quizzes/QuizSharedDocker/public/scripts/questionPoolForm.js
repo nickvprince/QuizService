@@ -2,10 +2,12 @@ var formID = 0;
 var buttonID = 0;
 var optionID = 0;
 var REMOVE_BUTTONS = 0;
-
-function start() { // on startup if query string it created then alert the user a pool was created
+var disable = false;
+/*function start() { // on startup if query string it created then alert the user a pool was created
+    
     const urlParams = new URLSearchParams(location.search);
     for (const [key, value] of urlParams) {
+        alert(key);
         if (key == "created" && value == "true") {
             alert("Question Pool Created");
         }
@@ -18,6 +20,27 @@ function start() { // on startup if query string it created then alert the user 
        
     }
     
+}*/
+function start(fromWhere) { // on startup if query string it created then alert the user a pool was created
+
+    const urlParams = new URLSearchParams(location.search);
+    for (const [key, value] of urlParams) {
+        
+        if (key == "created" && value == "true") {
+            alert("Question Pool Created");
+        }
+        else if (key == "created" && value == "false") { // if query is false then alert user pool failed to create
+            alert("Question Pool not Created");
+        }
+        else if (key == "quizID") {
+            REMOVE_BUTTONS = 1;
+        }
+
+    }
+    if (fromWhere == "view quiz") {
+        disable = true;
+    }
+
 }
 
 function Enter() { // submit question pool to be saved
@@ -184,6 +207,10 @@ function AddQuestion(i, k,removeButtons) {
     d.setAttribute("id", "Q" + formID);
     d.setAttribute("size", 120);
     d.setAttribute("maxlength", "72");
+    alert(disable);
+    if (disable==true) {
+        d.setAttribute("disabled", "true");
+    }
 
     if (removeButtons != 0) {
         console.log(REMOVE_BUTTONS.toString());
@@ -252,6 +279,10 @@ function option(i, c, name) { // add option to a question
     z.setAttribute("type", "text");
     z.setAttribute("value", String(name));
     z.setAttribute("id", b + ":" + nextID(b + ":").toString());
+    if (disable==true) {
+        i.setAttribute("disabled", "true");
+        z.setAttribute("disabled", "true");
+    }
     optionID++;
     if (c == 0) { // add radio button
         i.setAttribute("type", "radio")

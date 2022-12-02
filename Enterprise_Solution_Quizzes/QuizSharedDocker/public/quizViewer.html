@@ -5,35 +5,42 @@
     <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
     <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
     <script type="text/javascript" src="./scripts/redirect.js"></script>
+    <script type="text/javascript" src="./scripts/viewQuiz.js"></script>
+    <script src="./scripts/questionPoolForm.js"></script>
     <title>Edit Quiz</title>
 </head>
-<body onload="loadPool();loadQuiz();changeUrl('viewQuiz.html')">
+<body onload="loadPool(); loadQuiz(); ">
+    <script>start('view quiz');</script>
+    <input type="button" onclick="redirectToAddr('viewQuiz.html')" value="return to view quiz selection" />
+
     <h1>View Quiz</h1>
     <form>
         <input hidden type="number" id="quizID" name="quizID" value="0">
 
         <label for="quizTitle">Title:</label><br>
-        <input type="text" id="quizTitle" name="quizTitle"><br>
+        <input type="text" id="quizTitle" name="quizTitle" disabled><br>
 
         <label for="quizDuration">Time Allotted (min):</label><br>
         <input oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
-               type="number" id="quizDuration" name="quizDuration" min="1" max="1440" value="60"><br>
+               type="number" id="quizDuration" name="quizDuration" min="1" max="1440" value="60" disabled><br>
 
         <label for="quizPool">Question Pool:</label><br>
-        <select id="quizPool" name="quizPool">
+        <select id="quizPool" name="quizPool" disabled>
             <option></option>
         </select><br>
 
         <label for="quizStartDate">Start Date:</label><br>
-        <input type="date" id="quizStartDate" name="quizStartDate"><br>
+        <input type="date" id="quizStartDate" name="quizStartDate" disabled><br>
 
         <label for="quizEndDate">End Date:</label><br>
-        <input type="date" id="quizEndDate" name="quizEndDate"><br>
+        <input type="date" id="quizEndDate" name="quizEndDate" disabled><br>
 
         <br>
-
-        <input type="submit" onclick="sendAlert('Quiz Entry Submitted'); redirectToAddr('../editQuiz.html')" value="Submit" />
-        <!--- communication to calendar (UPDATE)-->
+        <!-- Append question pool stuff here-->
+        <p1>"here"</p1>
+        <input type="text" id="pname" style="visibility:hidden"> <!-- used for var data in Javascript-->
+        <p1 id="insertHere"></p1>
+        <script>loadData("pool1")</script>
     </form>
 </body>
 </html>
