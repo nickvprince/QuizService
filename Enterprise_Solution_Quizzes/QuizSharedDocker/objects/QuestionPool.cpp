@@ -10,10 +10,15 @@ bool QuestionPool::save(int overWrite)
 	{
 	if (overWrite == 2 || overWrite == 3)
 	{
+		
 		Database db;
 			
 			string poolid = this->ID;
-			this->deletePool(this->ID); // delete pool before writing into it
+			bool exitVal=this->deletePool(this->ID); // delete pool before writing into it
+			if (exitVal = false) {
+				Logger::log("Pool failed to delete", 2, "Errors");
+				return false;
+			}
 			db.executeQuery("INSERT INTO qp (poolid) VALUES ('"+poolid+"')");
 
 			int size = this->questions.size();
@@ -40,7 +45,7 @@ bool QuestionPool::save(int overWrite)
 
 
 
-
+		Logger::log("Pool saved", 0, "questionPoolLogs");
 		return true;
 
 	}
@@ -54,7 +59,7 @@ bool QuestionPool::save(int overWrite)
 		string tmp = "../public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef _WIN32
-		string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
+		//string tmp = "./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool";
 #endif
 #ifdef __linux__
 		if (file = fopen(tmp.c_str(), "r")) { // if file already exists return false
@@ -70,7 +75,7 @@ bool QuestionPool::save(int overWrite)
 		}
 #endif
 #ifdef _WIN32
-		outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
+		//outfile.open("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 		outfile.open("../public/QuestionPool/pools/" +this->ID+".pool", std::ios::out); // write pool
@@ -109,13 +114,14 @@ bool QuestionPool::load()
 	string tmp = ("../public/QuestionPool/pools/" + (string)this->ID + ".pool").c_str();
 #endif
 #ifdef _WIN32
-	string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
+	//string tmp = ("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool");
 #endif
 #ifdef __linux__
 	if (file = fopen(tmp.c_str(), "r")) { // if doesnt exist return false
 		fclose(file);
 	}
 	else {
+		Logger::log("Pool load failed", 1, "Errors");
 		return false;
 	}
 #endif
@@ -124,7 +130,7 @@ bool QuestionPool::load()
 #endif
 #ifdef _WIN32
 
-	outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
+	//outfile.open(("./QuizSharedDocker/public/QuestionPool/pools/" + this->ID + ".pool").c_str(), std::ios::in);
 #endif
 #ifdef __linux__
 	if (outfile.is_open()) {   //checking whether the file is open
@@ -145,7 +151,7 @@ bool QuestionPool::load()
 			int checkIndex;
 #endif
 #ifdef _WIN32
-			checkIndex = 0;
+			//checkIndex = 0;
 #endif
 #ifdef __linux__
 			checkIndex = 13;
@@ -195,12 +201,15 @@ bool QuestionPool::load()
 		}
 	}
 	else {
+		Logger::log("Pool load failed", 1, "Errors");
 		return false;
 	}
 	outfile.close();
 	if (this->questions.size() == 0) {
+		Logger::log("Pool load failed -- No questions", 1, "Errors");
 		return false;
 	}
+	Logger::log("Pool loaded", 0, "questionPoolLogs");
 	return true;
 }
 	
@@ -253,8 +262,10 @@ bool QuestionPool::loadFromDb(){
 		}
 		if (questions.size() == 0)
 		{
+			Logger::log("Pool load from db failed -- no questions", 2, "Errors");
 			return false;
 		}
+		Logger::log("Pool loaded from db", 0, "questionPoolLogs");
 		return true;
 	}
 
@@ -278,6 +289,7 @@ std::string QuestionPool::getID()
 QuestionPool::QuestionPool(std::string poolName)
 	{
 		this->ID = poolName;
+		Logger::log("Pool "+poolName + " created", 0, "questionPoolLogs");
 	}
 /// <summary>
 /// Add a question to this question pool and allocate points to it
@@ -288,6 +300,7 @@ QuestionPool::QuestionPool(std::string poolName)
 bool QuestionPool::addQuestion(std::string Question, float points) {
 		question q(Question, points);
 		this->questions.push_back(q);
+		Logger::log("Question "+Question +" added", 0, "questionPoolLogs");
 		return true;
 	}
 bool QuestionPool::getExpected(std::string question, std::string answer)
@@ -297,6 +310,7 @@ bool QuestionPool::getExpected(std::string question, std::string answer)
 			return this->questions.at(i).getExpected(answer);
 		}
 	}
+	Logger::log("get Expected failed", 2, "Errors");
 	throw "ERROR";
 	return false;
 }
@@ -314,6 +328,7 @@ bool QuestionPool::addOption(std::string question, std::string option, bool expe
 				return true;
 			}
 		}
+		Logger::log("add Option failed", 2, "Errors");
 		return false;
 	}
 /// <summary>
@@ -330,7 +345,7 @@ bool QuestionPool::deleteOption(std::string question, std::string option) {
 				return true;
 			}
 		}
-
+		Logger::log("Option failed to delete", 2, "Errors");
 		return false;
 	}
 	/// <summary>
@@ -356,6 +371,7 @@ bool QuestionPool::deleteOption(std::string question, std::string option) {
 			}
 		}
 		std::vector<std::string> failed;
+		Logger::log("get options failed", 2, "Errors");
 		return failed;
 	}
 /// <summary>
@@ -377,7 +393,7 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 				}
 			}
 		}
-
+		Logger::log("Could not set answer", 0, "Errors");
 		return false;
 	}
 
@@ -391,7 +407,18 @@ bool QuestionPool::setAnswer(std::string question, std::string option, bool answ
 /// <returns></returns>
 bool QuestionPool::deletePool(std::string poolName) {
 	Database db;
+	sql::ResultSet* dbRes2 = db.executeQuery("SELECT * from qp where poolid = '" + poolName + "';");
+	int count = 0;
+
+	while (dbRes2->next()) {
+		count++;
+	}
+	if (count <= 0) {
+		Logger::log("Pool not found in database", 0, "Errors");
+		return false;
+	}
 	sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM question where qp_poolid = '" + poolName + "';");
+
 	while (dbRes->next()) // for all questions delete all answers
 	{
 		std::string idquestion = dbRes->getString("idquestion");
@@ -399,6 +426,7 @@ bool QuestionPool::deletePool(std::string poolName) {
 		db.executeQuery("delete FROM question where idquestion = '" + idquestion + "';"); // delete question id x
 	}
 	db.executeQuery("delete FROM qp where poolid = '" + poolName + "';"); // delete pool id
+	Logger::log("Pool deleted", 0, "questionPoolLogs");
 	return true;
 }
 void QuestionPool::print() {

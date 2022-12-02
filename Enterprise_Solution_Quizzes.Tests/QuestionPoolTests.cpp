@@ -17,7 +17,7 @@ namespace EnterpriseSolutionQuizzesTests
 			//act
 			
 			//assert
-			Assert::AreEqual(pool.save(), false);
+			Assert::AreEqual(pool.save(0), false);
 		}
 		TEST_METHOD(load)
 		{

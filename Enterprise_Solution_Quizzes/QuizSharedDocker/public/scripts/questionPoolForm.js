@@ -265,6 +265,11 @@ function option(i, c, name) { // add option to a question
         document.getElementById(b).insertAdjacentElement("afterend", n);
     }
     else {
+       
+            var xmlHttpLog = new XMLHttpRequest();
+            xmlHttpLog.open("POST", "../log/Unexpected Error/3", false);
+            xmlHttpLog.send(null);
+        
         alert("Unexpected input");
     }
 

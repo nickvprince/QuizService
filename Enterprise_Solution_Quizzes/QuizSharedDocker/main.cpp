@@ -3,6 +3,7 @@ using namespace std;
 
 #ifdef _WIN32
 #include "./objects/QuestionPool.h"
+#include "./objects/Logger.h"
 #endif
 
 
@@ -19,7 +20,7 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 using namespace crow;
-
+int passFail = 0;
 void sendFile(response& res, string filename, string contentType);
 void sendScript(response& res, string filename);
 void sendStyle(response& res, string filename);
@@ -53,6 +54,7 @@ void sendFile(response& res, string filename, string contentType) {
 
 		// Set the proper error code and write the message to the browser when there is an error
 		res.code = 404;
+		Logger::log("Error - 404 not found", 2, "Errors");
 		res.write("404 Not Found");
 
 	}
@@ -66,35 +68,41 @@ void sendFile(response& res, string filename, string contentType) {
 }
 
 void sendScript(response& res, string filename) {
+	Logger::log(("Sending " + filename), 0, "routeLogs");
 	sendFile(res, "scripts/" + filename, "text/script");
 }
 
 void sendStyle(response& res, string filename) {
+	Logger::log(("Sending " + filename), 0, "routeLogs");
 	sendFile(res, "styles/" + filename, "text/css");
 }
 
 void sendImage(response& res, string filename) {
 
 	if (filename.find(".jpeg") != string::npos) {
+		Logger::log(("Sending " + filename), 0, "routeLogs");
 		sendFile(res, "images/" + filename, "image/jpeg");
 	}
 	else {
+		Logger::log(("Sending " + filename), 0, "routeLogs");
 		sendFile(res, "images/" + filename, "image/png");
 	}
 }
 
 void sendQuizText(response& res, string filename) {
+	Logger::log(("Sending " + filename), 0, "routeLogs");
 	sendFile(res, "quizzes/" + filename, "text/plain");
 }
 
 	
 void sendPool(response& res, string filename) {
-	std::cout << "SENDPOOL" << " QuestionPool/" + filename;
+	Logger::log(("Sending " + filename), 0, "routeLogs");
 	ifstream file;
 	file.open("../public/QuestionPool/"+filename);
 	if (!file.is_open())
 	{
 		res.code = 500;
+		Logger::log("ERROR - 500 available pools file error", 0, "Errors");
 		res.write("Available pools File Error");
 		}
 
@@ -116,17 +124,20 @@ void sendPool(response& res, string filename) {
 }
 
 void sendJson(response& res, string filename){
+	Logger::log(("Sending JSON "+filename), 0, "routeLogs");
 	sendFile(res, "json/" + filename, "application/json");
 }
 
 void sendJsonArray(response& res, nlohmann::json text) {
 	res.set_header("Content-Type", "application/json");
+	Logger::log(("Sending " +to_string(text)), 0, "routeLogs");
 	res.write(to_string(text));
 	res.end();
 }
 	
 
 void sendHtml(response& res, string filename) {
+	Logger::log(("Sending "+filename), 0, "routeLogs");
 	sendFile(res, filename, "text/html");
 }
 
@@ -150,15 +161,51 @@ int main() {
 #ifdef _WIN32
 
 std::cout <<"Hello world! -- This is not a windows project!";
+
 #endif // _WIN32
 
 #ifdef __linux__
+Logger::log("STARTUP", -1, "startLogs");
 	crow::SimpleApp app;
 	// Default Route
 	CROW_ROUTE(app, "/")
 		([](const request& req, response& res) {
+		Logger::log("Getting Mode", 0, "routeLogs");
 		sendHtml(res, "getMode.html");
 	});
+	/// <summary>
+	/// Used to log errors using javascript
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/log/<string>/<int>").methods(crow::HTTPMethod::POST)
+		([](const request& req, response& res, std::string log, int severity) {
+		std::string output = std::string(log);
+		Logger::log(output, severity, "webLogs");
+		res.end();
+			});
+	/// <summary>
+	/// used as a route to see if success or failure
+	/// </summary>
+	/// <returns></returns>
+	CROW_ROUTE(app, "/succeeded").methods(crow::HTTPMethod::GET)
+		([](const request& req, response& res) {
+
+		if (passFail == 0) {
+			res.write("Pool Deletion Failed");
+			Logger::log("Pool Deletion Failed Sent", 1, "routeLogs");
+		}
+		else if (passFail == 1) {
+			res.write("pool Deletion Successful");
+			Logger::log("Pool deleted successfully Sent", 0, "routeLogs");
+		}
+		else {
+			res.write("Error 500 : Unknown Error");
+			Logger::log("Variable Succeeded not set to 0 or 1", 2, "Errors");
+		}
+
+		res.end();
+			});
+
 
 	/// <summary>
 	/// submit a quiz to the gradebook
@@ -268,15 +315,36 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		([](const request& req, response& res, string poolname) {
 
 		QuestionPool pool(poolname);
-		pool.deletePool(pool.getID());
+		if (pool.deletePool(pool.getID()) == false) {
+			passFail = 0;
+			Logger::log("Pool deletion failed", 1, "Errors");
+		}
+		else {
+			passFail = 1;
+		}
+		Logger::log("Sending Question Pool.html", 0, "routeLogs");
 		sendHtml(res, "questionPool.html");
 			});
 
 
 	CROW_ROUTE(app, "/getPool/<string>")
 		([](const request& req, response& res, string poolname) {
+		Database db;
+		sql::ResultSet* dbRes2 = db.executeQuery("SELECT * from qp where poolid = '" + poolname + "';");
+		int count = 0;
+
+		while (dbRes2->next()) {
+			count++;
+		}
+		if (count <= 0) {
+			sendHtml(res, "index.html");
+		}
+
 		QuestionPool pool(poolname);
 		pool.loadFromDb(); // load pool
+		std::vector<std::string> questions = pool.getQuestions();
+		
+	
 		std::ofstream jsonFile;
 		jsonFile.open("../public/json/tmpPoolData.json");//fill temp file
 		if (jsonFile.is_open()) {
@@ -317,6 +385,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 			jsonFile << "}";
 			jsonFile.close();
 		}
+
 		sendJson(res, "../json/tmpPoolData.json");
 	});
 	
@@ -367,7 +436,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		bool result;
 		if (overWrite != "") {
 			result = q.save(2);
-			std::cout << "SAVING WITH INSERT";
+			
 		}
 		else {
 			result = q.save(0);
@@ -378,6 +447,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 		if (result == true && overWrite != "") {
 			updateQuizPoolJson();
 			sendHtml(res, "selectPool.html");
+
 		}
 		else if (result == true) {
 			sendHtml(res, "savepoolPass.html");
@@ -536,6 +606,7 @@ std::cout <<"Hello world! -- This is not a windows project!";
 	
 	//service port
 	app.port(8080).multithreaded().run();
+	Logger::log("SHUTDOWN", -1, "startLogs");
 	return 1;
 
 #endif //__linux__
