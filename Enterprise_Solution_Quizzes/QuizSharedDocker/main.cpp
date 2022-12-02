@@ -22,6 +22,7 @@ using namespace std;
 using namespace crow;
 int passFail = 0;
 std::string mode = "";
+std::string timeout = "0";
 void sendFile(response& res, string filename, string contentType);
 void sendScript(response& res, string filename);
 void sendStyle(response& res, string filename);
@@ -179,7 +180,17 @@ Logger::log("STARTUP", -1, "startLogs");
 	CROW_ROUTE(app, "/setMode/<string>")
 		([](const request& req, response& res, std::string modeIn) {
 		Logger::log("Setting Mode"+modeIn, 0, "routeLogs");
+		if (modeIn == "na") {
+			timeout ="1";
+		}
 		mode = modeIn;
+		res.end();
+			});
+
+	CROW_ROUTE(app, "/timeout")
+		([](const request& req, response& res) {
+		Logger::log("getting timeout", 0, "routeLogs");
+		res.write(timeout);
 		res.end();
 			});
 	CROW_ROUTE(app, "/getMode")

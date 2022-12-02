@@ -2,9 +2,9 @@
 
 function addButton() {
     var xmlHttpGetMode = new XMLHttpRequest();
-    xmlHttpGetMode.open("GET", "/getMode", false);
+    xmlHttpGetMode.open("GET", "/timeout", false);
     xmlHttpGetMode.send(null);
-    if (xmlHttpGetMode.responseText == "na" || xmlHttpGetMode.responseText == "") {
+    if (xmlHttpGetMode.responseText == "1") {
         //set prof
         xmlHttpGetMode.open("GET", "/setMode/prof", false);
         xmlHttpGetMode.send(null);
