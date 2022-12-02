@@ -1,4 +1,5 @@
 function loadData(poolName) {
+   
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "./getPool/" + poolName.toString(), false);
     xmlHttp.send(null);
@@ -53,11 +54,11 @@ function loadData(poolName) {
                         option(ques, 0, String(n));
                     }
                     type = 0;
-                    /*  if (obj[b][n] == "true") {
+                      if (obj[b][n] == "true") {
                           document.getElementById(String(ques) + "-" + counter).checked = true;
                       } else {
                           document.getElementById(String(ques) + "-" + counter).checked = false;
-                      }*/
+                      }
                     counter++;
 
                 }
@@ -68,4 +69,17 @@ function loadData(poolName) {
     /***************************************
     ********* Question pool data end********
     ***************************************/
+}
+
+function setPoolName() {
+    // Look for the corresponding GET request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "../json/currentQuiz.json", false);
+    xmlHttp.send(null);
+
+    const obj = JSON.parse(xmlHttp.responseText);
+
+    document.getElementById("pname").innerHTML = obj["quiz"].qp_poolid;
+
+
 }

@@ -3,24 +3,7 @@ var buttonID = 0;
 var optionID = 0;
 var REMOVE_BUTTONS = 0;
 var disable = false;
-/*function start() { // on startup if query string it created then alert the user a pool was created
-    
-    const urlParams = new URLSearchParams(location.search);
-    for (const [key, value] of urlParams) {
-        alert(key);
-        if (key == "created" && value == "true") {
-            alert("Question Pool Created");
-        }
-        else if (key == "created" && value == "false") { // if query is false then alert user pool failed to create
-            alert("Question Pool not Created");
-        }
-        else if (key == "quizID") {
-            REMOVE_BUTTONS = 1;
-        }
-       
-    }
-    
-}*/
+
 function start(fromWhere) { // on startup if query string it created then alert the user a pool was created
 
     const urlParams = new URLSearchParams(location.search);
@@ -207,7 +190,7 @@ function AddQuestion(i, k,removeButtons) {
     d.setAttribute("id", "Q" + formID);
     d.setAttribute("size", 120);
     d.setAttribute("maxlength", "72");
-    alert(disable);
+   
     if (disable==true) {
         d.setAttribute("disabled", "true");
     }

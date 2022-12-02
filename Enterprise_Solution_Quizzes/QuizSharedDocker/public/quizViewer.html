@@ -9,9 +9,11 @@
     <script src="./scripts/questionPoolForm.js"></script>
     <title>Edit Quiz</title>
 </head>
-<body onload="loadPool(); loadQuiz(); ">
-    <script>start('view quiz');</script>
+<body onload="loadPool();loadQuiz();">
+
+    
     <input type="button" onclick="redirectToAddr('viewQuiz.html')" value="return to view quiz selection" />
+    <input type="text" id="pname" style="visibility:hidden"> <!-- used for var data in Javascript-->
 
     <h1>View Quiz</h1>
     <form>
@@ -37,10 +39,10 @@
 
         <br>
         <!-- Append question pool stuff here-->
-        <p1>"here"</p1>
-        <input type="text" id="pname" style="visibility:hidden"> <!-- used for var data in Javascript-->
         <p1 id="insertHere"></p1>
-        <script>loadData("pool1")</script>
+        <script>start('view quiz');</script>
+        
+        <script>setPoolName(); loadData(document.getElementById("pname").textContent);</script>
     </form>
 </body>
 </html>
