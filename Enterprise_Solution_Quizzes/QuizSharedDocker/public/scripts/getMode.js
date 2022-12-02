@@ -25,6 +25,8 @@ function getExecutionMode(){
     var professor = false;
     var professorObj;
     //get request mode
+
+    var xmlHttpSetMode = new XMLHttpRequest(); // used to set mode in server
     try {
         var xmlHttpMODE = new XMLHttpRequest();
         xmlHttpMODE.open("GET", "http://" + ip + ":" + port + "/modeofoperation", false);
@@ -36,11 +38,19 @@ function getExecutionMode(){
         }
         alert(xmlHttpMODE.status);
         // Parse the services json file
+        xmlHttpSetMode.open("GET", '/setMode/'+responseText, false);
+        xmlHttpSetMode.send(null);
         professorJson = xmlHttpIP.responseText;
         professorObj = JSON.parse(professorJson);
     } catch (error) {
+        //set mode to na
+        
+        xmlHttpSetMode.open("GET", '/setMode/na', false);
+        xmlHttpSetMode.send(null);
+
         xmlHttpLog.open("POST", '../log/Professor mode defaulted... admin is not online at '+ip+':'+port+'/2', false);
         xmlHttpLog.send(null);
+
         professor = true;
     }
 
