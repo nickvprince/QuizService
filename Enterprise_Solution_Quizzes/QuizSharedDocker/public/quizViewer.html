@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
+    <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
+    <script type="text/javascript" src="./scripts/redirect.js"></script>
+    <title>Edit Quiz</title>
+</head>
+<body onload="loadPool();loadQuiz();changeUrl('viewQuiz.html')">
+    <h1>View Quiz</h1>
+    <form>
+        <input hidden type="number" id="quizID" name="quizID" value="0">
+
+        <label for="quizTitle">Title:</label><br>
+        <input type="text" id="quizTitle" name="quizTitle"><br>
+
+        <label for="quizDuration">Time Allotted (min):</label><br>
+        <input oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+               type="number" id="quizDuration" name="quizDuration" min="1" max="1440" value="60"><br>
+
+        <label for="quizPool">Question Pool:</label><br>
+        <select id="quizPool" name="quizPool">
+            <option></option>
+        </select><br>
+
+        <label for="quizStartDate">Start Date:</label><br>
+        <input type="date" id="quizStartDate" name="quizStartDate"><br>
+
+        <label for="quizEndDate">End Date:</label><br>
+        <input type="date" id="quizEndDate" name="quizEndDate"><br>
+
+        <br>
+
+        <input type="submit" onclick="sendAlert('Quiz Entry Submitted'); redirectToAddr('../editQuiz.html')" value="Submit" />
+        <!--- communication to calendar (UPDATE)-->
+    </form>
+</body>
+</html>

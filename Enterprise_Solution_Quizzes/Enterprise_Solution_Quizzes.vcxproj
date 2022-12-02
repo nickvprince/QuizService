@@ -42,18 +42,23 @@
     <None Include="QuizSharedDocker\public\createQuiz.html" />
     <None Include="QuizSharedDocker\public\deletePool.html" />
     <None Include="QuizSharedDocker\public\editPool.html" />
+    <None Include="QuizSharedDocker\public\editQuiz.html" />
     <None Include="QuizSharedDocker\public\questionPool.html" />
     <None Include="QuizSharedDocker\public\index.html" />
     <None Include="QuizSharedDocker\public\quizLandingPage.html" />
+    <None Include="QuizSharedDocker\public\quizViewer.html" />
     <None Include="QuizSharedDocker\public\scripts\editpool.js" />
     <None Include="QuizSharedDocker\public\scripts\getMode.js" />
+    <None Include="QuizSharedDocker\public\scripts\loadMenuOption.js" />
     <None Include="QuizSharedDocker\public\scripts\questionPoolForm.js" />
     <None Include="QuizSharedDocker\public\scripts\quizLandingPage.js" />
     <None Include="QuizSharedDocker\public\scripts\selectPool.js" />
     <None Include="QuizSharedDocker\public\scripts\takeQuiz.js" />
     <None Include="QuizSharedDocker\public\selectPool.html" />
+    <None Include="QuizSharedDocker\public\selectQuiz.html" />
     <None Include="QuizSharedDocker\public\studentIndex.html" />
     <None Include="QuizSharedDocker\public\takeQuiz.html" />
+    <None Include="QuizSharedDocker\public\viewQuiz.html" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

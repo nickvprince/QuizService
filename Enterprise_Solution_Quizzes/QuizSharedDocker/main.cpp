@@ -173,6 +173,22 @@ Logger::log("STARTUP", -1, "startLogs");
 		Logger::log("Getting Mode", 0, "routeLogs");
 		sendHtml(res, "getMode.html");
 	});
+
+	
+	CROW_ROUTE(app, "/viewQuiz.html").methods(crow::HTTPMethod::GET) //-----------
+		([](const request& req, response& res) {
+		auto quizID = req.url_params.get("quizID");
+		ostringstream quizIDString;
+
+		quizIDString << quizID ? quizID : "";
+
+		if (quizIDString.str() != "") {
+			updateQuizPoolJson(quizIDString.str());
+			sendHtml(res,"quizViewer.html");//passed
+		}
+		sendHtml(res, "viewQuiz.html"); // failed
+			});
+
 	/// <summary>
 	/// Used to log errors using javascript
 	/// </summary>

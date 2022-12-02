@@ -172,7 +172,7 @@ function removeQuestion(buttonID) {
 }
 
 function AddQuestion(i, k,removeButtons) {
-    console.log("ADD_BUTTON : " + REMOVE_BUTTONS);
+
     var t = String(i);
     var b = document.createElement('input');
     var d = document.createElement('input'); // create a button and textfield for a question, button allows you to add options
@@ -182,6 +182,8 @@ function AddQuestion(i, k,removeButtons) {
     d.setAttribute("type", "text");
     d.setAttribute("value", String(k));
     d.setAttribute("id", "Q" + formID);
+    d.setAttribute("size", 120);
+    d.setAttribute("maxlength", "72");
 
     if (removeButtons != 0) {
         console.log(REMOVE_BUTTONS.toString());
