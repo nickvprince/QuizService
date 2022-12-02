@@ -21,6 +21,7 @@ using namespace std;
 #include <sstream>
 using namespace crow;
 int passFail = 0;
+std::string mode = "prof";
 void sendFile(response& res, string filename, string contentType);
 void sendScript(response& res, string filename);
 void sendStyle(response& res, string filename);
@@ -174,7 +175,25 @@ Logger::log("STARTUP", -1, "startLogs");
 		sendHtml(res, "getMode.html");
 	});
 
-	
+	CROW_ROUTE(app, "/switch")
+		([](const request& req, response& res) {
+		Logger::log("Switching Mode", 0, "routeLogs");
+		if (mode == "prof") {
+			mode = "stud";
+			sendHtml(res, "studentIndex.html");
+		}
+		else if (mode == "stud") {
+			mode = "prof";
+			sendHtml(res, "index.html");
+		}
+		
+		sendHtml(res, "00.html");
+			});
+
+	/// <summary>
+	/// view quiz get request to get the data for a quiz
+	/// </summary>
+	/// <returns></returns>
 	CROW_ROUTE(app, "/viewQuiz.html").methods(crow::HTTPMethod::GET) //-----------
 		([](const request& req, response& res) {
 		auto quizID = req.url_params.get("quizID");

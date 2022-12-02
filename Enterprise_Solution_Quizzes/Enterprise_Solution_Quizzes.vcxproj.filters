@@ -60,6 +60,9 @@
     <ClCompile Include="QuizSharedDocker\objects\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuizSharedDocker\objects\JsonDTO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QuizSharedDocker\objects\Answer.h">
@@ -155,6 +158,15 @@
       <Filter>JS\quiz</Filter>
     </None>
     <None Include="QuizSharedDocker\public\scripts\communication.js">
+      <Filter>JS\other</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\quizCreateAlert.js">
+      <Filter>JS\quiz</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\loadQuizButtons.js">
+      <Filter>JS\quiz</Filter>
+    </None>
+    <None Include="QuizSharedDocker\public\scripts\indexes.js">
       <Filter>JS\other</Filter>
     </None>
   </ItemGroup>
