@@ -38,8 +38,19 @@ function getExecutionMode(){
         }
         alert(xmlHttpMODE.status);
         // Parse the services json file
-        xmlHttpSetMode.open("GET", '/setMode/'+responseText, false);
-        xmlHttpSetMode.send(null);
+        if (xmlHttpMODE.responseText == "true") {
+            xmlHttpSetMode.open("GET", '/setMode/prof', false);
+            xmlHttpSetMode.send(null);
+        }
+        else if (xmlHttpMODE.responseText == "false") {
+            xmlHttpSetMode.open("GET", '/setMode/stud', false);
+            xmlHttpSetMode.send(null);
+        }
+        else {
+            xmlHttpSetMode.open("GET", '/setMode/prof', false);
+            xmlHttpSetMode.send(null);
+        }
+      
         professorJson = xmlHttpIP.responseText;
         professorObj = JSON.parse(professorJson);
     } catch (error) {
