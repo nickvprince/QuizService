@@ -47,6 +47,7 @@
     <None Include="QuizSharedDocker\public\index.html" />
     <None Include="QuizSharedDocker\public\quizLandingPage.html" />
     <None Include="QuizSharedDocker\public\quizViewer.html" />
+    <None Include="QuizSharedDocker\public\scripts\communication.js" />
     <None Include="QuizSharedDocker\public\scripts\editpool.js" />
     <None Include="QuizSharedDocker\public\scripts\getMode.js" />
     <None Include="QuizSharedDocker\public\scripts\loadMenuOption.js" />

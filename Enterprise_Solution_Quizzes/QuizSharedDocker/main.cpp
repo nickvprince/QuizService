@@ -319,6 +319,7 @@ Logger::log("STARTUP", -1, "startLogs");
 		}
 		q.print();
 		std::cout << "\n" << "Points Earned : " << totalPoints << "\t" << "TotalPoints : " << availablePoints << "\n";
+		res.write(to_string(totalPoints));
 		res.end();
 	});
 

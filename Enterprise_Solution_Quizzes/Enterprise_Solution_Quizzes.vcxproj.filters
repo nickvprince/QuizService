@@ -154,5 +154,8 @@
     <None Include="QuizSharedDocker\public\scripts\viewQuiz.js">
       <Filter>JS\quiz</Filter>
     </None>
+    <None Include="QuizSharedDocker\public\scripts\communication.js">
+      <Filter>JS\other</Filter>
+    </None>
   </ItemGroup>
 </Project>
