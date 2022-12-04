@@ -43,9 +43,9 @@ function loadQuizList() {
     console.log(obj);
 
     var select = document.getElementById("quizID");
-
+  
     for (let x in obj) {
-       
+     
         var opt = String(obj[x].title);
         var el = document.createElement("option");
         el.textContent = opt;
@@ -63,6 +63,7 @@ function loadQuiz() {
     xmlHttp.send(null);
 
     const obj = JSON.parse(xmlHttp.responseText);
+  
 
     document.getElementById("quizID").value = obj["quiz"].id;
     document.getElementById("quizTitle").value = obj["quiz"].title;

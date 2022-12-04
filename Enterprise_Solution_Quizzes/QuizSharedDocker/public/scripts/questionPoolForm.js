@@ -2,10 +2,13 @@ var formID = 0;
 var buttonID = 0;
 var optionID = 0;
 var REMOVE_BUTTONS = 0;
+var disable = false;
 
-function start() { // on startup if query string it created then alert the user a pool was created
+function start(fromWhere) { // on startup if query string it created then alert the user a pool was created
+
     const urlParams = new URLSearchParams(location.search);
     for (const [key, value] of urlParams) {
+        
         if (key == "created" && value == "true") {
             alert("Question Pool Created");
         }
@@ -15,9 +18,12 @@ function start() { // on startup if query string it created then alert the user 
         else if (key == "quizID") {
             REMOVE_BUTTONS = 1;
         }
-       
+
     }
-    
+    if (fromWhere == "view quiz") {
+        disable = true;
+    }
+
 }
 
 function Enter() { // submit question pool to be saved
@@ -112,8 +118,33 @@ function Enter() { // submit question pool to be saved
         xmlHttp.open("GET", '/submitQuiz' + tmp, false);
         xmlHttp.send(null);
         window.location.replace('../index.html');
+     
 
+        // ------------- SEND TO GRADED -------------------
+        // Look for the corresponding GET request
+        var xmlGETHttp = new XMLHttpRequest();
+        xmlGETHttp.open("GET", "../json/serviceips.json", false);
+        xmlGETHttp.send(null);
+
+        // Parse the services json file
+        const serviceJson = xmlGETHttp.responseText;
+        const serviceObj = JSON.parse(serviceJson);
+
+        var ip = serviceObj["grades"].ip;
+        var port = serviceObj["grades"].port;
+
+        // Look for the corresponding GET request
+        const xmlPOSTHttp = new XMLHttpRequest(); 
+        xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "?grade=" + xmlHttp.responseText, true);
+        xmlPOSTHttp.send(null); alert("sending");
+        // ------------- SEND TO GRADED -------------------
+
+        //----------------- LOG --------------------------
+        var xmlHttpLog2 = new XMLHttpRequest();
+        xmlHttpLog2.open("POST", "../log/Grades sent/0", false);
+        xmlHttpLog2.send(null);
       
+        //----------------- LOG --------------------------
     }
     else {
         xmlHttp.open("GET", '/savepool' + tmp, false);
@@ -172,7 +203,7 @@ function removeQuestion(buttonID) {
 }
 
 function AddQuestion(i, k,removeButtons) {
-    console.log("ADD_BUTTON : " + REMOVE_BUTTONS);
+
     var t = String(i);
     var b = document.createElement('input');
     var d = document.createElement('input'); // create a button and textfield for a question, button allows you to add options
@@ -182,6 +213,12 @@ function AddQuestion(i, k,removeButtons) {
     d.setAttribute("type", "text");
     d.setAttribute("value", String(k));
     d.setAttribute("id", "Q" + formID);
+    d.setAttribute("size", 120);
+    d.setAttribute("maxlength", "72");
+   
+    if (disable==true) {
+        d.setAttribute("disabled", "true");
+    }
 
     if (removeButtons != 0) {
         console.log(REMOVE_BUTTONS.toString());
@@ -250,6 +287,10 @@ function option(i, c, name) { // add option to a question
     z.setAttribute("type", "text");
     z.setAttribute("value", String(name));
     z.setAttribute("id", b + ":" + nextID(b + ":").toString());
+    if (disable==true) {
+        i.setAttribute("disabled", "true");
+        z.setAttribute("disabled", "true");
+    }
     optionID++;
     if (c == 0) { // add radio button
         i.setAttribute("type", "radio")

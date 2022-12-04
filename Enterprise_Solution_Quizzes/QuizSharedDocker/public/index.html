@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles/styles.css">
-        <title>Quiz Module</title>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="../scripts/indexes.js"></script>
+    <title>Quiz Module</title>
+</head>
     <body>
         <!-- Navigation Section -->
         <nav class="navbar">
@@ -24,10 +25,14 @@
                     <li class="navbar_item">
                         <a href="./otherModules.html" class="navbar_links" id="othermodules-page">Other Modules</a>
                     </li>
+                    
+                    <li class="navbar_item" id="switchBtn">
+                          <a href="./switch" class="navbar_links" id="switchBtn">Switch Mode</a>
+                    </li>
                 </ul>
             </div>
         </nav>
-
+        <script>addButton()</script> <!-- add button or not -->
         <!-- Quiz Functions 'main' Section -->
         <div class="main" id="quizfunctions">
             <div class="main_container">
@@ -35,6 +40,7 @@
                     <h1>Quiz Functions</h1>
                     <button class="main_btn" role="button"><span class="text"><a href="./quizLandingPage.html">Quiz Creation</a></span></button>
                     <button class="main_btn" role="button"><span class="text"><a href="./questionPool.html">Question Pool</a></span></button>
+                    <button class="main_btn" role="button"><span class="text"><a href="./viewQuiz.html">View Quiz</a></span></button>
                 </div>
             </div>
         </div>
