@@ -12,20 +12,25 @@ function loadQuizButtons() {
     console.log(obj);
 
     var select = document.getElementById("selectQuiz");
-    for (let x in obj) {
-    
-        var opt = String(obj[x].title);
-        var listitem = document.createElement("li");
-        var el = document.createElement("BUTTON");
-        el.innerHTML = opt;
-        el.addEventListener("click", () => {
-            var addr = "../takeQuiz.html?quizID=" + x;
-            el.value = redirectToAddr(addr);
-            
-        });
-        listitem.appendChild(el);
-        select.appendChild(listitem);
 
+    const currDate = new Date();
+
+    for (let x in obj) {
+        var quizObjStartDate = new Date(obj[x].startdate);
+        console.log(currDate + "\n" + quizObjStartDate);
+        if(currDate >= quizObjStartDate) {
+            var opt = String(obj[x].title);
+            var listitem = document.createElement("li");
+            var el = document.createElement("BUTTON");
+            el.innerHTML = opt + " - Points: " + obj[x].totalpoints + " - DueDate: "+ obj[x].enddate;
+            el.addEventListener("click", () => {
+                var addr = "../takeQuiz.html?quizID=" + x;
+                el.value = redirectToAddr(addr);
+                
+            });
+            listitem.appendChild(el);
+            select.appendChild(listitem);
+        }
     }
 
 }
