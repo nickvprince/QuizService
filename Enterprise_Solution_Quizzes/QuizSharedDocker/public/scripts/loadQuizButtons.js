@@ -17,8 +17,9 @@ function loadQuizButtons() {
 
     for (let x in obj) {
         var quizObjStartDate = new Date(obj[x].startdate);
-        console.log(currDate + "\n" + quizObjStartDate);
-        if(currDate >= quizObjStartDate) {
+        var quizObjEndDate = new Date(obj[x].enddate);
+        
+        if(currDate >= quizObjStartDate && currDate < quizObjEndDate) {
             var opt = String(obj[x].title);
             var listitem = document.createElement("li");
             var el = document.createElement("BUTTON");
