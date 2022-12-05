@@ -13,7 +13,11 @@ Quiz::Quiz(std::string title, std::string startDate, std::string endDate, int du
 	this->endDate = endDate;
 	this->duration = duration;
 	this->pool = pool;
-	this->totalPoints = 0;
+	QuestionPool qp(this->pool);
+	qp.loadFromDb();
+	std::vector<std::string> questions = qp.getQuestions();
+	int length = questions.size();
+	this->totalPoints = length;
 	this->pointsAchieved = 0;
 }
 
@@ -24,7 +28,11 @@ Quiz::Quiz(int id, std::string title, std::string startDate, std::string endDate
 	this->endDate = endDate;
 	this->duration = duration;
 	this->pool = pool;
-	this->totalPoints = 0;
+	QuestionPool qp(this->pool);
+	qp.loadFromDb();
+	std::vector<std::string> questions = qp.getQuestions();
+	int length = questions.size();
+	this->totalPoints = length;
 	this->pointsAchieved = 0;
 }
 
