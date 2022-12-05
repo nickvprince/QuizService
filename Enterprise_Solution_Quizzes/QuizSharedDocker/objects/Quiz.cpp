@@ -95,6 +95,7 @@ bool Quiz::updateQuiz() {
 	db.executeQuery("UPDATE quiz SET qp_poolid = '" + this->pool + 
 	"', title = '" + this->title +
 	"', startdate = '" + this->startDate +
+	"', totalpoints = '" + std::to_string(this->totalPoints) +
 	"', enddate = '" + this->endDate +
 	"', duration = " + std::to_string(this->duration) +
 	" WHERE idquiz = " + std::to_string(this->id) + ";");
