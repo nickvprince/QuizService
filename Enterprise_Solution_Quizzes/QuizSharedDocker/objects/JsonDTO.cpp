@@ -13,8 +13,11 @@ bool updateQuizJson() {
         std::string str;
 
         while (dbRes->next()) { 
-            str += "'" + dbRes->getString("idquiz") + "': {\n";
-            str += "'title': '" + dbRes->getString("title") + "'\n},\n";
+            str += "\"" + dbRes->getString("idquiz") + "\": {\n";
+            str += "\"title\": \"" + dbRes->getString("title") + "\",\n";
+            str += "\"startdate\": \"" + dbRes->getString("startdate") + "\",\n";
+            str += "\"enddate\": \"" + dbRes->getString("enddate") + "\",\n";
+            str += "\"totalpoints\": \"" + dbRes->getString("totalpoints") +"\"\n},\n";
         }
 
         str.replace(str.length() - 2, str.length(), "\n");
