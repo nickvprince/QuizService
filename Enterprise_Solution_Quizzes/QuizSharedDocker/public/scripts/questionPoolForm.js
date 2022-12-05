@@ -118,8 +118,33 @@ function Enter() { // submit question pool to be saved
         xmlHttp.open("GET", '/submitQuiz' + tmp, false);
         xmlHttp.send(null);
         window.location.replace('../index.html');
+     
 
+        // ------------- SEND TO GRADED -------------------
+        // Look for the corresponding GET request
+        var xmlGETHttp = new XMLHttpRequest();
+        xmlGETHttp.open("GET", "../json/serviceips.json", false);
+        xmlGETHttp.send(null);
+
+        // Parse the services json file
+        const serviceJson = xmlGETHttp.responseText;
+        const serviceObj = JSON.parse(serviceJson);
+
+        var ip = serviceObj["grades"].ip;
+        var port = serviceObj["grades"].port;
+
+        // Look for the corresponding GET request
+        const xmlPOSTHttp = new XMLHttpRequest(); 
+        xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "?grade=" + xmlHttp.responseText, true);
+        xmlPOSTHttp.send(null); alert("sending");
+        // ------------- SEND TO GRADED -------------------
+
+        //----------------- LOG --------------------------
+        var xmlHttpLog2 = new XMLHttpRequest();
+        xmlHttpLog2.open("POST", "../log/Grades sent/0", false);
+        xmlHttpLog2.send(null);
       
+        //----------------- LOG --------------------------
     }
     else {
         xmlHttp.open("GET", '/savepool' + tmp, false);
