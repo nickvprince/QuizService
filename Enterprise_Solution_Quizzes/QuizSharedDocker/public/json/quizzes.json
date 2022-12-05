@@ -2,61 +2,43 @@
 "1": {
 "title": "Quiz 1",
 "startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "100"
+"enddate": "2022-12-12",
+"totalpoints": "3"
 },
 "2": {
 "title": "Quiz 2",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "213"
+"totalpoints": "0"
 },
 "3": {
 "title": "Quiz 3",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "15"
+"totalpoints": "3"
 },
 "4": {
 "title": "Quiz 4",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "1020"
+"totalpoints": "3"
 },
 "5": {
 "title": "Quiz 5",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "105435"
+"totalpoints": "3"
 },
 "6": {
 "title": "Quiz 6",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "100"
+"totalpoints": "3"
 },
 "7": {
 "title": "Quiz 7",
 "startdate": "2022-11-10",
 "enddate": "2022-11-11",
-"totalpoints": "10"
-},
-"8": {
-"title": "DS3 Demo Quiz",
-"startdate": "2022-11-17",
-"enddate": "2022-12-02",
-"totalpoints": "0"
-},
-"9": {
-"title": "test",
-"startdate": "2022-12-03",
-"enddate": "2022-12-05",
-"totalpoints": "0"
-},
-"10": {
-"title": "Test Quiz DS3",
-"startdate": "2022-12-01",
-"enddate": "2022-12-14",
-"totalpoints": "0"
+"totalpoints": "3"
 }
 }

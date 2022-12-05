@@ -42,8 +42,15 @@ bool QuestionPool::save(int overWrite)
 				
 				}
 			}
-
-
+		// when updating question pool update quiz total Points --
+			sql::ResultSet* dbRes=db.executeQuery("SELECT * FROM quiz where qp_poolid = '" + this->ID+"';");
+			std::vector<std::string> questions = this->getQuestions();
+			int length = questions.size();
+			while (dbRes->next()) // find all quizes with this pool id
+		{
+			std::cout << dbRes->getString("idquiz");
+			db.executeQuery("UPDATE quiz set totalpoints = "+to_string(length) + " where idquiz = " + dbRes->getString("idquiz") + "; ");//update their totalPoints
+		}
 
 		Logger::log("Pool saved", 0, "questionPoolLogs");
 		return true;

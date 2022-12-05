@@ -15,6 +15,7 @@ using namespace std;
 #include "./objects/json.hpp"
 //#include "./objects/QuestionPool.cpp"
 #include "objects/Quiz.cpp"
+#include <unistd.h>
 #include "objects/JsonDTO.cpp"
 #include <vector>
 #include <fstream>
@@ -183,7 +184,9 @@ Logger::log("STARTUP", -1, "startLogs");
 		if (modeIn == "na") {
 			timeout ="1";
 		}
-		mode = modeIn;
+		else {
+			mode = modeIn;
+		}
 		res.end();
 			});
 
