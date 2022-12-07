@@ -1,44 +1,8 @@
 {
-"1": {
-"title": "Quiz 1",
-"startdate": "2022-11-10",
-"enddate": "2022-12-12",
-"totalpoints": "3"
-},
-"2": {
-"title": "Quiz 2",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "0"
-},
-"3": {
-"title": "Quiz 3",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "3"
-},
-"4": {
-"title": "Quiz 4",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "3"
-},
-"5": {
-"title": "Quiz 5",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "3"
-},
-"6": {
-"title": "Quiz 6",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "3"
-},
-"7": {
-"title": "Quiz 7",
-"startdate": "2022-11-10",
-"enddate": "2022-11-11",
-"totalpoints": "3"
+"14": {
+"title": "CalendarQuiz22",
+"startdate": "2022-12-06",
+"enddate": "2022-12-31",
+"totalpoints": "2"
 }
 }

@@ -21,6 +21,7 @@ public:
 	Quiz(int id);
 	bool setTitle(std::string);
 	std::string getTitle();
+	int getID();
 	bool saveQuiz();
 	bool updateQuiz();
 	bool deleteQuiz();

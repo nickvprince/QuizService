@@ -528,7 +528,6 @@ Logger::log("STARTUP", -1, "startLogs");
 
 		updateQuizJson();
 		updateQuizPoolJson();
-
 		//createQuiz Query
 		if (filename == "createQuiz.html" || filename == "selectQuiz.html" || filename == "editQuiz.html") {
 
@@ -552,6 +551,7 @@ Logger::log("STARTUP", -1, "startLogs");
 					quizPoolString.str() != "" && quizStartDateString.str() != "" && quizEndDateString.str() != "" && quizPoolString.str() != "")) {
 					Quiz currentQuiz(quizTitleString.str(), quizStartDateString.str(), quizEndDateString.str(), stoi(quizDurationString.str()), quizPoolString.str());
 					currentQuiz.saveQuiz();
+					updateCalendarJson(currentQuiz.getID());
 					std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
 					filename = "quizLandingPage.html";
 				}
@@ -579,7 +579,7 @@ Logger::log("STARTUP", -1, "startLogs");
 					cout << "----------------------------I got here\n\n";
 					currentQuiz.updateQuiz();
 					std::cout << currentQuiz.getTitle() << "-------------" << std::endl; // for testing
-
+					updateCalendarJson(currentQuiz.getID());
 					updateQuizJson();
 					updateQuizPoolJson(quizIDString.str());
 

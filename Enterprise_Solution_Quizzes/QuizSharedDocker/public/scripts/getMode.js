@@ -2,8 +2,8 @@ function getExecutionMode(){
     //log startup
     var xmlHttpLog = new XMLHttpRequest();
    
-    xmlHttpLog.open("POST", "../log/gettingMode/0", false);
-    xmlHttpLog.send(null);
+    //xmlHttpLog.open("POST", "../log/gettingMode/0", false);
+    //xmlHttpLog.send(null);
   
 
 
@@ -32,17 +32,18 @@ function getExecutionMode(){
         xmlHttpMODE.open("GET", "http://" + ip + ":" + port + "/modeofoperation", false);
         xmlHttpMODE.timeout();
         xmlHttpMODE.send(null);
+
         if (xmlHttpMODE.status != 200) {
             xmlHttpLog.open("POST", "../log/Get mode failed"+xmlHttpMODE.status+"/2", false);
             xmlHttpLog.send(null);
         }
         alert(xmlHttpMODE.status);
         // Parse the services json file
-        if (xmlHttpMODE.responseText == "true") {
+        if (xmlHttpMODE.responseText == true) {
             xmlHttpSetMode.open("GET", '/setMode/prof', false);
             xmlHttpSetMode.send(null);
         }
-        else if (xmlHttpMODE.responseText == "false") {
+        else if (xmlHttpMODE.responseText == false) {
             xmlHttpSetMode.open("GET", '/setMode/stud', false);
             xmlHttpSetMode.send(null);
         }
@@ -64,7 +65,6 @@ function getExecutionMode(){
 
         addButtons();
     }
-
  
 }
     
