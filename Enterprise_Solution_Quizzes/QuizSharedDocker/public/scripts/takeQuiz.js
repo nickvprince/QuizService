@@ -146,3 +146,30 @@ function startTimer() {
 
 
 }
+
+function updateQuizDate() {
+    // Look for the corresponding GET request
+    var xmlGETHttp = new XMLHttpRequest();
+    xmlGETHttp.open("GET", "../json/serviceips.json", false);
+    xmlGETHttp.send(null);
+
+    // Parse the services json file
+    const serviceJson = xmlGETHttp.responseText;
+    const serviceObj = JSON.parse(serviceJson);
+
+    var ip = serviceObj["quizzes"].ip;
+    var port = serviceObj["quizzes"].port;
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "../json/currentQuiz.json", false);
+    xmlHttp.send(null);
+
+    const obj1 = JSON.parse(xmlHttp.responseText);
+    
+    var id = obj1["quiz"].id;
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlPOSTHttp.open("POST", "http://" + ip + ":" + port + "/updateTakeQuiz?quizID=" + id, false);
+    xmlHttp.send(null);
+
+}

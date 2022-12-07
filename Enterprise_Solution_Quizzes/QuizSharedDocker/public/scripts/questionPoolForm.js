@@ -27,6 +27,7 @@ function start(fromWhere) { // on startup if query string it created then alert 
 }
 
 function Enter() { // submit question pool to be saved
+    //updateQuizDate();
     window.location.replace('../index.html');
     var query = "?"
     var fromEdit = false;
@@ -143,7 +144,6 @@ function Enter() { // submit question pool to be saved
         var xmlHttpLog2 = new XMLHttpRequest();
         xmlHttpLog2.open("POST", "../log/Grades sent/0", false);
         xmlHttpLog2.send(null);
-      
         //----------------- LOG --------------------------
     }
     else {
