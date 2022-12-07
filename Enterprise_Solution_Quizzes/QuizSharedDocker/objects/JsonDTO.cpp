@@ -144,4 +144,32 @@ bool updateQuizQuestionList(std::string id) {
     return false;
 }
 
+bool updateCalendarJson(int id) {
+    Database db;
+
+    sql::ResultSet* dbRes = db.executeQuery("SELECT * FROM quiz WHERE idquiz = '" + std::to_string(id) + "';");
+    nlohmann::json jArray;
+
+    while(dbRes->next()){
+        jArray["eID"] = dbRes->getString("idquiz");
+        jArray["title"] = dbRes->getString("title");
+        jArray["startdate"] = dbRes->getString("startdate") + "T00:00:00";
+        jArray["dueDate"] = dbRes->getString("enddate") + "T00:00:00";
+        jArray["tag"] = "QUIZ";
+    }
+
+    std::ofstream jsonFile;
+    jsonFile.open("../public/json/createQuizInCalendar.json");
+
+    if (jsonFile.is_open()) {
+        jsonFile << jArray.dump();
+    } else {
+        std::cout << "Failed to write question pools to json file" << std::endl;
+        return false;
+    }
+    jsonFile.close();
+
+    return true;
+}
+
 #endif

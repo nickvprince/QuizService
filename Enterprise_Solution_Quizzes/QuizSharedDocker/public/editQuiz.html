@@ -5,6 +5,7 @@
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
         <script type="text/javascript" src="./scripts/redirect.js"></script>
+        <script type="text/javascript" src="./scripts/communication.js"></script>
         <title>Edit Quiz</title>
     </head>
     <body onload="loadPool();loadQuiz();changeUrl('editQuiz.html')">
@@ -38,7 +39,7 @@
 
             <br>
 
-            <input type="submit" onclick="sendAlert('Quiz Entry Submitted'); redirectToAddr('../editQuiz.html')"value="Submit"/>
+            <input type="submit" onclick="sendAlert('Quiz Entry Submitted');redirectToAddr('../editQuiz.html')"value="Submit"/>
             <!--- communication to calendar (UPDATE)-->
           </form>
     </body>

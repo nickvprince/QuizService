@@ -5,6 +5,7 @@
         <script type="text/javascript" src="./scripts/quizCreateAlert.js"></script>
         <script type="text/javascript" src="./scripts/loadMenuOption.js"></script>
         <script type="text/javascript" src="./scripts/redirect.js"></script>
+        <script type="text/javascript" src="./scripts/communication.js"></script>
         <title>Quiz Deletion</title>
     </head>
     <body onload="loadQuizList()">
@@ -22,7 +23,7 @@
             <select id="quizID" name="quizID">
                 <option></option>
             </select><br>
-            <input type="submit" onclick="sendAlert('Quiz Deletion Submitted')"value="Submit"/>
+            <input type="submit" onclick="sendAlert('Quiz Deletion Submitted'); deleteFromCalendar()"value="Submit"/>
             <!--- communication to calendar (REMOVE)-->
         </form>
     </body>
