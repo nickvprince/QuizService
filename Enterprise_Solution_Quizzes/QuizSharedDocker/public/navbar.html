@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="styles/navbar.css">
+<div class="navigation">
+    <a href="getMode.html" id="title">Quizzes</a>
+    <nav>
+        <a href="#" id="adminactivities">Admin</a>
+        <a id="assignments">Assignments</a>
+        <a href="#" id="attendance">Attendance</a>
+        <a href="#" id="calendar">Calendar</a>
+        <a href="#" id="classlist">Classlist</a>
+        <a href="#" id="grades">Grades</a>
+        <a href="#" id="groups">Groups</a>
+        <a href="#" id="rubrics">Rubrics</a>
+        <a href="#" id="surveys">Surveys</a>
+        <a href="studentIndex.html">Switch Mode</a>
+        <div class="animation"></div>
+    </nav>
+</div>
+
+<script>
+    // Look for the corresponding GET request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "../json/serviceips.json", false);
+    xmlHttp.send(null);
+
+    // Parse the services json file
+    const json = xmlHttp.responseText;
+    const obj = JSON.parse(json);
+
+    const services = ["assignments", "attendance", "calendar", "classlist", "grades", "groups", "rubrics", "surveys", "adminactivities"];
+
+    for (const x of services) {
+        var currentService = document.getElementById(x);
+        currentService.href = ("http://" + String(obj[x].ip) + ":" + String(obj[x].port));
+    }
+
+/*
+    var assignments = document.getElementById("assignments");
+    assignments.href = ("http://" + obj.assignments.ip + ":" + obj.assignments.port);
+    console.log("Set assignment Link: " + assignments.href);
+
+    var attendance = document.getElementById("attendance");
+    attendance.href = ("http://" + obj.attendance.ip + ":" + obj.attendance.port);
+    console.log("Set attendance Link: " + attendance.href);
+
+    var calendar = document.getElementById("calendar");
+    calendar.href = ("http://" + obj.calendar.ip + ":" + obj.calendar.port);
+    console.log("Set calendar Link: " + calendar.href);
+
+    var classlist = document.getElementById("classlist");
+    classlist.href = ("http://" + obj.classlist.ip + ":" + obj.classlist.port);
+    console.log("Set classlist Link: " + classlist.href);
+
+    var grades = document.getElementById("grades");
+    grades.href = ("http://" + obj.grades.ip + ":" + obj.grades.port);
+    console.log("Set grades Link: " + grades.href);
+
+    var groups = document.getElementById("groups");
+    groups.href = ("http://" + obj.groups.ip + ":" + obj.groups.port);
+    console.log("Set groups Link: " + groups.href);
+    
+    var rubrics = document.getElementById("rubrics");
+    rubrics.href = ("http://" + obj.rubrics.ip + ":" + obj.rubrics.port);
+    console.log("Set rubrics Link: " + rubrics.href);
+
+    var surveys = document.getElementById("surveys");
+    surveys.href = ("http://" + obj.surveys.ip + ":" + obj.surveys.port);
+    console.log("Set surveys Link: " + surveys.href);
+
+    var adminactivities = document.getElementById("admin");
+    adminactivities.href = ("http://" + obj.adminactivities.ip + ":" + obj.adminactivities.port);
+    console.log("Set admin Link: " + adminactivities.href);
+*/
+
+</script>
