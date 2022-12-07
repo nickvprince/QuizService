@@ -2,16 +2,16 @@
 <div class="navigation">
     <a href="getMode.html" id="title">Quizzes</a>
     <nav>
-        <a href="#" id="adminactivities">Admin</a>
+        <a id="adminactivities">Admin</a>
         <a id="assignments">Assignments</a>
-        <a href="#" id="attendance">Attendance</a>
-        <a href="#" id="calendar">Calendar</a>
-        <a href="#" id="classlist">Classlist</a>
-        <a href="#" id="grades">Grades</a>
-        <a href="#" id="groups">Groups</a>
-        <a href="#" id="rubrics">Rubrics</a>
-        <a href="#" id="surveys">Surveys</a>
-        <a href="studentIndex.html">Switch Mode</a>
+        <a id="attendance">Attendance</a>
+        <a id="calendar">Calendar</a>
+        <a id="classlist">Classlist</a>
+        <a id="grades">Grades</a>
+        <a id="groups">Groups</a>
+        <a id="rubrics">Rubrics</a>
+        <a id="surveys">Surveys</a>
+        <a href="studentIndex.html" id="switchBtn">Switch Mode</a>
         <div class="animation"></div>
     </nav>
 </div>
@@ -32,7 +32,6 @@
         var currentService = document.getElementById(x);
         currentService.href = ("http://" + String(obj[x].ip) + ":" + String(obj[x].port));
     }
-
 /*
     var assignments = document.getElementById("assignments");
     assignments.href = ("http://" + obj.assignments.ip + ":" + obj.assignments.port);

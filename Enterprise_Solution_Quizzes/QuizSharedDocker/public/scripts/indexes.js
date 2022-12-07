@@ -1,5 +1,3 @@
-
-
 function addButton() {
     var xmlHttpGetMode = new XMLHttpRequest();
     xmlHttpGetMode.open("GET", "/timeout", false);
