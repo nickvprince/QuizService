@@ -43,8 +43,8 @@ function Enter() { // submit question pool to be saved
          
         }
     }
-  
-    query += "pool=" +document.getElementById("pname").value + "&&";
+    var pnamvar = document.getElementById("pname").value;
+    query += "pool=" + encodeURIComponent(pnamvar) + "&&";
     var ids = document.querySelectorAll('[id]');
   
     Array.prototype.forEach.call(ids, function (el, i) { // add all questions as an array

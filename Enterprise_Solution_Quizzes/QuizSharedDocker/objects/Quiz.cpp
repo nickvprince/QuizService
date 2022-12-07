@@ -72,6 +72,10 @@ std::string Quiz::getTitle() {
 	return this->title;
 }
 
+int Quiz::getID() {
+	return this->id;
+}
+
 bool Quiz::saveQuiz() {
 
 	Database db;
@@ -83,6 +87,12 @@ bool Quiz::saveQuiz() {
 	this->endDate + "'," +
 	std::to_string(this->duration) + "," +
 	std::to_string(this->totalPoints) + ");");
+
+	sql::ResultSet* quizSQLRes = db.executeQuery("SELECT * FROM quiz ORDER BY idquiz DESC LIMIT 1;");
+	
+	while(quizSQLRes->next()) {
+		this->id = stoi(quizSQLRes->getString("idquiz"));
+	}
 
 	return true;
 
