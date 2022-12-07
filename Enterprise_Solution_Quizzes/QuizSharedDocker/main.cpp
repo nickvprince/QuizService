@@ -594,7 +594,7 @@ Logger::log("STARTUP", -1, "startLogs");
 
 				if(quizIDString.str() != ""){
 					updateQuizPoolJson(quizIDString.str());
-					
+					updateCalendarJson(stoi(quizIDString.str()));
 					filename = "editQuiz.html";
 				}
 			}
@@ -619,8 +619,8 @@ Logger::log("STARTUP", -1, "startLogs");
 			quizIDString << quizID ? quizID : "";
 			
 			if (quizIDString.str() != "") {
-			
 				updateQuizPoolJson(quizIDString.str());
+				updateCalendarJson(stoi(quizIDString.str()));
 				//updateQuizQuestionList(quizIDString.str());
 			}
 			else {
