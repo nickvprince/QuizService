@@ -113,7 +113,6 @@ function deleteFromCalendar() {
   const xmlPOSTHttp = new XMLHttpRequest();
   xmlPOSTHttp.open("DELETE", "http://" + ip + ":" + port + "/event?enterpriseID=Q" + selected.value, true);
   xmlPOSTHttp.send(null);
-  alert();
 }
 
 function pushToGrades(){

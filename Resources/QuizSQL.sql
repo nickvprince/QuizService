@@ -108,51 +108,76 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO qp (poolid) values ('pool1');
-INSERT INTO qp (poolid) values ('pool2');
 
-INSERT INTO question (question,points,qp_poolid) values("Please select the correct answer ( 1 + 2)",1,'pool1');
-INSERT INTO question (question,points,qp_poolid) values("Choose the animal that says woof",1,'pool1');
-
-INSERT INTO question (question,points,qp_poolid) values("Please select the correct answer (2+2)",1,'pool2');
-INSERT INTO question (question,points,qp_poolid) values("Choose the animal that says meow",1,'pool2');
-
-
-
-select * from qp;
-select * from question;
-select * from answer where quizID =1 and studentID = 123; # get student 123's answers to quiz 1	
-select * from answer where quizID =2 and studentID = 123; # get student 123's answers to quiz 2
-select * from answer where studentID is null; # get question 0 pool info
-select * from question where qp_poolid = "pool1"; # get pool 1 questions
-select * from question where qp_poolid = "pool2"; # get pool 2 questions
-
-
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 1", "2022-11-10", "2022-11-11", 2, 100);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 2", "2022-11-10", "2022-11-11", 2, 213);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 3", "2022-11-10", "2022-11-11", 2, 15);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 4", "2022-11-10", "2022-11-11", 2, 1020);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 5", "2022-11-10", "2022-11-11", 2, 105435);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 6", "2022-11-10", "2022-11-11", 2, 100);
-Insert into quiz (qp_poolid, title, startdate, enddate, duration, totalpoints) values ("pool1", "Quiz 7", "2022-11-10", "2022-11-11", 2, 10);
-
-
-insert into qp(poolid) values ("pool11");
-insert into qp(poolid) values ("pool111");
-insert into qp(poolid) values ("pool1111");
-insert into qp(poolid) values ("pool11111");
-insert into qp(poolid) values ("pool111111");
-insert into qp(poolid) values ("pool1111111");
-insert into qp(poolid) values ("pool11111111");
-insert into qp(poolid) values ("pool111111111");
-insert into qp(poolid) values ("pool1111111111");
-insert into qp(poolid) values ("pool11111111111");
-insert into qp(poolid) values ("pool111111111111");
-insert into qp(poolid) values ("pool1111111111111");
 set global max_connections = 10000;
 
 select * from qp;
 select * from question;
-select * from answer where question_idquestion=518;
+select * from answer;
+select * from quiz;
+select * from studentQuizzes;
+
+-- Quiz 1 --
+
+insert into qp(poolid) values ("thebestpool");
+
+INSERT INTO question (idquestion,question,points,qp_poolid) values(1,"What do you wear on your feet",1,'thebestpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(2,"How many sides in a triangle?",1,'thebestpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(3,"What colour is a giraffe?",1,'thebestpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(4,"Which word(s) has the letter e in it?",1,'thebestpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(5,"What is 1+1?",1,'thebestpool');
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(1,"Shoes",1,0,1);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(2,"Socks",1,0,1);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(3,"Hat",0,0,1);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(4,"Shirt",0,0,1);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(5,"20",0,0,2);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(6,"15",0,0,2);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(7,"3",1,0,2);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(8,"Blue",0,0,3);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(9,"Red",0,0,3);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(10,"Black",0,0,3);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(11,"Yellow",1,0,3);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(12,"the",1,0,4);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(13,"cat",0,0,4);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(14,"monkey",1,0,4);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(15,"mirror",0,0,4);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(16,"4",0,0,5);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(17,"2",1,0,5);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(18,"3",0,0,5);
+
+INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints) values("1","thebestpool","The Best Quiz","2022-12-08", "2022-12-11", 120, 5);
+
+-- Quiz 2 --
+
+insert into qp(poolid) values ("mathpool");
+
+INSERT INTO question (idquestion,question,points,qp_poolid) values(6,"1 + 1 = ?",1,'mathpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(7,"2 * 2 = ?",1,'mathpool');
+INSERT INTO question (idquestion,question,points,qp_poolid) values(8,"10 * 10 + 1 = ?",1,'mathpool');
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(19,"2",1,0,6);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(20,"0",0,0,6);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(21,"1",0,0,6);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(22,"10",0,0,6);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(23,"4",1,0,7);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(24,"8",0,0,7);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(25,"2",0,0,7);
+
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(26,"10",0,0,8);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(27,"100",0,0,8);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(28,"1000",0,0,8);
+INSERT INTO answer (idAnswer,answer,expected,selected,question_idquestion) values(29,"101",1,0,8);
+
+INSERT INTO quiz (idquiz,qp_poolid,title,startdate,enddate,duration,totalpoints) values("2","mathpool","Scary Movie","2022-12-08", "2022-12-15", 5, 3);
+
+select * from qp;
+select * from question;
+select * from answer;
 select * from quiz;
 select * from studentQuizzes;
