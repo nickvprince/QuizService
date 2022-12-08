@@ -1,5 +1,5 @@
 # Ignore Files Added
-
+Enterprise_Solution_Quizzes/QuizSharedDocker/build/
 Enterprise_Solution_Quizzes/QuizSharedDocker/build/CMakeFiles/
 Enterprise_Solution_Quizzes/QuizSharedDocker/.vscode/
 *.bat
