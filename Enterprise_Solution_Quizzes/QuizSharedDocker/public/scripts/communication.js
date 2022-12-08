@@ -76,7 +76,7 @@ function putToCalendar() {
       const selected = document.getElementById('quizID');
     
       const xmlPOSTHttp = new XMLHttpRequest();
-      xmlPOSTHttp.open("PUT", "http://" + ip + ":" + port + "/event?enterpriseID = " + document.getElementById("quizID").value, true);
+      xmlPOSTHttp.open("PUT", "http://" + ip + ":" + port + "/event?enterpriseID=Q" + document.getElementById("quizID").value, true);
       xmlPOSTHttp.setRequestHeader("Access-Control-Allow-Origin","*");
       xmlPOSTHttp.setRequestHeader("Accept", "application/json");
       xmlPOSTHttp.setRequestHeader("Content-Type", "application/json;charset=utf8");
@@ -111,9 +111,9 @@ function deleteFromCalendar() {
   console.log(selected.value);
 
   const xmlPOSTHttp = new XMLHttpRequest();
-  xmlPOSTHttp.open("DELETE", "http://" + ip + ":" + port + "/event?enterpriseID = " + selected.value, true);
+  xmlPOSTHttp.open("DELETE", "http://" + ip + ":" + port + "/event?enterpriseID=Q" + selected.value, true);
   xmlPOSTHttp.send(null);
-
+  alert();
 }
 
 function pushToGrades(){

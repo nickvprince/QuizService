@@ -5,12 +5,6 @@
 "enddate": "2022-12-31",
 "totalpoints": "2"
 },
-"15": {
-"title": "2323",
-"startdate": "2022-12-01",
-"enddate": "2022-12-31",
-"totalpoints": "2"
-},
 "16": {
 "title": "Test",
 "startdate": "2022-12-01",
@@ -75,24 +69,6 @@
 "title": "test test test",
 "startdate": "2022-11-30",
 "enddate": "2023-01-07",
-"totalpoints": "2"
-},
-"27": {
-"title": "1111111111111",
-"startdate": "2022-12-06",
-"enddate": "2022-12-30",
-"totalpoints": "1"
-},
-"28": {
-"title": "yoyo my g",
-"startdate": "2022-11-29",
-"enddate": "2022-12-22",
-"totalpoints": "2"
-},
-"29": {
-"title": "yoyo my g",
-"startdate": "2022-11-30",
-"enddate": "2022-12-16",
 "totalpoints": "2"
 }
 }
