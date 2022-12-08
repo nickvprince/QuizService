@@ -151,7 +151,7 @@ bool updateCalendarJson(int id) {
     nlohmann::json jArray;
 
     while(dbRes->next()){
-        jArray["eID"] = dbRes->getString("idquiz");
+        jArray["eID"] = "Q" + dbRes->getString("idquiz");
         jArray["title"] = dbRes->getString("title");
         jArray["startdate"] = dbRes->getString("startdate") + "T00:00:00";
         jArray["dueDate"] = dbRes->getString("enddate") + "T00:00:00";
